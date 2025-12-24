@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Kilyann Boucly</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-content">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-code"></i> KB
+                </a>
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="index.html" class="nav-link">Accueil</a></li>
+                    <li><a href="competences.html" class="nav-link">Compétences</a></li>
+                    <li><a href="projets.html" class="nav-link">Projets</a></li>
+                    <li><a href="alternance.html" class="nav-link">Alternance</a></li>
+                    <li><a href="contact.html" class="nav-link active">Contact</a></li>
+                </ul>
+                <div class="nav-right">
+                    <button class="theme-toggle" id="themeToggle">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <button class="menu-toggle" id="menuToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Section Contact -->
+    <section class="page-section contact-page">
+        <div class="container">
+            <div class="page-header">
+                <h1 class="page-title fade-in">Prenons Contact</h1>
+                <p class="page-subtitle fade-in">Je suis à l'écoute de vos projets et opportunités</p>
+            </div>
+
+            <div class="contact-wrapper">
+                <div class="contact-info card-contact-1">
+                    <p class="contact-intro">Vous avez un projet en tête ? Une question ? N'hésitez pas à me contacter. Je répondrai à votre message dans les plus brefs délais !</p>
+                    
+                    <div class="contact-items">
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div>
+                                <h3>Email</h3>
+                                <p><a href="mailto:kilyannboucly.pro@gmail.com">kilyannboucly.pro@gmail.com</a></p>
+                                <span class="contact-detail">Réponse en moins de 24h</span>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div>
+                                <h3>Téléphone</h3>
+                                <p><a href="tel:+33661242233">+33 6 61 24 22 33</a></p>
+                                <span class="contact-detail">Du lundi au vendredi 9h-18h</span>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div>
+                                <h3>Localisation</h3>
+                                <p>Crècy-la-Chapelle, 77580</p>
+                                <span class="contact-detail">Île-de-France, France</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="social-section">
+                        <h3>Réseaux Sociaux</h3>
+                        <div class="social-links">
+                            <a href="https://www.linkedin.com/in/kilyann-boucly-aaa56638b/" target="_blank" title="LinkedIn" class="social-btn">
+                                <i class="fab fa-linkedin"></i>
+                            </a>
+                            <a href="https://github.com/KilyannPro" target="_blank" title="GitHub" class="social-btn">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            <a href="https://instagram.com/klnn_pro" target="_blank" title="Instagram" class="social-btn">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <form class="contact-form card-contact-2" id="contactForm" action="https://formspree.io/f/mykganzp" method="POST">
+                    <div class="form-group">
+                        <label for="name">Nom complet *</label>
+                        <input type="text" id="name" name="name" placeholder="Votre nom" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Adresse email *</label>
+                        <input type="email" id="email" name="email" placeholder="votre@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Sujet *</label>
+                        <input type="text" id="subject" name="subject" placeholder="Sujet du message" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message *</label>
+                        <textarea id="message" name="message" placeholder="Décrivez votre projet ou question..." rows="6" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-submit">
+                        <span class="btn-text">Envoyer le message</span>
+                        <span class="btn-icon">→</span>
+                    </button>
+                    <p class="form-note">Les champs marqués * sont obligatoires</p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>À propos</h4>
+                    <p>Alternant passionné par le développement web et les technologies modernes.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Navigation</h4>
+                    <ul>
+                        <li><a href="index.html">Accueil</a></li>
+                        <li><a href="competences.html">Compétences</a></li>
+                        <li><a href="projets.html">Projets</a></li>
+                        <li><a href="alternance.html">Alternance</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Réseaux</h4>
+                    <div class="social-links">
+                        <a href="https://www.linkedin.com/in/kilyann-boucly-aaa56638b/" target="_blank" title="LinkedIn" class="social-btn">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="https://github.com/KilyannPro" target="_blank" title="GitHub" class="social-btn">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="https://instagram.com/klnn_pro" target="_blank" title="Instagram" class="social-btn">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Kilyann Boucly. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

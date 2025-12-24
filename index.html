@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kilyann - Portfolio</title>
+    <title>Kilyann Boucly - Portfolio</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -12,169 +12,142 @@
     <nav class="navbar">
         <div class="container">
             <div class="navbar-content">
-                <h1 class="logo">Kilyann</h1>
-                <ul class="nav-menu">
-                    <li><a href="#accueil">Accueil</a></li>
-                    <li><a href="#projets">Projets</a></li>
-                    <li><a href="#alternance">Alternance</a></li>
-                    <li><a href="#contact">Contact</a></li>
+                <a href="index.html" class="logo">
+                    <i class="fas fa-code"></i> KB
+                </a>
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="index.html" class="nav-link active">Accueil</a></li>
+                    <li><a href="competences.html" class="nav-link">Compétences</a></li>
+                    <li><a href="projets.html" class="nav-link">Projets</a></li>
+                    <li><a href="alternance.html" class="nav-link">Alternance</a></li>
+                    <li><a href="contact.html" class="nav-link">Contact</a></li>
                 </ul>
+                <div class="nav-right">
+                    <button class="theme-toggle" id="themeToggle">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <button class="menu-toggle" id="menuToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
             </div>
         </div>
     </nav>
 
     <!-- Section Accueil -->
-    <section id="accueil" class="hero">
+    <section class="hero page-section">
         <div class="container">
             <div class="hero-content">
-                <h1 class="hero-title">Bienvenue</h1>
-                <p class="hero-subtitle">Je suis développeur passionné par les nouvelles technologies</p>
-                <p class="hero-description">Créant des solutions web modernes et innovantes</p>
-                <a href="#contact" class="btn btn-primary">Me contacter</a>
+                <div class="hero-greeting fade-in-left">👋 Bienvenue</div>
+                <h1 class="hero-title fade-in-left">Kilyann Boucly</h1>
+                <p class="hero-subtitle fade-in-left">Alternant Développement Web & Réseaux</p>
+                <p class="hero-description fade-in-left">Créateur de solutions web modernes et performantes. Passionné par les technologies actuelles et les défis techniques.</p>
+                <div class="hero-buttons fade-in-left">
+                    <a href="contact.html" class="btn btn-primary">Me contacter</a>
+                    <a href="projets.html" class="btn btn-secondary">Voir mes projets</a>
+                </div>
+                <div class="hero-downloads fade-in-left">
+                    <a href="cv.pdf" download class="btn-download">
+                        <i class="fas fa-file-pdf"></i>
+                        Télécharger mon CV
+                    </a>
+                    <a href="lettre.pdf" download class="btn-download">
+                        <i class="fas fa-file-pdf"></i>
+                        Lettre de motivation
+                    </a>
+                </div>
+                <div class="hero-stats fade-in-left">
+                    <div class="stat">
+                        <span class="stat-number">4+</span>
+                        <span class="stat-label">Années de formation</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">10+</span>
+                        <span class="stat-label">Projets réalisés</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">12</span>
+                        <span class="stat-label">Compétences</span>
+                    </div>
+                </div>
             </div>
-            <div class="hero-image">
-                <div class="profile-circle"></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Section Projets -->
-    <section id="projets" class="projects">
-        <div class="container">
-            <h2 class="section-title">Mes Projets</h2>
-            <div class="projects-grid">
-                <div class="project-card">
-                    <div class="project-icon">
-                        <i class="fas fa-globe"></i>
-                    </div>
-                    <h3>Projet Web</h3>
-                    <p>Description de votre projet web. Technologie utilisée : HTML, CSS, JavaScript.</p>
-                    <div class="project-tags">
-                        <span class="tag">HTML</span>
-                        <span class="tag">CSS</span>
-                        <span class="tag">JavaScript</span>
-                    </div>
-                    <a href="#" class="btn btn-secondary">Voir plus</a>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-icon">
-                        <i class="fas fa-code"></i>
-                    </div>
-                    <h3>Application Mobile</h3>
-                    <p>Description de votre application. Technologie utilisée : React Native ou Flutter.</p>
-                    <div class="project-tags">
-                        <span class="tag">React</span>
-                        <span class="tag">Mobile</span>
-                    </div>
-                    <a href="#" class="btn btn-secondary">Voir plus</a>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-icon">
-                        <i class="fas fa-database"></i>
-                    </div>
-                    <h3>Système Backend</h3>
-                    <p>Description de votre backend. Technologie utilisée : Node.js, Python ou Java.</p>
-                    <div class="project-tags">
-                        <span class="tag">Node.js</span>
-                        <span class="tag">API</span>
-                    </div>
-                    <a href="#" class="btn btn-secondary">Voir plus</a>
-                </div>
+            <div class="hero-image fade-in-right">
+                <img src="moi.jpg" alt="Kilyann Boucly" class="profile-pic">
+                <div class="hero-badge">ALTERNANT</div>
             </div>
         </div>
     </section>
 
-    <!-- Section Alternance -->
-    <section id="alternance" class="internship">
+    <!-- Aperçu des Sections -->
+    <section class="preview-sections page-section">
         <div class="container">
-            <h2 class="section-title">Alternance & Expérience</h2>
-            <div class="experience-timeline">
-                <div class="experience-item">
-                    <div class="experience-date">2024 - Présent</div>
-                    <div class="experience-content">
-                        <h3>Développeur Web</h3>
-                        <p class="company">Nom de l'Entreprise</p>
-                        <p>Description de votre alternance et des missions accomplies.</p>
-                        <div class="skills">
-                            <span class="skill">JavaScript</span>
-                            <span class="skill">React</span>
-                            <span class="skill">Node.js</span>
-                        </div>
+            <h2 class="section-title">Explorez Mon Portfolio</h2>
+            <div class="preview-grid">
+                <a href="competences.html" class="preview-card card-1">
+                    <div class="preview-icon">
+                        <i class="fas fa-star"></i>
                     </div>
-                </div>
-
-                <div class="experience-item">
-                    <div class="experience-date">2023 - 2024</div>
-                    <div class="experience-content">
-                        <h3>Stage - Développeur Frontend</h3>
-                        <p class="company">Autre Entreprise</p>
-                        <p>Description de votre stage et des missions accomplies.</p>
-                        <div class="skills">
-                            <span class="skill">HTML/CSS</span>
-                            <span class="skill">Vue.js</span>
-                        </div>
+                    <h3>Compétences</h3>
+                    <p>Découvrez mes technologies et domaines d'expertise</p>
+                    <span class="preview-arrow">→</span>
+                </a>
+                <a href="projets.html" class="preview-card card-2">
+                    <div class="preview-icon">
+                        <i class="fas fa-rocket"></i>
                     </div>
-                </div>
-
-                <div class="experience-item">
-                    <div class="experience-date">2023</div>
-                    <div class="experience-content">
-                        <h3>Projet Académique</h3>
-                        <p class="company">École/Formation</p>
-                        <p>Description de votre projet académique et apprentissages.</p>
-                        <div class="skills">
-                            <span class="skill">Python</span>
-                            <span class="skill">Bases de données</span>
-                        </div>
+                    <h3>Projets</h3>
+                    <p>Les projets que j'ai développés et leurs détails</p>
+                    <span class="preview-arrow">→</span>
+                </a>
+                <a href="alternance.html" class="preview-card card-3">
+                    <div class="preview-icon">
+                        <i class="fas fa-briefcase"></i>
                     </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Section Contact -->
-    <section id="contact" class="contact">
-        <div class="container">
-            <h2 class="section-title">Me Contacter</h2>
-            <div class="contact-content">
-                <div class="contact-info">
-                    <div class="contact-item">
+                    <h3>Alternance</h3>
+                    <p>Mon parcours académique et professionnel</p>
+                    <span class="preview-arrow">→</span>
+                </a>
+                <a href="contact.html" class="preview-card card-4">
+                    <div class="preview-icon">
                         <i class="fas fa-envelope"></i>
-                        <div>
-                            <h3>Email</h3>
-                            <p><a href="mailto:votre.email@example.com">votre.email@example.com</a></p>
-                        </div>
                     </div>
-                    <div class="contact-item">
-                        <i class="fas fa-phone"></i>
-                        <div>
-                            <h3>Téléphone</h3>
-                            <p><a href="tel:+33612345678">+33 6 12 34 56 78</a></p>
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <div>
-                            <h3>Localisation</h3>
-                            <p>Votre Ville, France</p>
-                        </div>
-                    </div>
-                </div>
+                    <h3>Contact</h3>
+                    <p>Discutons d'une collaboration ou opportunité</p>
+                    <span class="preview-arrow">→</span>
+                </a>
+            </div>
+        </div>
+    </section>
 
-                <form class="contact-form" id="contactForm">
-                    <div class="form-group">
-                        <input type="text" placeholder="Votre nom" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="email" placeholder="Votre email" required>
-                    </div>
-                    <div class="form-group">
-                        <textarea placeholder="Votre message" rows="5" required></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Envoyer</button>
-                </form>
+    <!-- Qualités Rapides -->
+    <section class="quick-qualities page-section">
+        <div class="container">
+            <h2 class="section-title">Qualités Professionnelles</h2>
+            <div class="qualities-list">
+                <div class="quality-badge">
+                    <i class="fas fa-fire"></i>
+                    <span>Motivation</span>
+                </div>
+                <div class="quality-badge">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Autonomie</span>
+                </div>
+                <div class="quality-badge">
+                    <i class="fas fa-handshake"></i>
+                    <span>Esprit d'équipe</span>
+                </div>
+                <div class="quality-badge">
+                    <i class="fas fa-lightbulb"></i>
+                    <span>Créativité</span>
+                </div>
+                <div class="quality-badge">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Rigueur</span>
+                </div>
+                <div class="quality-badge">
+                    <i class="fas fa-brain"></i>
+                    <span>Adaptabilité</span>
+                </div>
             </div>
         </div>
     </section>
@@ -182,12 +155,38 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <div class="social-links">
-                <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                <a href="#" title="GitHub"><i class="fab fa-github"></i></a>
-                <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>À propos</h4>
+                    <p>Alternant passionné par le développement web et les technologies modernes.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Navigation</h4>
+                    <ul>
+                        <li><a href="index.html">Accueil</a></li>
+                        <li><a href="competences.html">Compétences</a></li>
+                        <li><a href="projets.html">Projets</a></li>
+                        <li><a href="alternance.html">Alternance</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Réseaux</h4>
+                    <div class="social-links">
+                        <a href="https://www.linkedin.com/in/kilyann-boucly-aaa56638b/" target="_blank" title="LinkedIn" class="social-btn">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="https://github.com/KilyannPro" target="_blank" title="GitHub" class="social-btn">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="https://instagram.com/klnn_pro" target="_blank" title="Instagram" class="social-btn">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
             </div>
-            <p>&copy; 2024 Kilyann. Tous droits réservés.</p>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Kilyann Boucly. Tous droits réservés.</p>
+            </div>
         </div>
     </footer>
 
