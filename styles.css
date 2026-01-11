@@ -584,6 +584,38 @@ body.dark-mode .btn-download:hover {
 }
 
 /* Projets */
+.projects-filter {
+    display: flex;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+}
+
+.filter-btn {
+    background: var(--color-bg);
+    color: var(--color-text);
+    border: 2px solid var(--color-border);
+    padding: 8px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: var(--transition);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+}
+
+.filter-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px var(--color-shadow);
+}
+
+.filter-btn.active {
+    background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+    color: white;
+    border-color: transparent;
+}
+
 .projects-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -1211,6 +1243,14 @@ body.dark-mode .social-btn {
         grid-template-columns: 1fr;
     }
 
+    .projects-filter {
+        justify-content: center;
+    }
+
+    .filter-btn {
+        padding: 8px 12px;
+    }
+
     .experience-timeline {
         padding-left: 40px;
     }
@@ -1226,6 +1266,72 @@ body.dark-mode .social-btn {
     .page-title {
         font-size: 2.5rem;
     }
+}
+
+/* Modal/Lightbox Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.modal.active {
+    opacity: 1;
+}
+
+.modal-content-wrapper {
+    position: relative;
+    max-width: 90%;
+    max-height: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.modal-content {
+    max-width: 100%;
+    max-height: 80vh;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.modal-close {
+    position: absolute;
+    top: -40px;
+    right: 0;
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    background: none;
+    border: none;
+}
+
+.modal-close:hover {
+    color: var(--color-primary);
+}
+
+.modal-caption {
+    color: white;
+    margin-top: 15px;
+    font-size: 1.1rem;
+    text-align: center;
+}
+
+/* Video specific styles */
+video.modal-content {
+    width: auto;
+    height: auto;
 }
 
 /* Responsive Mobile */

@@ -217,15 +217,93 @@ window.addEventListener('load', () => {
         document.body.style.transition = 'opacity 0.5s ease-in';
         document.body.style.opacity = '1';
     }, 100);
+
+    // Filtre projets (page Projets)
+    const filterBtns = document.querySelectorAll('.projects-filter .filter-btn');
+    const projectCards = document.querySelectorAll('.projects-grid .project-card');
+    if (filterBtns.length && projectCards.length) {
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const category = btn.getAttribute('data-filter');
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                projectCards.forEach(card => {
+                    const match = category === 'all' || card.getAttribute('data-category') === category;
+                    card.style.display = match ? 'flex' : 'none';
+                });
+            });
+        });
+    }
 });
 
-// Effet de soulignement au survol des cartes
-document.querySelectorAll('.preview-card, .project-card, .skill-card').forEach(card => {
-    card.addEventListener('mouseenter', function() {
-        this.style.transform = this.style.transform ? this.style.transform.replace(/translateY\([^)]*\)/, 'translateY(-10px)') : 'translateY(-10px)';
+/* ... existing code ... */
+
+// Modal/Lightbox Logic
+const modal = document.getElementById('projectModal');
+const modalBody = document.getElementById('modalBody');
+const modalClose = document.getElementById('modalClose');
+const modalCaption = document.getElementById('modalCaption');
+
+if (modal) { // Only run if modal exists
+    function openModal(type, source, captionText) {
+        modal.display = 'flex'; // Use flex to center
+        // Small timeout to allow display:flex to apply before adding active class for opacity transition
+        modal.style.display = 'flex';
+        setTimeout(() => {
+            modal.classList.add('active');
+        }, 10);
+
+        modalBody.innerHTML = ''; // Clear previous content
+        modalCaption.textContent = captionText || '';
+
+        if (type === 'video') {
+            const video = document.createElement('video');
+            video.src = source;
+            video.controls = true;
+            video.autoplay = true;
+            video.className = 'modal-content';
+            modalBody.appendChild(video);
+        } else if (type === 'image') {
+            const img = document.createElement('img');
+            img.src = source;
+            img.className = 'modal-content';
+            img.alt = captionText;
+            modalBody.appendChild(img);
+        }
+    }
+
+    function closeModal() {
+        modal.classList.remove('active');
+        setTimeout(() => {
+            modal.style.display = 'none';
+            modalBody.innerHTML = ''; // Stop video playback
+        }, 300);
+    }
+
+    modalClose.addEventListener('click', closeModal);
+
+    // Close on click outside
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal || e.target.classList.contains('modal-content-wrapper')) {
+            closeModal();
+        }
     });
-    
-    card.addEventListener('mouseleave', function() {
-        this.style.transform = 'translateY(0)';
+
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+            closeModal();
+        }
     });
-});
+
+    // Attach event listeners to buttons
+    document.querySelectorAll('.view-project-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const type = btn.dataset.type;
+            const source = btn.dataset.source;
+            const caption = btn.dataset.caption;
+            openModal(type, source, caption);
+        });
+    });
+}
