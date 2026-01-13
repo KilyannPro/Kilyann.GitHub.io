@@ -421,15 +421,24 @@ body.dark-mode .btn-download:hover {
     font-size: 0.9rem;
 }
 
-.profile-pic {
+.profile-pic-frame {
     width: 100%;
     max-width: 350px;
     border-radius: 25px;
-    object-fit: cover;
-    animation: float 3s ease-in-out infinite;
+    overflow: hidden;
     box-shadow: 0 30px 80px var(--color-shadow), 0 0 0 10px rgba(124, 58, 237, 0.15);
     border: 5px solid white;
     position: relative;
+    animation: float 3s ease-in-out infinite;
+    transition: var(--transition);
+}
+
+.profile-pic {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1.4);
+    display: block;
 }
 
 .hero-image {
@@ -1804,9 +1813,25 @@ video.modal-content {
         font-size: 0.8rem;
     }
 
-    .profile-pic {
-        max-width: 220px;
+    .profile-pic-frame {
+        max-width: 250px;
         border-radius: 20px;
+    }
+
+    .profile-pic {
+        transform: scale(1.4);
+    }
+
+    @keyframes float {
+
+        0%,
+        100% {
+            transform: translateY(0);
+        }
+
+        50% {
+            transform: translateY(-10px);
+        }
     }
 
     .logo {
