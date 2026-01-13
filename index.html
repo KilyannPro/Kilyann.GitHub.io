@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+
 <body>
     <!-- Navigation -->
     <nav class="navbar">
@@ -16,13 +18,21 @@
                     <i class="fas fa-code"></i> KB
                 </a>
                 <ul class="nav-menu" id="navMenu">
-                    <li><a href="index.html" class="nav-link active">Accueil</a></li>
-                    <li><a href="competences.html" class="nav-link">Compétences</a></li>
-                    <li><a href="projets.html" class="nav-link">Projets</a></li>
-                    <li><a href="alternance.html" class="nav-link">Alternance</a></li>
-                    <li><a href="contact.html" class="nav-link">Contact</a></li>
+                    <li><a href="index.html" class="nav-link active" data-i18n="nav-home">Accueil</a></li>
+                    <li><a href="competences.html" class="nav-link" data-i18n="nav-skills">Compétences</a></li>
+                    <li><a href="projets.html" class="nav-link" data-i18n="nav-projects">Projets</a></li>
+                    <li><a href="alternance.html" class="nav-link" data-i18n="nav-alternance">Alternance</a></li>
+                    <li><a href="mini-jeux.html" class="nav-link" data-i18n="nav-games">Mini-jeux</a></li>
+                    <li><a href="contact.html" class="nav-link" data-i18n="nav-contact">Contact</a></li>
                 </ul>
                 <div class="nav-right">
+                    <div class="lang-dropdown">
+                        <button class="lang-toggle" id="langToggle">FR</button>
+                        <div class="lang-dropdown-content" id="langMenu">
+                            <button class="lang-option" data-lang="fr">Français (FR)</button>
+                            <button class="lang-option" data-lang="en">English (EN)</button>
+                        </div>
+                    </div>
                     <button class="theme-toggle" id="themeToggle">
                         <i class="fas fa-moon"></i>
                     </button>
@@ -38,20 +48,23 @@
     <section class="hero page-section">
         <div class="container">
             <div class="hero-content">
-                <div class="hero-greeting fade-in-left">👋 Bienvenue</div>
+                <div class="hero-greeting fade-in-left" data-i18n="hero-greeting">👋 Bienvenue</div>
                 <h1 class="hero-title fade-in-left">Kilyann Boucly</h1>
-                <p class="hero-subtitle fade-in-left">Alternant Développement Web & Réseaux</p>
-                <p class="hero-description fade-in-left">Créateur de solutions web modernes et performantes. Passionné par les technologies actuelles et les défis techniques.</p>
+                <p class="hero-subtitle fade-in-left" data-i18n="hero-subtitle">Alternant Développement Web & Réseaux
+                </p>
+                <p class="hero-description fade-in-left" data-i18n="hero-desc">Créateur de solutions web modernes et
+                    performantes. Passionné
+                    par les technologies actuelles et les défis techniques.</p>
                 <div class="hero-buttons fade-in-left">
-                    <a href="contact.html" class="btn btn-primary">Me contacter</a>
-                    <a href="projets.html" class="btn btn-secondary">Voir mes projets</a>
+                    <a href="contact.html" class="btn btn-primary" data-i18n="btn-contact">Me contacter</a>
+                    <a href="projets.html" class="btn btn-secondary" data-i18n="btn-projects">Voir mes projets</a>
                 </div>
                 <div class="hero-downloads fade-in-left">
-                    <a href="cv.pdf" download class="btn-download">
+                    <a href="cv.pdf" download class="btn-download" data-i18n="download-cv">
                         <i class="fas fa-file-pdf"></i>
                         Télécharger mon CV
                     </a>
-                    <a href="lettre.pdf" download class="btn-download">
+                    <a href="lettre.pdf" download class="btn-download" data-i18n="cover-letter">
                         <i class="fas fa-file-pdf"></i>
                         Lettre de motivation
                     </a>
@@ -59,15 +72,15 @@
                 <div class="hero-stats fade-in-left">
                     <div class="stat">
                         <span class="stat-number">4+</span>
-                        <span class="stat-label">Années de formation</span>
+                        <span class="stat-label" data-i18n="stat-years">Années de formation</span>
                     </div>
                     <div class="stat">
                         <span class="stat-number">10+</span>
-                        <span class="stat-label">Projets réalisés</span>
+                        <span class="stat-label" data-i18n="stat-projects">Projets réalisés</span>
                     </div>
                     <div class="stat">
                         <span class="stat-number">12</span>
-                        <span class="stat-label">Compétences</span>
+                        <span class="stat-label" data-i18n="stat-skills">Compétences</span>
                     </div>
                 </div>
             </div>
@@ -81,38 +94,38 @@
     <!-- Aperçu des Sections -->
     <section class="preview-sections page-section">
         <div class="container">
-            <h2 class="section-title">Explorez Mon Portfolio</h2>
+            <h2 class="section-title" data-i18n="preview-title">Explorez Mon Portfolio</h2>
             <div class="preview-grid">
                 <a href="competences.html" class="preview-card card-1">
                     <div class="preview-icon">
                         <i class="fas fa-star"></i>
                     </div>
-                    <h3>Compétences</h3>
-                    <p>Découvrez mes technologies et domaines d'expertise</p>
+                    <h3 data-i18n="nav-skills">Compétences</h3>
+                    <p data-i18n="preview-skills-desc">Découvrez mes technologies et domaines d'expertise</p>
                     <span class="preview-arrow">→</span>
                 </a>
                 <a href="projets.html" class="preview-card card-2">
                     <div class="preview-icon">
                         <i class="fas fa-rocket"></i>
                     </div>
-                    <h3>Projets</h3>
-                    <p>Les projets que j'ai développés et leurs détails</p>
+                    <h3 data-i18n="nav-projects">Projets</h3>
+                    <p data-i18n="preview-projects-desc">Les projets que j'ai développés et leurs détails</p>
                     <span class="preview-arrow">→</span>
                 </a>
                 <a href="alternance.html" class="preview-card card-3">
                     <div class="preview-icon">
                         <i class="fas fa-briefcase"></i>
                     </div>
-                    <h3>Alternance</h3>
-                    <p>Mon parcours académique et professionnel</p>
+                    <h3 data-i18n="nav-alternance">Alternance</h3>
+                    <p data-i18n="preview-alternance-desc">Mon parcours académique et professionnel</p>
                     <span class="preview-arrow">→</span>
                 </a>
                 <a href="contact.html" class="preview-card card-4">
                     <div class="preview-icon">
                         <i class="fas fa-envelope"></i>
                     </div>
-                    <h3>Contact</h3>
-                    <p>Discutons d'une collaboration ou opportunité</p>
+                    <h3 data-i18n="nav-contact">Contact</h3>
+                    <p data-i18n="preview-contact-desc">Discutons d'une collaboration ou opportunité</p>
                     <span class="preview-arrow">→</span>
                 </a>
             </div>
@@ -122,31 +135,31 @@
     <!-- Qualités Rapides -->
     <section class="quick-qualities page-section">
         <div class="container">
-            <h2 class="section-title">Qualités Professionnelles</h2>
+            <h2 class="section-title" data-i18n="qualities-title">Qualités Professionnelles</h2>
             <div class="qualities-list">
                 <div class="quality-badge">
                     <i class="fas fa-fire"></i>
-                    <span>Motivation</span>
+                    <span data-i18n="quality-motivation">Motivation</span>
                 </div>
                 <div class="quality-badge">
                     <i class="fas fa-chart-line"></i>
-                    <span>Autonomie</span>
+                    <span data-i18n="quality-autonomy">Autonomie</span>
                 </div>
                 <div class="quality-badge">
                     <i class="fas fa-handshake"></i>
-                    <span>Esprit d'équipe</span>
+                    <span data-i18n="quality-team">Esprit d'équipe</span>
                 </div>
                 <div class="quality-badge">
                     <i class="fas fa-lightbulb"></i>
-                    <span>Créativité</span>
+                    <span data-i18n="quality-creativity">Créativité</span>
                 </div>
                 <div class="quality-badge">
                     <i class="fas fa-shield-alt"></i>
-                    <span>Rigueur</span>
+                    <span data-i18n="quality-rigor">Rigueur</span>
                 </div>
                 <div class="quality-badge">
                     <i class="fas fa-brain"></i>
-                    <span>Adaptabilité</span>
+                    <span data-i18n="quality-adaptability">Adaptabilité</span>
                 </div>
             </div>
         </div>
@@ -157,22 +170,25 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h4>À propos</h4>
-                    <p>Alternant passionné par le développement web et les technologies modernes.</p>
+                    <h4 data-i18n="footer-about">À propos</h4>
+                    <p data-i18n="footer-about-desc">Alternant passionné par le développement web et les technologies
+                        modernes.</p>
                 </div>
                 <div class="footer-section">
-                    <h4>Navigation</h4>
+                    <h4 data-i18n="footer-nav">Navigation</h4>
                     <ul>
-                        <li><a href="index.html">Accueil</a></li>
-                        <li><a href="competences.html">Compétences</a></li>
-                        <li><a href="projets.html">Projets</a></li>
-                        <li><a href="alternance.html">Alternance</a></li>
+                        <li><a href="index.html" data-i18n="nav-home">Accueil</a></li>
+                        <li><a href="competences.html" data-i18n="nav-skills">Compétences</a></li>
+                        <li><a href="projets.html" data-i18n="nav-projects">Projets</a></li>
+                        <li><a href="alternance.html" data-i18n="nav-alternance">Alternance</a></li>
+                        <li><a href="mini-jeux.html" data-i18n="nav-games">Mini-jeux</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
-                    <h4>Réseaux</h4>
+                    <h4 data-i18n="footer-socials">Réseaux</h4>
                     <div class="social-links">
-                        <a href="https://www.linkedin.com/in/kilyann-boucly-aaa56638b/" target="_blank" title="LinkedIn" class="social-btn">
+                        <a href="https://www.linkedin.com/in/kilyann-boucly-aaa56638b/" target="_blank" title="LinkedIn"
+                            class="social-btn">
                             <i class="fab fa-linkedin"></i>
                         </a>
                         <a href="https://github.com/KilyannPro" target="_blank" title="GitHub" class="social-btn">
@@ -185,11 +201,12 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 Kilyann Boucly. Tous droits réservés.</p>
+                <p>&copy; 2025 Kilyann Boucly. <span data-i18n="footer-rights">Tous droits réservés.</span></p>
             </div>
         </div>
     </footer>
 
     <script src="script.js"></script>
 </body>
+
 </html>

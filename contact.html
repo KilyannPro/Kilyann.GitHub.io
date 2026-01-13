@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+
 <body>
     <!-- Navigation -->
     <nav class="navbar">
@@ -16,13 +18,21 @@
                     <i class="fas fa-code"></i> KB
                 </a>
                 <ul class="nav-menu" id="navMenu">
-                    <li><a href="index.html" class="nav-link">Accueil</a></li>
-                    <li><a href="competences.html" class="nav-link">Compétences</a></li>
-                    <li><a href="projets.html" class="nav-link">Projets</a></li>
-                    <li><a href="alternance.html" class="nav-link">Alternance</a></li>
-                    <li><a href="contact.html" class="nav-link active">Contact</a></li>
+                    <li><a href="index.html" class="nav-link" data-i18n="nav-home">Accueil</a></li>
+                    <li><a href="competences.html" class="nav-link" data-i18n="nav-skills">Compétences</a></li>
+                    <li><a href="projets.html" class="nav-link" data-i18n="nav-projects">Projets</a></li>
+                    <li><a href="alternance.html" class="nav-link" data-i18n="nav-alternance">Alternance</a></li>
+                    <li><a href="mini-jeux.html" class="nav-link" data-i18n="nav-games">Mini-jeux</a></li>
+                    <li><a href="contact.html" class="nav-link active" data-i18n="nav-contact">Contact</a></li>
                 </ul>
                 <div class="nav-right">
+                    <div class="lang-dropdown">
+                        <button class="lang-toggle" id="langToggle">FR</button>
+                        <div class="lang-dropdown-content" id="langMenu">
+                            <button class="lang-option" data-lang="fr">Français (FR)</button>
+                            <button class="lang-option" data-lang="en">English (EN)</button>
+                        </div>
+                    </div>
                     <button class="theme-toggle" id="themeToggle">
                         <i class="fas fa-moon"></i>
                     </button>
@@ -38,14 +48,16 @@
     <section class="page-section contact-page">
         <div class="container">
             <div class="page-header">
-                <h1 class="page-title fade-in">Prenons Contact</h1>
-                <p class="page-subtitle fade-in">Je suis à l'écoute de vos projets et opportunités</p>
+                <h1 class="page-title fade-in" data-i18n="contact-title">Prenons Contact</h1>
+                <p class="page-subtitle fade-in" data-i18n="contact-subtitle">Je suis à l'écoute de vos projets et
+                    opportunités</p>
             </div>
 
             <div class="contact-wrapper">
                 <div class="contact-info card-contact-1">
-                    <p class="contact-intro">Vous avez un projet en tête ? Une question ? N'hésitez pas à me contacter. Je répondrai à votre message dans les plus brefs délais !</p>
-                    
+                    <p class="contact-intro">Vous avez un projet en tête ? Une question ? N'hésitez pas à me contacter.
+                        Je répondrai à votre message dans les plus brefs délais !</p>
+
                     <div class="contact-items">
                         <div class="contact-item">
                             <div class="contact-icon">
@@ -82,38 +94,44 @@
                     <div class="social-section">
                         <h3>Réseaux Sociaux</h3>
                         <div class="social-links">
-                            <a href="https://www.linkedin.com/in/kilyann-boucly-aaa56638b/" target="_blank" title="LinkedIn" class="social-btn">
+                            <a href="https://www.linkedin.com/in/kilyann-boucly-aaa56638b/" target="_blank"
+                                title="LinkedIn" class="social-btn">
                                 <i class="fab fa-linkedin"></i>
                             </a>
                             <a href="https://github.com/KilyannPro" target="_blank" title="GitHub" class="social-btn">
                                 <i class="fab fa-github"></i>
                             </a>
-                            <a href="https://instagram.com/klnn_pro" target="_blank" title="Instagram" class="social-btn">
+                            <a href="https://instagram.com/klnn_pro" target="_blank" title="Instagram"
+                                class="social-btn">
                                 <i class="fab fa-instagram"></i>
                             </a>
                         </div>
                     </div>
                 </div>
 
-                <form class="contact-form card-contact-2" id="contactForm" action="https://formspree.io/f/mykganzp" method="POST">
+                <form class="contact-form card-contact-2" id="contactForm" action="https://formspree.io/f/mykganzp"
+                    method="POST">
                     <div class="form-group">
-                        <label for="name">Nom complet *</label>
-                        <input type="text" id="name" name="name" placeholder="Votre nom" required>
+                        <label for="name" data-i18n="form-name">Nom complet *</label>
+                        <input type="text" id="name" name="name" placeholder="Votre nom" required data-i18n="form-name">
                     </div>
                     <div class="form-group">
-                        <label for="email">Adresse email *</label>
-                        <input type="email" id="email" name="email" placeholder="votre@email.com" required>
+                        <label for="email" data-i18n="form-email">Adresse email *</label>
+                        <input type="email" id="email" name="email" placeholder="votre@email.com" required
+                            data-i18n="form-email">
                     </div>
                     <div class="form-group">
-                        <label for="subject">Sujet *</label>
-                        <input type="text" id="subject" name="subject" placeholder="Sujet du message" required>
+                        <label for="subject" data-i18n="form-subject">Sujet *</label>
+                        <input type="text" id="subject" name="subject" placeholder="Sujet du message" required
+                            data-i18n="form-subject">
                     </div>
                     <div class="form-group">
-                        <label for="message">Message *</label>
-                        <textarea id="message" name="message" placeholder="Décrivez votre projet ou question..." rows="6" required></textarea>
+                        <label for="message" data-i18n="form-message">Message *</label>
+                        <textarea id="message" name="message" placeholder="Décrivez votre projet ou question..."
+                            rows="6" required data-i18n="form-message"></textarea>
                     </div>
                     <button type="submit" class="btn btn-primary btn-submit">
-                        <span class="btn-text">Envoyer le message</span>
+                        <span class="btn-text" data-i18n="btn-send">Envoyer le message</span>
                         <span class="btn-icon">→</span>
                     </button>
                     <p class="form-note">Les champs marqués * sont obligatoires</p>
@@ -127,22 +145,25 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h4>À propos</h4>
-                    <p>Alternant passionné par le développement web et les technologies modernes.</p>
+                    <h4 data-i18n="footer-about">À propos</h4>
+                    <p data-i18n="footer-about-desc">Alternant passionné par le développement web et les technologies
+                        modernes.</p>
                 </div>
                 <div class="footer-section">
-                    <h4>Navigation</h4>
+                    <h4 data-i18n="footer-nav">Navigation</h4>
                     <ul>
-                        <li><a href="index.html">Accueil</a></li>
-                        <li><a href="competences.html">Compétences</a></li>
-                        <li><a href="projets.html">Projets</a></li>
-                        <li><a href="alternance.html">Alternance</a></li>
+                        <li><a href="index.html" data-i18n="nav-home">Accueil</a></li>
+                        <li><a href="competences.html" data-i18n="nav-skills">Compétences</a></li>
+                        <li><a href="projets.html" data-i18n="nav-projects">Projets</a></li>
+                        <li><a href="alternance.html" data-i18n="nav-alternance">Alternance</a></li>
+                        <li><a href="mini-jeux.html" data-i18n="nav-games">Mini-jeux</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
-                    <h4>Réseaux</h4>
+                    <h4 data-i18n="footer-socials">Réseaux</h4>
                     <div class="social-links">
-                        <a href="https://www.linkedin.com/in/kilyann-boucly-aaa56638b/" target="_blank" title="LinkedIn" class="social-btn">
+                        <a href="https://www.linkedin.com/in/kilyann-boucly-aaa56638b/" target="_blank" title="LinkedIn"
+                            class="social-btn">
                             <i class="fab fa-linkedin"></i>
                         </a>
                         <a href="https://github.com/KilyannPro" target="_blank" title="GitHub" class="social-btn">
@@ -155,11 +176,12 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 Kilyann Boucly. Tous droits réservés.</p>
+                <p>&copy; 2025 Kilyann Boucly. <span data-i18n="footer-rights">Tous droits réservés.</span></p>
             </div>
         </div>
     </footer>
 
     <script src="script.js"></script>
 </body>
+
 </html>

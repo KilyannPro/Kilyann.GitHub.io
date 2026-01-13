@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mission: Alternance - Kilyann Boucly</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="game-container">
+        <canvas id="gameCanvas"></canvas>
+
+        <!-- UI Overlay -->
+        <div id="ui-layer">
+            <div id="start-screen" class="screen active">
+                <h1>MISSION: ALTERNANCE</h1>
+                <p class="subtitle">Aidez-moi à décrocher mon alternance !</p>
+                <div class="controls-info">
+                    <p>UTILISEZ LES FLÈCHES OU ZQSD POUR BOUGER</p>
+                </div>
+                <button id="start-btn" class="btn-primary">COMMENCER LA MISSION</button>
+            </div>
+
+            <div id="game-over-screen" class="screen hidden">
+                <h1>MISSION ÉCHOUÉE</h1>
+                <p>N'abandonnez pas ! La persévérance est la clé.</p>
+                <button id="restart-btn" class="btn-primary">RÉESSAYER</button>
+            </div>
+
+            <div id="victory-screen" class="screen hidden">
+                <h1>MISSION ACCOMPLIE !</h1>
+                <p>Vous avez découvert tout mon potentiel.</p>
+                <div class="actions">
+                    <a href="CV Boucly Kilyann.pdf" download class="btn-primary">TÉLÉCHARGER CV</a>
+                    <a href="lettre.pdf" download class="btn-secondary">LETTRE DE MOTIVATION</a>
+                </div>
+                <button id="replay-btn" class="btn-text">Rejouer</button>
+            </div>
+
+            <!-- In-game Hub/Modal for details -->
+            <div id="info-modal" class="modal hidden">
+                <div class="modal-content">
+                    <span class="close-modal">&times;</span>
+                    <h2 id="modal-title">Titre</h2>
+                    <p id="modal-desc">Description...</p>
+                </div>
+            </div>
+
+            <div id="hud" class="hidden">
+                <div class="score-container">XP: <span id="score">0</span></div>
+                <div class="timer-container">TEMPS: <span id="timer">00:00</span></div>
+                <div class="highscore-container">BEST: <span id="highscore">0</span></div>
+            </div>
+
+            <!-- Mobile Controls -->
+            <div id="mobile-controls" class="hidden">
+                <div class="control-btn up" id="ctrl-up"><i class="fas fa-chevron-up"></i></div>
+                <div class="control-row">
+                    <div class="control-btn left" id="ctrl-left"><i class="fas fa-chevron-left"></i></div>
+                    <div class="control-btn down" id="ctrl-down"><i class="fas fa-chevron-down"></i></div>
+                    <div class="control-btn right" id="ctrl-right"><i class="fas fa-chevron-right"></i></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="cv_data.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

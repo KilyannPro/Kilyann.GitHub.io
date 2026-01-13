@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+
 <body>
     <!-- Navigation -->
     <nav class="navbar">
@@ -16,13 +18,21 @@
                     <i class="fas fa-code"></i> KB
                 </a>
                 <ul class="nav-menu" id="navMenu">
-                    <li><a href="index.html" class="nav-link">Accueil</a></li>
-                    <li><a href="competences.html" class="nav-link active">Compétences</a></li>
-                    <li><a href="projets.html" class="nav-link">Projets</a></li>
-                    <li><a href="alternance.html" class="nav-link">Alternance</a></li>
-                    <li><a href="contact.html" class="nav-link">Contact</a></li>
+                    <li><a href="index.html" class="nav-link" data-i18n="nav-home">Accueil</a></li>
+                    <li><a href="competences.html" class="nav-link active" data-i18n="nav-skills">Compétences</a></li>
+                    <li><a href="projets.html" class="nav-link" data-i18n="nav-projects">Projets</a></li>
+                    <li><a href="alternance.html" class="nav-link" data-i18n="nav-alternance">Alternance</a></li>
+                    <li><a href="mini-jeux.html" class="nav-link" data-i18n="nav-games">Mini-jeux</a></li>
+                    <li><a href="contact.html" class="nav-link" data-i18n="nav-contact">Contact</a></li>
                 </ul>
                 <div class="nav-right">
+                    <div class="lang-dropdown">
+                        <button class="lang-toggle" id="langToggle">FR</button>
+                        <div class="lang-dropdown-content" id="langMenu">
+                            <button class="lang-option" data-lang="fr">Français (FR)</button>
+                            <button class="lang-option" data-lang="en">English (EN)</button>
+                        </div>
+                    </div>
                     <button class="theme-toggle" id="themeToggle">
                         <i class="fas fa-moon"></i>
                     </button>
@@ -38,8 +48,9 @@
     <section class="page-section skills-page">
         <div class="container">
             <div class="page-header">
-                <h1 class="page-title fade-in">Compétences Techniques</h1>
-                <p class="page-subtitle fade-in">Découvrez mes domaines d'expertise et technologies</p>
+                <h1 class="page-title fade-in" data-i18n="skills-title">Compétences Techniques</h1>
+                <p class="page-subtitle fade-in" data-i18n="skills-subtitle">Découvrez mes domaines d'expertise et
+                    technologies</p>
             </div>
 
             <div class="skills-grid">
@@ -47,8 +58,8 @@
                     <div class="skill-icon">
                         <i class="fas fa-globe"></i>
                     </div>
-                    <h3>Développement Web</h3>
-                    <p>Création de sites web modernes et responsifs</p>
+                    <h3 data-i18n="skill-web">Développement Web</h3>
+                    <p data-i18n="skill-web-desc">Création de sites web modernes et responsifs</p>
                     <div class="skill-tags">
                         <span>HTML/CSS</span>
                         <span>JavaScript</span>
@@ -64,8 +75,8 @@
                     <div class="skill-icon">
                         <i class="fas fa-database"></i>
                     </div>
-                    <h3>Bases de Données</h3>
-                    <p>Conception et gestion de données relationnelles</p>
+                    <h3 data-i18n="skill-db">Bases de Données</h3>
+                    <p data-i18n="skill-db-desc">Conception et gestion de données relationnelles</p>
                     <div class="skill-tags">
                         <span>SQL</span>
                         <span>Conception</span>
@@ -80,8 +91,8 @@
                     <div class="skill-icon">
                         <i class="fas fa-network-wired"></i>
                     </div>
-                    <h3>Réseaux & Systèmes</h3>
-                    <p>Architecture réseau et administration système</p>
+                    <h3 data-i18n="skill-net">Réseaux & Systèmes</h3>
+                    <p data-i18n="skill-net-desc">Architecture réseau et administration système</p>
                     <div class="skill-tags">
                         <span>Architecture</span>
                         <span>Docker</span>
@@ -96,8 +107,8 @@
                     <div class="skill-icon">
                         <i class="fas fa-palette"></i>
                     </div>
-                    <h3>Design & UX/UI</h3>
-                    <p>Conception d'interfaces utilisateur intuitives</p>
+                    <h3 data-i18n="skill-ui">Design & UX/UI</h3>
+                    <p data-i18n="skill-ui-desc">Conception d'interfaces utilisateur intuitives</p>
                     <div class="skill-tags">
                         <span>Photoshop</span>
                         <span>Illustrator</span>
@@ -112,8 +123,8 @@
                     <div class="skill-icon">
                         <i class="fas fa-code-branch"></i>
                     </div>
-                    <h3>Langages</h3>
-                    <p>Programmation multi-langages et versatile</p>
+                    <h3 data-i18n="skill-lang">Langages</h3>
+                    <p data-i18n="skill-lang-desc">Programmation multi-langages et versatile</p>
                     <div class="skill-tags">
                         <span>Python</span>
                         <span>C++</span>
@@ -128,8 +139,8 @@
                     <div class="skill-icon">
                         <i class="fas fa-film"></i>
                     </div>
-                    <h3>Multimédia</h3>
-                    <p>Production vidéo et design graphique</p>
+                    <h3 data-i18n="skill-media">Multimédia</h3>
+                    <p data-i18n="skill-media-desc">Production vidéo et design graphique</p>
                     <div class="skill-tags">
                         <span>Montage Vidéo</span>
                         <span>After Effects</span>
@@ -146,11 +157,11 @@
     <!-- CTA -->
     <section class="cta-section page-section">
         <div class="container">
-            <h2 class="fade-in">Intéressé par un projet ensemble ?</h2>
-            <p class="fade-in">Explorez mes projets ou contactez-moi pour discuter</p>
+            <h2 class="fade-in" data-i18n="cta-skills-title">Intéressé par un projet ensemble ?</h2>
+            <p class="fade-in" data-i18n="cta-skills-desc">Explorez mes projets ou contactez-moi pour discuter</p>
             <div class="cta-buttons fade-in">
-                <a href="projets.html" class="btn btn-primary">Voir les projets</a>
-                <a href="contact.html" class="btn btn-secondary">Me contacter</a>
+                <a href="projets.html" class="btn btn-primary" data-i18n="nav-projects">Voir les projets</a>
+                <a href="contact.html" class="btn btn-secondary" data-i18n="nav-contact">Me contacter</a>
             </div>
         </div>
     </section>
@@ -160,22 +171,25 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h4>À propos</h4>
-                    <p>Alternant passionné par le développement web et les technologies modernes.</p>
+                    <h4 data-i18n="footer-about">À propos</h4>
+                    <p data-i18n="footer-about-desc">Alternant passionné par le développement web et les technologies
+                        modernes.</p>
                 </div>
                 <div class="footer-section">
-                    <h4>Navigation</h4>
+                    <h4 data-i18n="footer-nav">Navigation</h4>
                     <ul>
-                        <li><a href="index.html">Accueil</a></li>
-                        <li><a href="competences.html">Compétences</a></li>
-                        <li><a href="projets.html">Projets</a></li>
-                        <li><a href="alternance.html">Alternance</a></li>
+                        <li><a href="index.html" data-i18n="nav-home">Accueil</a></li>
+                        <li><a href="competences.html" data-i18n="nav-skills">Compétences</a></li>
+                        <li><a href="projets.html" data-i18n="nav-projects">Projets</a></li>
+                        <li><a href="alternance.html" data-i18n="nav-alternance">Alternance</a></li>
+                        <li><a href="mini-jeux.html" data-i18n="nav-games">Mini-jeux</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
-                    <h4>Réseaux</h4>
+                    <h4 data-i18n="footer-socials">Réseaux</h4>
                     <div class="social-links">
-                        <a href="https://www.linkedin.com/in/kilyann-boucly-aaa56638b/" target="_blank" title="LinkedIn" class="social-btn">
+                        <a href="https://www.linkedin.com/in/kilyann-boucly-aaa56638b/" target="_blank" title="LinkedIn"
+                            class="social-btn">
                             <i class="fab fa-linkedin"></i>
                         </a>
                         <a href="https://github.com/KilyannPro" target="_blank" title="GitHub" class="social-btn">
@@ -188,11 +202,12 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 Kilyann Boucly. Tous droits réservés.</p>
+                <p>&copy; 2025 Kilyann Boucly. <span data-i18n="footer-rights">Tous droits réservés.</span></p>
             </div>
         </div>
     </footer>
 
     <script src="script.js"></script>
 </body>
+
 </html>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+
 <body>
     <!-- Navigation -->
     <nav class="navbar">
@@ -16,13 +18,21 @@
                     <i class="fas fa-code"></i> KB
                 </a>
                 <ul class="nav-menu" id="navMenu">
-                    <li><a href="index.html" class="nav-link">Accueil</a></li>
-                    <li><a href="competences.html" class="nav-link">Compétences</a></li>
-                    <li><a href="projets.html" class="nav-link">Projets</a></li>
-                    <li><a href="alternance.html" class="nav-link active">Alternance</a></li>
-                    <li><a href="contact.html" class="nav-link">Contact</a></li>
+                    <li><a href="index.html" class="nav-link" data-i18n="nav-home">Accueil</a></li>
+                    <li><a href="competences.html" class="nav-link" data-i18n="nav-skills">Compétences</a></li>
+                    <li><a href="projets.html" class="nav-link" data-i18n="nav-projects">Projets</a></li>
+                    <li><a href="alternance.html" class="nav-link active" data-i18n="nav-alternance">Alternance</a></li>
+                    <li><a href="mini-jeux.html" class="nav-link" data-i18n="nav-games">Mini-jeux</a></li>
+                    <li><a href="contact.html" class="nav-link" data-i18n="nav-contact">Contact</a></li>
                 </ul>
                 <div class="nav-right">
+                    <div class="lang-dropdown">
+                        <button class="lang-toggle" id="langToggle">FR</button>
+                        <div class="lang-dropdown-content" id="langMenu">
+                            <button class="lang-option" data-lang="fr">Français (FR)</button>
+                            <button class="lang-option" data-lang="en">English (EN)</button>
+                        </div>
+                    </div>
                     <button class="theme-toggle" id="themeToggle">
                         <i class="fas fa-moon"></i>
                     </button>
@@ -38,14 +48,15 @@
     <section class="page-section internship-page">
         <div class="container">
             <div class="page-header">
-                <h1 class="page-title fade-in">Parcours & Expérience</h1>
-                <p class="page-subtitle fade-in">Mon évolution académique et professionnelle</p>
+                <h1 class="page-title fade-in" data-i18n="exp-title">Parcours & Expérience</h1>
+                <p class="page-subtitle fade-in" data-i18n="exp-subtitle">Mon évolution académique et professionnelle
+                </p>
                 <div class="page-downloads fade-in">
-                    <a href="cv.pdf" download class="btn-download">
+                    <a href="cv.pdf" download class="btn-download" data-i18n="download-cv">
                         <i class="fas fa-file-pdf"></i>
                         Télécharger mon CV
                     </a>
-                    <a href="lettre.pdf" download class="btn-download">
+                    <a href="lettre.pdf" download class="btn-download" data-i18n="cover-letter">
                         <i class="fas fa-file-pdf"></i>
                         Lettre de motivation
                     </a>
@@ -59,14 +70,17 @@
                     <div class="experience-content">
                         <h3>
                             <i class="fas fa-code"></i>
-                            Alternant Développement Web & Réseaux
+                            <span data-i18n="exp1-title">Alternant Développement Web & Réseaux</span>
                         </h3>
-                        <p class="company">L'ETNA</p>
-                        <p>Alternance en cycle 3 semaines entreprise / 1 jour école. Acquisition de compétences solides en programmation, architecture réseau et gestion de bases de données. Amélioration et refonte du site élève.</p>
+                        <p class="company" data-i18n="exp1-company">L'ETNA</p>
+                        <p data-i18n="exp1-desc">Alternance en cycle 3 semaines entreprise / 1 jour école. Acquisition
+                            de compétences solides
+                            en programmation, architecture réseau et gestion de bases de données. Amélioration et
+                            refonte du site élève.</p>
                         <div class="experience-highlights">
-                            <span class="highlight">Entreprise immersive</span>
-                            <span class="highlight">3 semaines/1 jour</span>
-                            <span class="highlight">Expérience actuelle</span>
+                            <span class="highlight" data-i18n="exp1-h1">Entreprise immersive</span>
+                            <span class="highlight" data-i18n="exp1-h2">3 semaines/1 jour</span>
+                            <span class="highlight" data-i18n="exp1-h3">Expérience actuelle</span>
                         </div>
                         <div class="skills-exp">
                             <span class="skill">Java</span>
@@ -85,14 +99,16 @@
                     <div class="experience-content">
                         <h3>
                             <i class="fas fa-briefcase"></i>
-                            Stage - IUT MMI
+                            <span data-i18n="exp2-title">Stage - IUT MMI</span>
                         </h3>
-                        <p class="company">Treize cent treize</p>
-                        <p>Stage de première année MMI (1 mois). Création de site vitrine pour artiste. Apprentissage des bonnes pratiques en web design et développement frontend.</p>
+                        <p class="company" data-i18n="exp2-company">Treize cent treize</p>
+                        <p data-i18n="exp2-desc">Stage de première année MMI (1 mois). Création de site vitrine pour
+                            artiste. Apprentissage
+                            des bonnes pratiques en web design et développement frontend.</p>
                         <div class="experience-highlights">
-                            <span class="highlight">1 mois de stage</span>
-                            <span class="highlight">Web design</span>
-                            <span class="highlight">Site vitrine</span>
+                            <span class="highlight" data-i18n="exp2-h1">1 mois de stage</span>
+                            <span class="highlight" data-i18n="exp2-h2">Web design</span>
+                            <span class="highlight" data-i18n="exp2-h3">Site vitrine</span>
                         </div>
                         <div class="skills-exp">
                             <span class="skill">HTML/CSS</span>
@@ -108,14 +124,17 @@
                     <div class="experience-content">
                         <h3>
                             <i class="fas fa-graduation-cap"></i>
-                            Formation - IUT MMI
+                            <span data-i18n="exp3-title">Formation - IUT MMI</span>
                         </h3>
-                        <p class="company">IUT Champs-sur-Marne (Parcours Développement Web)</p>
-                        <p>2 ans de formation en Métiers du Multimédia et de l'Internet. Apprentissage en programmation Web, architecture réseau, gestion de bases de données et web marketing.</p>
+                        <p class="company" data-i18n="exp3-company">IUT Champs-sur-Marne (Parcours Développement Web)
+                        </p>
+                        <p data-i18n="exp3-desc">2 ans de formation en Métiers du Multimédia et de l'Internet.
+                            Apprentissage en programmation
+                            Web, architecture réseau, gestion de bases de données et web marketing.</p>
                         <div class="experience-highlights">
-                            <span class="highlight">2 années</span>
-                            <span class="highlight">Développement Web</span>
-                            <span class="highlight">Graduation réussie</span>
+                            <span class="highlight" data-i18n="exp3-h1">2 années</span>
+                            <span class="highlight" data-i18n="exp3-h2">Développement Web</span>
+                            <span class="highlight" data-i18n="exp3-h3">Graduation réussie</span>
                         </div>
                         <div class="skills-exp">
                             <span class="skill">HTML/CSS</span>
@@ -132,14 +151,17 @@
                     <div class="experience-content">
                         <h3>
                             <i class="fas fa-school"></i>
-                            Bac STI2D
+                            <span data-i18n="exp4-title">Bac STI2D</span>
                         </h3>
-                        <p class="company">Lycée</p>
-                        <p>Baccalauréat Sciences Technologiques de l'Industrie et du Développement Durable. Découverte de la programmation et infrastructure réseau. Projets pratiques en systèmes et électronique.</p>
+                        <p class="company" data-i18n="exp4-company">Lycée</p>
+                        <p data-i18n="exp4-desc">Baccalauréat Sciences Technologiques de l'Industrie et du Développement
+                            Durable. Découverte
+                            de la programmation et infrastructure réseau. Projets pratiques en systèmes et électronique.
+                        </p>
                         <div class="experience-highlights">
-                            <span class="highlight">2 années</span>
-                            <span class="highlight">STI2D</span>
-                            <span class="highlight">Bac obtenu</span>
+                            <span class="highlight" data-i18n="exp4-h1">2 années</span>
+                            <span class="highlight" data-i18n="exp4-h2">STI2D</span>
+                            <span class="highlight" data-i18n="exp4-h3">Bac obtenu</span>
                         </div>
                         <div class="skills-exp">
                             <span class="skill">C++</span>
@@ -155,11 +177,12 @@
     <!-- CTA -->
     <section class="cta-section page-section">
         <div class="container">
-            <h2 class="fade-in">Impressionné par mon parcours ?</h2>
-            <p class="fade-in">Découvrez mes compétences ou contactez-moi pour une collaboration</p>
+            <h2 class="fade-in" data-i18n="cta-exp-title">Impressionné par mon parcours ?</h2>
+            <p class="fade-in" data-i18n="cta-exp-desc">Découvrez mes compétences ou contactez-moi pour une
+                collaboration</p>
             <div class="cta-buttons fade-in">
-                <a href="competences.html" class="btn btn-primary">Voir mes compétences</a>
-                <a href="contact.html" class="btn btn-secondary">Me contacter</a>
+                <a href="competences.html" class="btn btn-primary" data-i18n="btn-skills">Voir mes compétences</a>
+                <a href="contact.html" class="btn btn-secondary" data-i18n="nav-contact">Me contacter</a>
             </div>
         </div>
     </section>
@@ -169,22 +192,25 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h4>À propos</h4>
-                    <p>Alternant passionné par le développement web et les technologies modernes.</p>
+                    <h4 data-i18n="footer-about">À propos</h4>
+                    <p data-i18n="footer-about-desc">Alternant passionné par le développement web et les technologies
+                        modernes.</p>
                 </div>
                 <div class="footer-section">
-                    <h4>Navigation</h4>
+                    <h4 data-i18n="footer-nav">Navigation</h4>
                     <ul>
-                        <li><a href="index.html">Accueil</a></li>
-                        <li><a href="competences.html">Compétences</a></li>
-                        <li><a href="projets.html">Projets</a></li>
-                        <li><a href="alternance.html">Alternance</a></li>
+                        <li><a href="index.html" data-i18n="nav-home">Accueil</a></li>
+                        <li><a href="competences.html" data-i18n="nav-skills">Compétences</a></li>
+                        <li><a href="projets.html" data-i18n="nav-projects">Projets</a></li>
+                        <li><a href="alternance.html" data-i18n="nav-alternance">Alternance</a></li>
+                        <li><a href="mini-jeux.html" data-i18n="nav-games">Mini-jeux</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
-                    <h4>Réseaux</h4>
+                    <h4 data-i18n="footer-socials">Réseaux</h4>
                     <div class="social-links">
-                        <a href="https://www.linkedin.com/in/kilyann-boucly-aaa56638b/" target="_blank" title="LinkedIn" class="social-btn">
+                        <a href="https://www.linkedin.com/in/kilyann-boucly-aaa56638b/" target="_blank" title="LinkedIn"
+                            class="social-btn">
                             <i class="fab fa-linkedin"></i>
                         </a>
                         <a href="https://github.com/KilyannPro" target="_blank" title="GitHub" class="social-btn">
@@ -197,11 +223,12 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 Kilyann Boucly. Tous droits réservés.</p>
+                <p>&copy; 2025 Kilyann Boucly. <span data-i18n="footer-rights">Tous droits réservés.</span></p>
             </div>
         </div>
     </footer>
 
     <script src="script.js"></script>
 </body>
+
 </html>

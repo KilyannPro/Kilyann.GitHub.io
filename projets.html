@@ -18,13 +18,21 @@
                     <i class="fas fa-code"></i> KB
                 </a>
                 <ul class="nav-menu" id="navMenu">
-                    <li><a href="index.html" class="nav-link">Accueil</a></li>
-                    <li><a href="competences.html" class="nav-link">Compétences</a></li>
-                    <li><a href="projets.html" class="nav-link active">Projets</a></li>
-                    <li><a href="alternance.html" class="nav-link">Alternance</a></li>
-                    <li><a href="contact.html" class="nav-link">Contact</a></li>
+                    <li><a href="index.html" class="nav-link" data-i18n="nav-home">Accueil</a></li>
+                    <li><a href="competences.html" class="nav-link" data-i18n="nav-skills">Compétences</a></li>
+                    <li><a href="projets.html" class="nav-link active" data-i18n="nav-projects">Projets</a></li>
+                    <li><a href="alternance.html" class="nav-link" data-i18n="nav-alternance">Alternance</a></li>
+                    <li><a href="mini-jeux.html" class="nav-link" data-i18n="nav-games">Mini-jeux</a></li>
+                    <li><a href="contact.html" class="nav-link" data-i18n="nav-contact">Contact</a></li>
                 </ul>
                 <div class="nav-right">
+                    <div class="lang-dropdown">
+                        <button class="lang-toggle" id="langToggle">FR</button>
+                        <div class="lang-dropdown-content" id="langMenu">
+                            <button class="lang-option" data-lang="fr">Français (FR)</button>
+                            <button class="lang-option" data-lang="en">English (EN)</button>
+                        </div>
+                    </div>
                     <button class="theme-toggle" id="themeToggle">
                         <i class="fas fa-moon"></i>
                     </button>
@@ -40,16 +48,22 @@
     <section class="page-section projects-page">
         <div class="container">
             <div class="page-header">
-                <h1 class="page-title fade-in">Mes Projets</h1>
-                <p class="page-subtitle fade-in">Projets de stage en motion design, mock-up et tracking</p>
+                <h1 class="page-title fade-in" data-i18n="projects-title">Mes Projets</h1>
+                <p class="page-subtitle fade-in" data-i18n="projects-subtitle">Projets de stage en motion design,
+                    mock-up et tracking</p>
             </div>
 
             <div class="projects-filter">
-                <button class="filter-btn active" data-filter="all"><i class="fas fa-layer-group"></i> Tous</button>
-                <button class="filter-btn" data-filter="motion"><i class="fas fa-video"></i> Motion & Vidéo</button>
-                <button class="filter-btn" data-filter="design"><i class="fas fa-palette"></i> Design & Print</button>
-                <button class="filter-btn" data-filter="web"><i class="fas fa-laptop-code"></i> Web</button>
-                <button class="filter-btn" data-filter="com"><i class="fas fa-bullhorn"></i> Communication</button>
+                <button class="filter-btn active" data-filter="all"><i class="fas fa-layer-group"></i> <span
+                        data-i18n="filter-all">Tous</span></button>
+                <button class="filter-btn" data-filter="motion"><i class="fas fa-video"></i> <span
+                        data-i18n="filter-motion">Motion & Vidéo</span></button>
+                <button class="filter-btn" data-filter="design"><i class="fas fa-palette"></i> <span
+                        data-i18n="filter-design">Design & Print</span></button>
+                <button class="filter-btn" data-filter="web"><i class="fas fa-laptop-code"></i> <span
+                        data-i18n="filter-web">Web</span></button>
+                <button class="filter-btn" data-filter="com"><i class="fas fa-bullhorn"></i> <span
+                        data-i18n="filter-com">Communication</span></button>
             </div>
 
             <div class="projects-grid">
@@ -173,7 +187,7 @@
                     </div>
                     <a href="#" class="btn btn-secondary view-project-btn" data-type="video"
                         data-source="Travaux Stage Kilyann 2/Tracking/Tracking.mp4"
-                        data-caption="Tracking Vidéo - Démonstration">Voir le projet</a>
+                        data-caption="Tracking Vidéo - Démonstration" data-i18n="view-project">Voir le projet</a>
                 </div>
 
                 <!-- Nouveaux Projets -->
@@ -201,7 +215,7 @@
                             <span class="stat-name">Style</span>
                         </div>
                     </div>
-                    <a href="sae-torii/index.html" class="btn btn-secondary" target="_blank">
+                    <a href="sae-torii/index.html" class="btn btn-secondary" target="_blank" data-i18n="view-site">
                         <i class="fas fa-external-link-alt"></i> Voir le site
                     </a>
                 </div>
@@ -303,11 +317,11 @@
     <!-- CTA -->
     <section class="cta-section page-section">
         <div class="container">
-            <h2 class="fade-in">Envie d'un projet similaire ?</h2>
-            <p class="fade-in">Parlons de votre idée et transformons-la en réalité</p>
+            <h2 class="fade-in" data-i18n="cta-title">Envie d'un projet similaire ?</h2>
+            <p class="fade-in" data-i18n="cta-desc">Parlons de votre idée et transformons-la en réalité</p>
             <div class="cta-buttons fade-in">
-                <a href="competences.html" class="btn btn-primary">Voir mes compétences</a>
-                <a href="contact.html" class="btn btn-secondary">Démarrer un projet</a>
+                <a href="competences.html" class="btn btn-primary" data-i18n="btn-skills">Voir mes compétences</a>
+                <a href="contact.html" class="btn btn-secondary" data-i18n="btn-start-project">Démarrer un projet</a>
             </div>
         </div>
     </section>
@@ -317,20 +331,22 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h4>À propos</h4>
-                    <p>Alternant passionné par le développement web et les technologies modernes.</p>
+                    <h4 data-i18n="footer-about">À propos</h4>
+                    <p data-i18n="footer-about-desc">Alternant passionné par le développement web et les technologies
+                        modernes.</p>
                 </div>
                 <div class="footer-section">
-                    <h4>Navigation</h4>
+                    <h4 data-i18n="footer-nav">Navigation</h4>
                     <ul>
-                        <li><a href="index.html">Accueil</a></li>
-                        <li><a href="competences.html">Compétences</a></li>
-                        <li><a href="projets.html">Projets</a></li>
-                        <li><a href="alternance.html">Alternance</a></li>
+                        <li><a href="index.html" data-i18n="nav-home">Accueil</a></li>
+                        <li><a href="competences.html" data-i18n="nav-skills">Compétences</a></li>
+                        <li><a href="projets.html" data-i18n="nav-projects">Projets</a></li>
+                        <li><a href="alternance.html" data-i18n="nav-alternance">Alternance</a></li>
+                        <li><a href="mini-jeux.html" data-i18n="nav-games">Mini-jeux</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
-                    <h4>Réseaux</h4>
+                    <h4 data-i18n="footer-socials">Réseaux</h4>
                     <div class="social-links">
                         <a href="https://www.linkedin.com/in/kilyann-boucly-aaa56638b/" target="_blank" title="LinkedIn"
                             class="social-btn">
@@ -346,7 +362,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 Kilyann Boucly. Tous droits réservés.</p>
+                <p>&copy; 2025 Kilyann Boucly. <span data-i18n="footer-rights">Tous droits réservés.</span></p>
             </div>
         </div>
     </footer>
