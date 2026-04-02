@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alternance & Expérience - Kilyann Boucly</title>
+    <title>Parcours & Expérience - Kilyann Boucly</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -12,33 +12,36 @@
 <body>
     <!-- Navigation -->
     <nav class="navbar">
-        <div class="container">
-            <div class="navbar-content">
-                <a href="index.html" class="logo">
-                    <i class="fas fa-code"></i> KB
-                </a>
-                <ul class="nav-menu" id="navMenu">
-                    <li><a href="index.html" class="nav-link" data-i18n="nav-home">Accueil</a></li>
-                    <li><a href="competences.html" class="nav-link" data-i18n="nav-skills">Compétences</a></li>
-                    <li><a href="projets.html" class="nav-link" data-i18n="nav-projects">Projets</a></li>
-                    <li><a href="alternance.html" class="nav-link active" data-i18n="nav-alternance">Alternance</a></li>
-                    <li><a href="mini-jeux.html" class="nav-link" data-i18n="nav-games">Mini-jeux</a></li>
-                    <li><a href="contact.html" class="nav-link" data-i18n="nav-contact">Contact</a></li>
-                </ul>
-                <div class="nav-right">
-                    <div class="lang-dropdown">
-                        <button class="lang-toggle" id="langToggle">FR</button>
-                        <div class="lang-dropdown-content" id="langMenu">
-                            <button class="lang-option" data-lang="fr">Français (FR)</button>
-                            <button class="lang-option" data-lang="en">English (EN)</button>
+        <div class="navbar-inner">
+            <div class="container">
+                <div class="navbar-content">
+                    <a href="index.html" class="logo">
+                        <div class="logo-mark">KB</div>
+                        <div class="logo-text">
+                            <span class="logo-name">Kilyann Boucly</span>
                         </div>
+                    </a>
+                    <ul class="nav-menu" id="navMenu">
+                        <li><a href="index.html" class="nav-link" data-i18n="nav-home">Accueil</a></li>
+                        <li><a href="competences.html" class="nav-link" data-i18n="nav-skills">Compétences</a></li>
+                        <li><a href="projets.html" class="nav-link" data-i18n="nav-projects">Projets</a></li>
+                        <li><a href="alternance.html" class="nav-link active" data-i18n="nav-alternance">Parcours</a>
+                        </li>
+                        <li><a href="mini-jeux.html" class="nav-link" data-i18n="nav-games">Mini-jeux</a></li>
+                        <li><a href="contact.html" class="nav-link" data-i18n="nav-contact">Contact</a></li>
+                    </ul>
+                    <div class="nav-right">
+                        <div class="lang-dropdown">
+                            <button class="lang-toggle" id="langToggle">FR</button>
+                            <div class="lang-dropdown-content" id="langMenu">
+                                <button class="lang-option" data-lang="fr">Français (FR)</button>
+                                <button class="lang-option" data-lang="en">English (EN)</button>
+                            </div>
+                        </div>
+                        <button class="menu-toggle" id="menuToggle">
+                            <i class="fas fa-bars"></i>
+                        </button>
                     </div>
-                    <button class="theme-toggle" id="themeToggle">
-                        <i class="fas fa-moon"></i>
-                    </button>
-                    <button class="menu-toggle" id="menuToggle">
-                        <i class="fas fa-bars"></i>
-                    </button>
                 </div>
             </div>
         </div>
@@ -66,29 +69,27 @@
             <div class="experience-timeline">
                 <div class="experience-item card-exp-1">
                     <div class="experience-marker"></div>
-                    <div class="experience-date">2025 - Présent</div>
+                    <div class="experience-date">2025</div>
                     <div class="experience-content">
                         <h3>
-                            <i class="fas fa-code"></i>
-                            <span data-i18n="exp1-title">Alternant Développement Web & Réseaux</span>
+                            <i class="fas fa-graduation-cap"></i>
+                            <span data-i18n="exp1-title">Étudiant Développement Web & Réseaux — ETNA</span>
                         </h3>
-                        <p class="company" data-i18n="exp1-company">L'ETNA</p>
-                        <p data-i18n="exp1-desc">Alternance en cycle 3 semaines entreprise / 1 jour école. Acquisition
-                            de compétences solides
-                            en programmation, architecture réseau et gestion de bases de données. Amélioration et
-                            refonte du site élève.</p>
+                        <p class="company" data-i18n="exp1-company">L'ETNA (Piscine 2025)</p>
+                        <p data-i18n="exp1-desc">Intégration à L'ETNA via la Piscine 2025 — programme d'immersion
+                            intensif pour valider l'entrée en formation. Acquisition de bases solides en programmation,
+                            algorithmique et développement web. Piscine terminée avec succès.</p>
                         <div class="experience-highlights">
-                            <span class="highlight" data-i18n="exp1-h1">Entreprise immersive</span>
-                            <span class="highlight" data-i18n="exp1-h2">3 semaines/1 jour</span>
-                            <span class="highlight" data-i18n="exp1-h3">Expérience actuelle</span>
+                            <span class="highlight" data-i18n="exp1-h1">Piscine 2025</span>
+                            <span class="highlight" data-i18n="exp1-h2">Terminée</span>
+                            <span class="highlight" data-i18n="exp1-h3">Immersion intensive</span>
                         </div>
                         <div class="skills-exp">
-                            <span class="skill">Java</span>
                             <span class="skill">Python</span>
+                            <span class="skill">Algorithmique</span>
                             <span class="skill">HTML/CSS</span>
                             <span class="skill">JavaScript</span>
-                            <span class="skill">Docker</span>
-                            <span class="skill">API</span>
+                            <span class="skill">Git</span>
                         </div>
                     </div>
                 </div>
@@ -193,7 +194,7 @@
             <div class="footer-content">
                 <div class="footer-section">
                     <h4 data-i18n="footer-about">À propos</h4>
-                    <p data-i18n="footer-about-desc">Alternant passionné par le développement web et les technologies
+                    <p data-i18n="footer-about-desc">Étudiant passionné par le développement web et les technologies
                         modernes.</p>
                 </div>
                 <div class="footer-section">
@@ -202,7 +203,7 @@
                         <li><a href="index.html" data-i18n="nav-home">Accueil</a></li>
                         <li><a href="competences.html" data-i18n="nav-skills">Compétences</a></li>
                         <li><a href="projets.html" data-i18n="nav-projects">Projets</a></li>
-                        <li><a href="alternance.html" data-i18n="nav-alternance">Alternance</a></li>
+                        <li><a href="alternance.html" data-i18n="nav-alternance">Parcours</a></li>
                         <li><a href="mini-jeux.html" data-i18n="nav-games">Mini-jeux</a></li>
                     </ul>
                 </div>

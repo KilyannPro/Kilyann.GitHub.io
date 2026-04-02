@@ -1,32 +1,5 @@
-// Mode Sombre/Clair
-const themeToggle = document.getElementById('themeToggle');
-const body = document.body;
-
-// Charger le thème sauvegardé
-const savedTheme = localStorage.getItem('theme');
-if (savedTheme === 'dark') {
-    body.classList.add('dark-mode');
-    updateThemeIcon();
-}
-
-// Toggle mode sombre
-themeToggle.addEventListener('click', () => {
-    body.classList.toggle('dark-mode');
-    const isDarkMode = body.classList.contains('dark-mode');
-    localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
-    updateThemeIcon();
-});
-
-function updateThemeIcon() {
-    const icon = themeToggle.querySelector('i');
-    if (body.classList.contains('dark-mode')) {
-        icon.classList.remove('fa-moon');
-        icon.classList.add('fa-sun');
-    } else {
-        icon.classList.remove('fa-sun');
-        icon.classList.add('fa-moon');
-    }
-}
+// Dark mode permanent (le mode clair a été supprimé)
+document.body.classList.add('dark-mode');
 
 // Gestion des langues
 const langToggle = document.getElementById('langToggle');
@@ -35,11 +8,11 @@ const translations = {
         'nav-home': 'Accueil',
         'nav-skills': 'Compétences',
         'nav-projects': 'Projets',
-        'nav-alternance': 'Alternance',
+        'nav-alternance': 'Parcours',
         'nav-games': 'Mini-jeux',
         'nav-contact': 'Contact',
         'hero-greeting': '👋 Bienvenue',
-        'hero-subtitle': 'Alternant Développement Web & Réseaux',
+        'hero-subtitle': 'Développeur Web & Réseaux',
         'hero-desc': 'Créateur de solutions web modernes et performantes. Passionné par les technologies actuelles et les défis techniques.',
         'btn-contact': 'Me contacter',
         'btn-projects': 'Voir mes projets',
@@ -61,7 +34,7 @@ const translations = {
         'quality-rigor': 'Rigueur',
         'quality-adaptability': 'Adaptabilité',
         'footer-about': 'À propos',
-        'footer-about-desc': 'Alternant passionné par le développement web et les technologies modernes.',
+        'footer-about-desc': 'Étudiant passionné par le développement web et les technologies modernes.',
         'footer-nav': 'Navigation',
         'footer-socials': 'Réseaux',
         'footer-rights': 'Tous droits réservés.',
@@ -111,12 +84,12 @@ const translations = {
         'cta-skills-desc': 'Explorez mes projets ou contactez-moi pour discuter',
         'exp-title': 'Parcours & Expérience',
         'exp-subtitle': 'Mon évolution académique et professionnelle',
-        'exp1-title': 'Alternant Développement Web & Réseaux',
-        'exp1-company': 'L\'ETNA',
-        'exp1-desc': 'Alternance en cycle 3 semaines entreprise / 1 jour école. Acquisition de compétences solides en programmation, architecture réseau et gestion de bases de données. Amélioration et refonte du site élève.',
-        'exp1-h1': 'Entreprise immersive',
-        'exp1-h2': '3 semaines/1 jour',
-        'exp1-h3': 'Expérience actuelle',
+        'exp1-title': 'Développement Web & Réseaux — ETNA',
+        'exp1-company': 'L\'ETNA (Piscine 2025)',
+        'exp1-desc': 'Intégration à L\'ETNA via la Piscine 2025 — programme d\'immersion intensif pour valider l\'entrée en formation. Acquisition de bases solides en programmation, algorithmique et développement web. Piscine terminée avec succès.',
+        'exp1-h1': 'Piscine 2025',
+        'exp1-h2': 'Terminée',
+        'exp1-h3': 'Immersion intensive',
         'exp2-title': 'Stage - IUT MMI',
         'exp2-company': 'Treize cent treize',
         'exp2-desc': 'Stage de première année MMI (1 mois). Création de site vitrine pour artiste. Apprentissage des bonnes pratiques en web design et développement frontend.',
@@ -142,11 +115,11 @@ const translations = {
         'nav-home': 'Home',
         'nav-skills': 'Skills',
         'nav-projects': 'Projects',
-        'nav-alternance': 'Apprenticeship',
+        'nav-alternance': 'Journey',
         'nav-games': 'Mini-games',
         'nav-contact': 'Contact',
         'hero-greeting': '👋 Welcome',
-        'hero-subtitle': 'Fullstack Web & Network Apprentice',
+        'hero-subtitle': 'Web & Network Developer',
         'hero-desc': 'Creator of modern and high-performance web solutions. Passionate about current technologies and technical challenges.',
         'btn-contact': 'Contact me',
         'btn-projects': 'View my projects',
@@ -168,7 +141,7 @@ const translations = {
         'quality-rigor': 'Rigor',
         'quality-adaptability': 'Adaptability',
         'footer-about': 'About',
-        'footer-about-desc': 'Apprentice passionate about web development and modern technologies.',
+        'footer-about-desc': 'Student passionate about web development and modern technologies.',
         'footer-nav': 'Navigation',
         'footer-socials': 'Networks',
         'footer-rights': 'All rights reserved.',
@@ -218,12 +191,12 @@ const translations = {
         'cta-skills-desc': 'Explore my projects or contact me to discuss',
         'exp-title': 'Journey & Experience',
         'exp-subtitle': 'My academic and professional evolution',
-        'exp1-title': 'Web & Network Development Apprentice',
-        'exp1-company': 'L\'ETNA',
-        'exp1-desc': 'Apprenticeship with a 3-week company / 1-day school cycle. Acquisition of solid skills in programming, network architecture, and database management. Improvement and redesign of the student site.',
-        'exp1-h1': 'Immersive company',
-        'exp1-h2': '3 weeks/1 day',
-        'exp1-h3': 'Current experience',
+        'exp1-title': 'Web & Network Development — ETNA',
+        'exp1-company': 'L\'ETNA (Piscine 2025)',
+        'exp1-desc': 'Joined L\'ETNA through the Piscine 2025 — an intensive immersion program to validate entry into the curriculum. Gained solid foundations in programming, algorithms, and web development. Piscine successfully completed.',
+        'exp1-h1': 'Piscine 2025',
+        'exp1-h2': 'Completed',
+        'exp1-h3': 'Intensive immersion',
         'exp2-title': 'Internship - IUT MMI',
         'exp2-company': 'Treize cent treize',
         'exp2-desc': 'First-year MMI internship (1 month). Creation of a showcase site for an artist. Learning best practices in web design and frontend development.',
