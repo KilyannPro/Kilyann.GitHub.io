@@ -40,11 +40,13 @@ class Input {
 
         window.addEventListener('keydown', e => {
             switch (e.key) {
-                case 'ArrowUp': case 'z': this.nextDir = { x: 0, y: -1 }; break;
-                case 'ArrowDown': case 's': this.nextDir = { x: 0, y: 1 }; break;
-                case 'ArrowLeft': case 'q': this.nextDir = { x: -1, y: 0 }; break;
-                case 'ArrowRight': case 'd': this.nextDir = { x: 1, y: 0 }; break;
+                case 'ArrowUp': case 'z': case 'Z': this.nextDir = { x: 0, y: -1 }; break;
+                case 'ArrowDown': case 's': case 'S': this.nextDir = { x: 0, y: 1 }; break;
+                case 'ArrowLeft': case 'q': case 'Q': this.nextDir = { x: -1, y: 0 }; break;
+                case 'ArrowRight': case 'd': case 'D': this.nextDir = { x: 1, y: 0 }; break;
+                default: return;
             }
+            e.preventDefault();
         });
 
         // Touch Controls
@@ -71,8 +73,8 @@ class Input {
 class Pacman {
     constructor(map) {
         this.map = map;
-        this.x = 10; // Grid coordinates
-        this.y = 15;
+        this.x = 10; // Grid coordinates (case libre sous la maison des fantômes)
+        this.y = 14;
         this.dir = { x: 0, y: 0 };
         this.nextDir = { x: 0, y: 0 };
         this.angle = 0;
@@ -228,26 +230,22 @@ class Game {
         this.input = new Input();
         this.resetGame();
 
-        this.infoQueue = [];
-        this.showingInfo = false;
-
-        // Load CV Data mapping
-        this.cvMap = [];
-        // Extract content and map to power pellets
-        // Assuming 4-5 power pellets in map layout, simple circular assignment
-        let pelletIndex = 0;
-        if (typeof CV_DATA !== 'undefined') {
-            const pellets = [
-                { x: 1, y: 1 }, { x: 18, y: 1 },
-                { x: 1, y: 18 }, { x: 18, y: 18 }, { x: 1, y: 9 }
-            ]; // Hardcoded typical positions based on map
-
-            // Map data to power pellets order
-            // Note: In real logic, we detect pellets in map generation
-        }
-
         this.initListeners();
         this.loop();
+    }
+
+    countPellets() {
+        let left = 0;
+        for (let r = 0; r < ROWS; r++)
+            for (let c = 0; c < COLS; c++)
+                if (this.map[r][c] === 2) left++;
+        return left;
+    }
+
+    startPlaying() {
+        this.gameState = 'PLAYING';
+        this.updateUI('hud');
+        this.startTimer();
     }
 
     isWall(x, y) {
@@ -266,47 +264,42 @@ class Game {
         ];
         this.score = 0;
         this.gameState = 'MENU';
+        this.showingInfo = false;
         this.infoDisplayIndex = 0;
+        this.input.nextDir = { x: 0, y: 0 };
         this.startTime = 0;
         this.timerInterval = null;
-        this.highscore = localStorage.getItem('pacman_highscore') || 0;
+        try {
+            this.highscore = parseInt(localStorage.getItem('pacman_highscore'), 10) || 0;
+        } catch (e) {
+            this.highscore = 0;
+        }
+        document.getElementById('score').innerText = '0';
+        document.getElementById('timer').innerText = '00:00';
         document.getElementById('highscore').innerText = this.highscore;
     }
 
     initListeners() {
-        document.getElementById('start-btn').addEventListener('click', () => {
-            this.gameState = 'PLAYING';
-            this.updateUI('hud');
-            this.startTimer();
-            // Show mobile controls on touch devices
-            if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
-                document.getElementById('mobile-controls').classList.remove('hidden');
-            }
-        });
+        document.getElementById('start-btn').addEventListener('click', () => this.startPlaying());
 
-        document.getElementById('restart-btn').addEventListener('click', () => {
-            this.resetGame();
-            this.gameState = 'PLAYING';
-            this.updateUI('hud');
-            this.startTimer();
-            if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
-                document.getElementById('mobile-controls').classList.remove('hidden');
-            }
-        });
-
-        document.getElementById.bind(document)('replay-btn').addEventListener('click', () => {
-            this.resetGame();
-            this.gameState = 'PLAYING';
-            this.updateUI('hud');
-            this.startTimer();
-            if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
-                document.getElementById('mobile-controls').classList.remove('hidden');
-            }
+        ['restart-btn', 'replay-btn'].forEach(id => {
+            document.getElementById(id).addEventListener('click', () => {
+                this.resetGame();
+                this.startPlaying();
+            });
         });
 
         document.querySelector('.close-modal').addEventListener('click', () => {
             document.getElementById('info-modal').classList.add('hidden');
             this.showingInfo = false;
+
+            // Tous les gros points mangés : profil débloqué
+            if (this.countPellets() === 0) {
+                this.gameState = 'VICTORY';
+                this.updateUI('victory');
+                return;
+            }
+
             this.gameState = 'PLAYING';
             // Teleport Ghosts back to house to avoid instant death
             this.ghosts.forEach(g => { g.x = 9; g.y = 8; g.px = g.x * 30 + 15; g.py = g.y * 30 + 15; });
@@ -361,7 +354,9 @@ class Game {
     checkHighScore() {
         if (this.score > this.highscore) {
             this.highscore = this.score;
-            localStorage.setItem('pacman_highscore', this.highscore);
+            try {
+                localStorage.setItem('pacman_highscore', this.highscore);
+            } catch (e) { /* stockage indisponible */ }
             document.getElementById('highscore').innerText = this.highscore;
         }
     }
@@ -391,47 +386,29 @@ class Game {
             this.showCVInfo();
         }
 
-        // Ghost Collision
-        this.ghosts.forEach(g => {
-            const dx = this.pacman.px - g.px;
-            const dy = this.pacman.py - g.py;
-            if (Math.hypot(dx, dy) < TILE_SIZE) {
-                this.gameState = 'GAMEOVER';
-                this.updateUI('gameover');
-                this.checkHighScore();
-            }
-        });
-
-        // Victory Check (No dots left usually, here maybe just survival or 4 pellets?)
-        // Let's check pellets count
-        let pelletsLeft = 0;
-        for (let r = 0; r < ROWS; r++)
-            for (let c = 0; c < COLS; c++)
-                if (this.map[r][c] === 2) pelletsLeft++;
-
-        if (pelletsLeft === 0 && this.score > 200) { // Simple win condition
-            setTimeout(() => {
-                this.gameState = 'VICTORY';
-                this.updateUI('victory');
-            }, 1000);
-        }
-
         document.getElementById('score').innerText = this.score;
+        if (this.showingInfo) return;
+
+        // Ghost Collision
+        const caught = this.ghosts.some(g => Math.hypot(this.pacman.px - g.px, this.pacman.py - g.py) < TILE_SIZE);
+        if (caught) {
+            this.gameState = 'GAMEOVER';
+            this.updateUI('gameover');
+            this.checkHighScore();
+        }
     }
 
     showCVInfo() {
         this.showingInfo = true; // Pause
 
-        // Use the sequential index
-        let infoIndex = this.infoDisplayIndex % CV_DATA.length;
-        const info = CV_DATA[infoIndex];
-
-        // Increment for next pellet
+        const total = MAP_LAYOUT.flat().filter(cell => cell === 2).length;
+        const info = CV_DATA[this.infoDisplayIndex % CV_DATA.length];
         this.infoDisplayIndex++;
 
         document.getElementById('info-modal').classList.remove('hidden');
         document.getElementById('modal-title').innerText = info.title;
         document.getElementById('modal-desc').innerHTML = info.desc;
+        document.getElementById('modal-progress').innerText = `${this.infoDisplayIndex} / ${total}`;
     }
 
     draw() {
@@ -449,13 +426,13 @@ class Game {
                     this.ctx.fillStyle = '#100020'; // Dark fill
                     this.ctx.fillRect(px, py, TILE_SIZE, TILE_SIZE);
                     // Neon Border
-                    this.ctx.strokeStyle = '#bc13fe';
+                    this.ctx.strokeStyle = '#8b6cff';
                     this.ctx.lineWidth = 1;
                     this.ctx.strokeRect(px + 4, py + 4, TILE_SIZE - 8, TILE_SIZE - 8);
 
                     // Box shadow effect simulated
                     this.ctx.shadowBlur = 5;
-                    this.ctx.shadowColor = '#bc13fe';
+                    this.ctx.shadowColor = '#ff4d94';
                     this.ctx.strokeRect(px + 4, py + 4, TILE_SIZE - 8, TILE_SIZE - 8);
                     this.ctx.shadowBlur = 0;
 
@@ -483,4 +460,4 @@ class Game {
     }
 }
 
-window.onload = () => new Game();
+window.onload = () => { window.pacProfil = new Game(); };

@@ -4,193 +4,116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mini-jeux - Kilyann Boucly</title>
+    <title>Mini-jeux — Kilyann Boucly</title>
+    <meta name="description" content="Les mini-jeux de Kilyann Boucly : découvrez son profil en jouant à Pac-Profil.">
+    <meta name="theme-color" content="#0b0a12">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        .games-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2.5rem;
-            margin-top: 3rem;
-        }
-
-        .game-card {
-            background: var(--color-bg);
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px var(--color-shadow);
-            transition: var(--transition);
-            border: 1px solid var(--color-border);
-            display: flex;
-            flex-direction: column;
-        }
-
-        .game-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 50px var(--color-shadow);
-        }
-
-        .game-image {
-            width: 100%;
-            height: 200px;
-            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-
-        .game-image i {
-            font-size: 5rem;
-            color: rgba(255, 255, 255, 0.2);
-        }
-
-        .game-badge {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: rgba(255, 255, 255, 0.9);
-            color: var(--color-primary);
-            padding: 5px 15px;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 0.8rem;
-        }
-
-        .game-info {
-            padding: 2rem;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .game-info h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: var(--color-text);
-        }
-
-        .game-info p {
-            color: var(--color-text-light);
-            margin-bottom: 1.5rem;
-            line-height: 1.6;
-        }
-
-        .game-meta {
-            margin-top: auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .game-tags {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .game-tag {
-            background: var(--color-bg-light);
-            color: var(--color-primary);
-            padding: 4px 12px;
-            border-radius: 50px;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-
-        .btn-play {
-            width: 100%;
-            text-align: center;
-            margin-top: 1.5rem;
-        }
-    </style>
 </head>
 
 <body>
+    <div class="scroll-progress" id="scrollProgress"></div>
+    <div class="bg-orbs" aria-hidden="true"></div>
+    <div class="bg-grid" aria-hidden="true"></div>
+
     <!-- Navigation -->
-    <nav class="navbar">
-        <div class="navbar-inner">
-            <div class="container">
-                <div class="navbar-content">
-                    <a href="index.html" class="logo">
-                        <div class="logo-mark">KB</div>
-                        <div class="logo-text">
-                            <span class="logo-name">Kilyann Boucly</span>
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <div class="nav-shell">
+                <a href="index.html" class="logo" aria-label="Kilyann Boucly — accueil">
+                    <span class="logo-mark">KB</span>
+                    <span class="logo-name">Kilyann Boucly</span>
+                </a>
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="index.html" class="nav-link" data-i18n="nav-home">Accueil</a></li>
+                    <li><a href="competences.html" class="nav-link" data-i18n="nav-skills">Compétences</a></li>
+                    <li><a href="projets.html" class="nav-link" data-i18n="nav-projects">Projets</a></li>
+                    <li><a href="alternance.html" class="nav-link" data-i18n="nav-alternance">Parcours</a></li>
+                    <li><a href="mini-jeux.html" class="nav-link" data-i18n="nav-games">Mini-jeux</a></li>
+                    <li><a href="contact.html" class="nav-link" data-i18n="nav-contact">Contact</a></li>
+                </ul>
+                <div class="nav-right">
+                    <div class="lang-dropdown">
+                        <button class="lang-toggle" id="langToggle" aria-label="Langue">FR</button>
+                        <div class="lang-dropdown-content" id="langMenu">
+                            <button class="lang-option" data-lang="fr">Français (FR)</button>
+                            <button class="lang-option" data-lang="en">English (EN)</button>
                         </div>
-                    </a>
-                    <ul class="nav-menu" id="navMenu">
-                        <li><a href="index.html" class="nav-link" data-i18n="nav-home">Accueil</a></li>
-                        <li><a href="competences.html" class="nav-link" data-i18n="nav-skills">Compétences</a></li>
-                        <li><a href="projets.html" class="nav-link" data-i18n="nav-projects">Projets</a></li>
-                        <li><a href="alternance.html" class="nav-link" data-i18n="nav-alternance">Parcours</a></li>
-                        <li><a href="mini-jeux.html" class="nav-link active" data-i18n="nav-games">Mini-jeux</a></li>
-                        <li><a href="contact.html" class="nav-link" data-i18n="nav-contact">Contact</a></li>
-                    </ul>
-                    <div class="nav-right">
-                        <div class="lang-dropdown">
-                            <button class="lang-toggle" id="langToggle">FR</button>
-                            <div class="lang-dropdown-content" id="langMenu">
-                                <button class="lang-option" data-lang="fr">Français (FR)</button>
-                                <button class="lang-option" data-lang="en">English (EN)</button>
-                            </div>
-                        </div>
-                        <button class="menu-toggle" id="menuToggle">
-                            <i class="fas fa-bars"></i>
-                        </button>
                     </div>
+                    <a href="contact.html" class="nav-cta" data-i18n="nav-cta">Discutons</a>
+                    <button class="menu-toggle" id="menuToggle" aria-label="Menu" aria-expanded="false">
+                        <i class="fas fa-bars"></i>
+                    </button>
                 </div>
             </div>
         </div>
     </nav>
 
-    <!-- Page Content -->
-    <section class="page-section games-page">
-        <div class="container">
-            <div class="page-header">
-                <h1 class="page-title fade-in" data-i18n="games-title">Mes Mini-jeux</h1>
-                <p class="page-subtitle fade-in" data-i18n="games-subtitle">Une façon ludique de découvrir mon univers
-                    et mes compétences</p>
+    <main>
+        <header class="page-hero">
+            <div class="container">
+                <span class="eyebrow reveal" data-i18n="games-eyebrow">Pause</span>
+                <h1 class="page-title reveal" style="--d:.05s" data-i18n="games-title">Mes <span
+                        class="gradient-text">mini-jeux</span></h1>
+                <p class="page-subtitle reveal" style="--d:.1s" data-i18n="games-subtitle">Une façon ludique de
+                    découvrir mon univers et mes compétences.</p>
             </div>
+        </header>
 
-            <div class="games-grid">
-                <!-- Game 1: Mission Alternance -->
-                <div class="game-card fade-in">
-                    <div class="game-image">
-                        <i class="fas fa-gamepad"></i>
-                        <span class="game-badge">NOUVEAU</span>
-                    </div>
-                    <div class="game-info">
-                        <h3>Mission: Alternance</h3>
-                        <p data-i18n="game-mission-desc">Aidez-moi à décrocher mon alternance dans ce jeu d'arcade !
-                            Explorez mon parcours tout en évitant les obstacles et en collectant des bonus d'expérience.
-                        </p>
-                        <div class="game-meta">
-                            <div class="game-tags">
-                                <span class="game-tag">Arcade</span>
-                                <span class="game-tag">Canvas</span>
-                                <span class="game-tag">JavaScript</span>
-                            </div>
+        <section class="section-tight">
+            <div class="container">
+                <div class="games-grid">
+                    <article class="game-card reveal">
+                        <div class="game-image">
+                            <i class="fas fa-ghost"></i>
+                            <span class="game-badge" data-i18n="game-badge-new">À JOUER</span>
                         </div>
-                        <a href="jeux Boucly Kilyann/index.html" class="btn btn-primary btn-play"
-                            data-i18n="btn-play">Jouer maintenant</a>
+                        <div class="game-info">
+                            <h3>Pac-Profil</h3>
+                            <p data-i18n="game-mission-desc">Un Pac-Man à ma sauce : mangez les 6 gros points en
+                                évitant les fantômes, chacun dévoile une partie de mon profil (formation, alternance,
+                                expériences, compétences…).</p>
+                            <div class="game-tags">
+                                <span class="tag accent" style="--accent: var(--amber)">Arcade</span>
+                                <span class="tag">Canvas</span>
+                                <span class="tag">JavaScript</span>
+                            </div>
+                            <a href="jeux Boucly Kilyann/index.html" class="btn btn-primary btn-block">
+                                <i class="fas fa-play"></i> <span data-i18n="btn-play">Jouer maintenant</span>
+                            </a>
+                        </div>
+                    </article>
+
+                    <div class="game-soon reveal" style="--d:.1s">
+                        <i class="fas fa-puzzle-piece"></i>
+                        <h3 data-i18n="game-soon-title">Prochain jeu en préparation</h3>
+                        <p data-i18n="game-soon-desc">De nouveaux mini-jeux arrivent bientôt. Revenez faire un tour !
+                        </p>
                     </div>
                 </div>
-
-                <!-- Future games placeholders can be added here -->
             </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
-                <div class="footer-section">
-                    <h4 data-i18n="footer-about">À propos</h4>
-                    <p data-i18n="footer-about-desc">Alternant passionné par le développement web et les technologies
-                        modernes.</p>
+                <div class="footer-brand">
+                    <a href="index.html" class="logo">
+                        <span class="logo-mark">KB</span>
+                        <span class="logo-name">Kilyann Boucly</span>
+                    </a>
+                    <p data-i18n="footer-about-desc">Étudiant en BTS CIEL à l'UTEC et alternant chez Cap RATP. Passionné
+                        d'informatique, de réseaux et de cybersécurité.</p>
                 </div>
-                <div class="footer-section">
+                <div>
                     <h4 data-i18n="footer-nav">Navigation</h4>
                     <ul>
                         <li><a href="index.html" data-i18n="nav-home">Accueil</a></li>
@@ -198,30 +121,30 @@
                         <li><a href="projets.html" data-i18n="nav-projects">Projets</a></li>
                         <li><a href="alternance.html" data-i18n="nav-alternance">Parcours</a></li>
                         <li><a href="mini-jeux.html" data-i18n="nav-games">Mini-jeux</a></li>
+                        <li><a href="contact.html" data-i18n="nav-contact">Contact</a></li>
                     </ul>
                 </div>
-                <div class="footer-section">
+                <div>
                     <h4 data-i18n="footer-socials">Réseaux</h4>
                     <div class="social-links">
-                        <a href="https://www.linkedin.com/in/kilyann-boucly-aaa56638b/" target="_blank" title="LinkedIn"
-                            class="social-btn">
-                            <i class="fab fa-linkedin"></i>
-                        </a>
-                        <a href="https://github.com/KilyannPro" target="_blank" title="GitHub" class="social-btn">
-                            <i class="fab fa-github"></i>
-                        </a>
-                        <a href="https://instagram.com/klnn_pro" target="_blank" title="Instagram" class="social-btn">
-                            <i class="fab fa-instagram"></i>
-                        </a>
+                        <a href="https://www.linkedin.com/in/kilyann-boucly-aaa56638b/" target="_blank" rel="noopener"
+                            title="LinkedIn" class="social-btn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://github.com/KilyannPro" target="_blank" rel="noopener" title="GitHub"
+                            class="social-btn"><i class="fab fa-github"></i></a>
+                        <a href="https://instagram.com/klnn_pro" target="_blank" rel="noopener" title="Instagram"
+                            class="social-btn"><i class="fab fa-instagram"></i></a>
                     </div>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 Kilyann Boucly. <span data-i18n="footer-rights">Tous droits réservés.</span></p>
+                <p>&copy; <span class="year">2026</span> Kilyann Boucly. <span data-i18n="footer-rights">Tous droits
+                        réservés.</span></p>
+                <p data-i18n="footer-made">Conçu et codé en Seine-et-Marne</p>
             </div>
         </div>
     </footer>
 
+    <button class="back-to-top" id="backToTop" aria-label="Retour en haut"><i class="fas fa-arrow-up"></i></button>
     <script src="script.js"></script>
 </body>
 

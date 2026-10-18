@@ -1,8 +1,9 @@
 :root {
     --bg-color: #050010;
-    --wall-color: #bc13fe;
-    /* Neon Violet */
-    --wall-glow: #bc13fe;
+    --wall-color: #8b6cff;
+    /* Violet du portfolio */
+    --wall-glow: #ff4d94;
+    --accent: #ff4d94;
     --pacman-color: #ffff00;
     --dot-color: #e0b0ff;
     /* Mauve clair */
@@ -181,6 +182,112 @@ button:hover {
     margin-left: 20px;
 }
 
+.modal-content li {
+    margin-bottom: 8px;
+}
+
+.close-modal {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    font-size: 1.8rem;
+    line-height: 1;
+    color: #fff;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.2s, color 0.2s;
+}
+
+.close-modal:hover {
+    opacity: 1;
+    color: var(--accent);
+}
+
+.modal-hint {
+    margin-top: 18px;
+    font-size: 0.8rem !important;
+    color: rgba(255, 255, 255, 0.55);
+}
+
+/* Liens & boutons des écrans */
+.back-link {
+    position: fixed;
+    top: 14px;
+    left: 14px;
+    z-index: 200;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(5, 0, 16, 0.7);
+    color: #fff;
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: border-color 0.2s, background 0.2s;
+}
+
+.back-link:hover {
+    border-color: var(--accent);
+    background: rgba(255, 77, 148, 0.15);
+}
+
+.screen p {
+    max-width: 80%;
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.controls-info p {
+    font-family: var(--font-pixel);
+    font-size: 0.6rem;
+    max-width: none;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 10px;
+}
+
+.btn-link {
+    font-family: var(--font-pixel);
+    font-size: 0.7rem;
+    padding: 14px 18px;
+    border: 2px solid var(--accent);
+    background: var(--accent);
+    color: #fff;
+    text-decoration: none;
+    box-shadow: 0 0 12px var(--wall-glow);
+    transition: transform 0.2s;
+}
+
+.btn-link.secondary {
+    background: transparent;
+    border-color: var(--wall-color);
+}
+
+.btn-link:hover {
+    transform: scale(1.05);
+}
+
+.btn-text {
+    border: none;
+    box-shadow: none;
+    font-size: 0.7rem;
+    text-decoration: underline;
+}
+
+.btn-text:hover {
+    background: transparent;
+    box-shadow: none;
+    color: var(--accent);
+}
+
 /* Animations */
 @keyframes blink {
     50% {
@@ -262,8 +369,24 @@ button:hover {
         font-size: 1rem;
     }
 
-    .modal-content p {
+    .modal-content p,
+    .modal-content ul {
         font-size: 0.85rem;
+    }
+
+    .btn-link {
+        font-size: 0.55rem;
+        padding: 10px 12px;
+    }
+
+    .back-link {
+        top: 8px;
+        left: 8px;
+        font-size: 0.75rem;
+    }
+
+    body {
+        padding-top: 50px;
     }
 }
 

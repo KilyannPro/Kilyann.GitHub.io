@@ -4,340 +4,327 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projets - Kilyann Boucly</title>
+    <title>Projets — Kilyann Boucly</title>
+    <meta name="description"
+        content="Projets de Kilyann Boucly : web, jeu en JavaScript, design, print, vidéo et communication.">
+    <meta name="theme-color" content="#0b0a12">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
+    <div class="scroll-progress" id="scrollProgress"></div>
+    <div class="bg-orbs" aria-hidden="true"></div>
+    <div class="bg-grid" aria-hidden="true"></div>
+
     <!-- Navigation -->
-    <nav class="navbar">
-        <div class="navbar-inner">
-            <div class="container">
-                <div class="navbar-content">
-                    <a href="index.html" class="logo">
-                        <div class="logo-mark">KB</div>
-                        <div class="logo-text">
-                            <span class="logo-name">Kilyann Boucly</span>
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <div class="nav-shell">
+                <a href="index.html" class="logo" aria-label="Kilyann Boucly — accueil">
+                    <span class="logo-mark">KB</span>
+                    <span class="logo-name">Kilyann Boucly</span>
+                </a>
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="index.html" class="nav-link" data-i18n="nav-home">Accueil</a></li>
+                    <li><a href="competences.html" class="nav-link" data-i18n="nav-skills">Compétences</a></li>
+                    <li><a href="projets.html" class="nav-link" data-i18n="nav-projects">Projets</a></li>
+                    <li><a href="alternance.html" class="nav-link" data-i18n="nav-alternance">Parcours</a></li>
+                    <li><a href="mini-jeux.html" class="nav-link" data-i18n="nav-games">Mini-jeux</a></li>
+                    <li><a href="contact.html" class="nav-link" data-i18n="nav-contact">Contact</a></li>
+                </ul>
+                <div class="nav-right">
+                    <div class="lang-dropdown">
+                        <button class="lang-toggle" id="langToggle" aria-label="Langue">FR</button>
+                        <div class="lang-dropdown-content" id="langMenu">
+                            <button class="lang-option" data-lang="fr">Français (FR)</button>
+                            <button class="lang-option" data-lang="en">English (EN)</button>
                         </div>
-                    </a>
-                    <ul class="nav-menu" id="navMenu">
-                        <li><a href="index.html" class="nav-link" data-i18n="nav-home">Accueil</a></li>
-                        <li><a href="competences.html" class="nav-link" data-i18n="nav-skills">Compétences</a></li>
-                        <li><a href="projets.html" class="nav-link active" data-i18n="nav-projects">Projets</a></li>
-                        <li><a href="alternance.html" class="nav-link" data-i18n="nav-alternance">Parcours</a></li>
-                        <li><a href="mini-jeux.html" class="nav-link" data-i18n="nav-games">Mini-jeux</a></li>
-                        <li><a href="contact.html" class="nav-link" data-i18n="nav-contact">Contact</a></li>
-                    </ul>
-                    <div class="nav-right">
-                        <div class="lang-dropdown">
-                            <button class="lang-toggle" id="langToggle">FR</button>
-                            <div class="lang-dropdown-content" id="langMenu">
-                                <button class="lang-option" data-lang="fr">Français (FR)</button>
-                                <button class="lang-option" data-lang="en">English (EN)</button>
-                            </div>
-                        </div>
-                        <button class="menu-toggle" id="menuToggle">
-                            <i class="fas fa-bars"></i>
-                        </button>
                     </div>
+                    <a href="contact.html" class="nav-cta" data-i18n="nav-cta">Discutons</a>
+                    <button class="menu-toggle" id="menuToggle" aria-label="Menu" aria-expanded="false">
+                        <i class="fas fa-bars"></i>
+                    </button>
                 </div>
             </div>
         </div>
     </nav>
 
-    <!-- Section Projets -->
-    <section class="page-section projects-page">
-        <div class="container">
-            <div class="page-header">
-                <h1 class="page-title fade-in" data-i18n="projects-title">Mes Projets</h1>
-                <p class="page-subtitle fade-in" data-i18n="projects-subtitle">Projets de stage en motion design,
-                    mock-up et tracking</p>
+    <main>
+        <header class="page-hero">
+            <div class="container">
+                <span class="eyebrow reveal" data-i18n="projects-eyebrow">Réalisations</span>
+                <h1 class="page-title reveal" style="--d:.05s" data-i18n="projects-title">Mes <span
+                        class="gradient-text">projets</span></h1>
+                <p class="page-subtitle reveal" style="--d:.1s" data-i18n="projects-subtitle">Web, design, vidéo et
+                    communication : une sélection de travaux réalisés en formation et en stage.</p>
             </div>
+        </header>
 
-            <div class="projects-filter">
-                <button class="filter-btn active" data-filter="all"><i class="fas fa-layer-group"></i> <span
-                        data-i18n="filter-all">Tous</span></button>
-                <button class="filter-btn" data-filter="motion"><i class="fas fa-video"></i> <span
-                        data-i18n="filter-motion">Motion & Vidéo</span></button>
-                <button class="filter-btn" data-filter="design"><i class="fas fa-palette"></i> <span
-                        data-i18n="filter-design">Design & Print</span></button>
-                <button class="filter-btn" data-filter="web"><i class="fas fa-laptop-code"></i> <span
-                        data-i18n="filter-web">Web</span></button>
-                <button class="filter-btn" data-filter="com"><i class="fas fa-bullhorn"></i> <span
-                        data-i18n="filter-com">Communication</span></button>
-            </div>
-
-            <div class="projects-grid">
-                <div class="project-card" data-category="motion">
-                    <div class="project-header">
-                        <div class="project-icon">
-                            <i class="fas fa-bolt"></i>
-                        </div>
-                        <span class="project-year">2023-2024</span>
-                    </div>
-                    <h3>Animations logo TCT</h3>
-                    <p>Série d’animations de logos pour TCT réalisées sous After Effects (variations noir/blanc, formats
-                        carrés). Travail sur rythme, easing et révélation.</p>
-                    <div class="project-tags">
-                        <span class="tag">After Effects</span>
-                        <span class="tag">Motion Design</span>
-                        <span class="tag">Logo</span>
-                    </div>
-                    <div class="project-stats">
-                        <div class="stat-item">
-                            <span class="stat-value">10+</span>
-                            <span class="stat-name">Animations</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-value">AE</span>
-                            <span class="stat-name">Outil</span>
-                        </div>
-                    </div>
-                    <a href="Travaux Stage Kilyann 2/Animation AE/TCT/tct-animation-carre.aep" class="btn btn-secondary"
-                        download>
-                        <i class="fas fa-download"></i> Télécharger le fichier source (AEP)
-                    </a>
+        <section class="section-tight">
+            <div class="container">
+                <div class="filter-bar reveal">
+                    <button class="filter-btn active" data-filter="all"><i class="fas fa-layer-group"></i> <span
+                            data-i18n="filter-all">Tous</span></button>
+                    <button class="filter-btn" data-filter="motion"><i class="fas fa-video"></i> <span
+                            data-i18n="filter-motion">Vidéo &amp; Animation</span></button>
+                    <button class="filter-btn" data-filter="design"><i class="fas fa-palette"></i> <span
+                            data-i18n="filter-design">Design &amp; Print</span></button>
+                    <button class="filter-btn" data-filter="web"><i class="fas fa-laptop-code"></i> <span
+                            data-i18n="filter-web">Web</span></button>
+                    <button class="filter-btn" data-filter="com"><i class="fas fa-bullhorn"></i> <span
+                            data-i18n="filter-com">Communication</span></button>
                 </div>
 
-                <div class="project-card" data-category="motion">
-                    <div class="project-header">
-                        <div class="project-icon">
-                            <i class="fas fa-wand-magic-sparkles"></i>
-                        </div>
-                        <span class="project-year">2023</span>
-                    </div>
-                    <h3>Entraînements AE</h3>
-                    <p>Explorations et exercices sur l’animation typographique, les masques et les courbes d’animation
-                        pour renforcer les bases du motion design.</p>
-                    <div class="project-tags">
-                        <span class="tag">After Effects</span>
-                        <span class="tag">Typo</span>
-                        <span class="tag">Apprentissage</span>
-                    </div>
-                    <div class="project-stats">
-                        <div class="stat-item">
-                            <span class="stat-value">5+</span>
-                            <span class="stat-name">Projets</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-value">FX</span>
-                            <span class="stat-name">Effets</span>
-                        </div>
-                    </div>
-                    <a href="Travaux Stage Kilyann 2/Animation AE/Entrainement/ecriture-anime.aep"
-                        class="btn btn-secondary" download>
-                        <i class="fas fa-download"></i> Télécharger le fichier source (AEP)
-                    </a>
-                </div>
-
-                <div class="project-card" data-category="design">
-                    <div class="project-header">
-                        <div class="project-icon">
-                            <i class="fas fa-image"></i>
-                        </div>
-                        <span class="project-year">2023</span>
-                    </div>
-                    <h3>Mock-up TCT</h3>
-                    <p>Création de mock-ups pour des supports immobiliers (enseignes, planches, affichages) à partir de
-                        visuels Illustrator et brief client.</p>
-                    <div class="project-tags">
-                        <span class="tag">Illustrator</span>
-                        <span class="tag">Branding</span>
-                        <span class="tag">Mock-up</span>
-                    </div>
-                    <div class="project-stats">
-                        <div class="stat-item">
-                            <span class="stat-value">15+</span>
-                            <span class="stat-name">Visuels</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-value">AI</span>
-                            <span class="stat-name">Outil</span>
-                        </div>
-                    </div>
-                    <a href="Travaux Stage Kilyann 2/Mock-up TCT/1313-AEW-43-Vineuse.ai" class="btn btn-secondary"
-                        download>
-                        <i class="fas fa-download"></i> Télécharger le fichier source (AI)
-                    </a>
-                </div>
-
-                <div class="project-card" data-category="motion">
-                    <div class="project-header">
-                        <div class="project-icon">
-                            <i class="fas fa-video"></i>
-                        </div>
-                        <span class="project-year">2023</span>
-                    </div>
-                    <h3>Tracking Vidéo</h3>
-                    <p>Projet de suivi de mouvement (2D/3D) et intégration d’éléments graphiques sur séquences vidéo
-                        pour des démonstrations clients.</p>
-                    <div class="project-tags">
-                        <span class="tag">After Effects</span>
-                        <span class="tag">Tracking</span>
-                        <span class="tag">VFX</span>
-                    </div>
-                    <div class="project-stats">
-                        <div class="stat-item">
-                            <span class="stat-value">1</span>
-                            <span class="stat-name">Vidéo</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-value">2D/3D</span>
-                            <span class="stat-name">Track</span>
-                        </div>
-                    </div>
-                    <a href="#" class="btn btn-secondary view-project-btn" data-type="video"
-                        data-source="Travaux Stage Kilyann 2/Tracking/Tracking.mp4"
-                        data-caption="Tracking Vidéo - Démonstration" data-i18n="view-project">Voir le projet</a>
-                </div>
-
-                <!-- Nouveaux Projets -->
-                <div class="project-card" data-category="web">
-                    <div class="project-header">
-                        <div class="project-icon">
+                <div class="projects-grid">
+                    <!-- Torii -->
+                    <article class="project-card reveal" data-category="web" style="--accent: var(--sky)">
+                        <div class="project-cover">
+                            <span class="project-cat" data-i18n="filter-web">Web</span>
+                            <span class="project-year">2024</span>
                             <i class="fas fa-torii-gate"></i>
                         </div>
-                        <span class="project-year">2024</span>
-                    </div>
-                    <h3>Projet Torii</h3>
-                    <p>Recherche culturelle, création de modèle 3D et incrustation sur une carte interactive web.</p>
-                    <div class="project-tags">
-                        <span class="tag">Design</span>
-                        <span class="tag">HTML/CSS</span>
-                        <span class="tag">Japon</span>
-                    </div>
-                    <div class="project-stats">
-                        <div class="stat-item">
-                            <span class="stat-value">UI</span>
-                            <span class="stat-name">Design</span>
+                        <div class="project-body">
+                            <h3>Projet Torii</h3>
+                            <p>Recherche culturelle, création d'un modèle 3D et incrustation sur une carte interactive
+                                web.</p>
+                            <div class="project-tags">
+                                <span class="tag">HTML/CSS</span>
+                                <span class="tag">3D</span>
+                                <span class="tag">Carte interactive</span>
+                            </div>
+                            <a href="sae-torii/index.html" class="btn btn-primary btn-sm btn-block" target="_blank">
+                                <i class="fas fa-arrow-up-right-from-square"></i> <span data-i18n="view-site">Voir le
+                                    site</span>
+                            </a>
                         </div>
-                        <div class="stat-item">
-                            <span class="stat-value">Zen</span>
-                            <span class="stat-name">Style</span>
-                        </div>
-                    </div>
-                    <a href="sae-torii/index.html" class="btn btn-secondary" target="_blank" data-i18n="view-site">
-                        <i class="fas fa-external-link-alt"></i> Voir le site
-                    </a>
-                </div>
+                    </article>
 
-                <!-- Nouveaux Projets Divers -->
-                <div class="project-card" data-category="design">
-                    <div class="project-header">
-                        <div class="project-icon">
+                    <!-- Pac-Profil -->
+                    <article class="project-card reveal" data-category="web" style="--accent: var(--sky); --d:.05s">
+                        <div class="project-cover">
+                            <span class="project-cat" data-i18n="filter-web">Web</span>
+                            <i class="fas fa-gamepad"></i>
+                        </div>
+                        <div class="project-body">
+                            <h3>Pac-Profil</h3>
+                            <p>Pac-Man codé en JavaScript (Canvas) : chaque gros point mangé dévoile une partie de mon
+                                profil.</p>
+                            <div class="project-tags">
+                                <span class="tag">JavaScript</span>
+                                <span class="tag">Canvas</span>
+                                <span class="tag">Jeu</span>
+                            </div>
+                            <a href="jeux Boucly Kilyann/index.html" class="btn btn-primary btn-sm btn-block">
+                                <i class="fas fa-play"></i> <span data-i18n="btn-play">Jouer maintenant</span>
+                            </a>
+                        </div>
+                    </article>
+
+                    <!-- Tracking -->
+                    <article class="project-card reveal" data-category="motion" style="--accent: var(--coral); --d:.05s">
+                        <div class="project-cover">
+                            <span class="project-cat" data-i18n="filter-motion">Vidéo &amp; Animation</span>
+                            <span class="project-year">2023</span>
+                            <i class="fas fa-crosshairs"></i>
+                        </div>
+                        <div class="project-body">
+                            <h3>Tracking vidéo</h3>
+                            <p>Suivi de mouvement (2D/3D) et intégration d'éléments graphiques sur séquences vidéo
+                                pour des démonstrations clients.</p>
+                            <div class="project-tags">
+                                <span class="tag">After Effects</span>
+                                <span class="tag">Tracking</span>
+                                <span class="tag">VFX</span>
+                            </div>
+                            <a href="#" class="btn btn-primary btn-sm btn-block view-project-btn" data-type="video"
+                                data-source="Travaux Stage Kilyann 2/Tracking/Tracking.mp4"
+                                data-caption="Tracking vidéo — démonstration">
+                                <i class="fas fa-play"></i> <span data-i18n="view-project">Voir le projet</span>
+                            </a>
+                        </div>
+                    </article>
+
+                    <!-- Animations TCT -->
+                    <article class="project-card reveal" data-category="motion" style="--accent: var(--coral); --d:.1s">
+                        <div class="project-cover">
+                            <span class="project-cat" data-i18n="filter-motion">Vidéo &amp; Animation</span>
+                            <span class="project-year">2023-2024</span>
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <div class="project-body">
+                            <h3>Animations logo TCT</h3>
+                            <p>Série d'animations de logos pour TCT sous After Effects (variations noir/blanc, formats
+                                carrés). Travail sur le rythme, l'easing et la révélation.</p>
+                            <div class="project-tags">
+                                <span class="tag">After Effects</span>
+                                <span class="tag">Animation</span>
+                                <span class="tag">10+ animations</span>
+                            </div>
+                            <a href="Travaux Stage Kilyann 2/Animation AE/TCT/tct-animation-carre.aep"
+                                class="btn btn-ghost btn-sm btn-block" download>
+                                <i class="fas fa-download"></i> <span data-i18n="download-source">Télécharger le
+                                    fichier source</span> (AEP)
+                            </a>
+                        </div>
+                    </article>
+
+                    <!-- Entraînements AE -->
+                    <article class="project-card reveal" data-category="motion" style="--accent: var(--coral)">
+                        <div class="project-cover">
+                            <span class="project-cat" data-i18n="filter-motion">Vidéo &amp; Animation</span>
+                            <span class="project-year">2023</span>
+                            <i class="fas fa-wand-magic-sparkles"></i>
+                        </div>
+                        <div class="project-body">
+                            <h3>Entraînements After Effects</h3>
+                            <p>Explorations sur l'animation typographique, les masques et les courbes d'animation pour
+                                découvrir les bases de l'animation.</p>
+                            <div class="project-tags">
+                                <span class="tag">After Effects</span>
+                                <span class="tag">Typo</span>
+                                <span class="tag">5+ exercices</span>
+                            </div>
+                            <a href="Travaux Stage Kilyann 2/Animation AE/Entrainement/ecriture-anime.aep"
+                                class="btn btn-ghost btn-sm btn-block" download>
+                                <i class="fas fa-download"></i> <span data-i18n="download-source">Télécharger le
+                                    fichier source</span> (AEP)
+                            </a>
+                        </div>
+                    </article>
+
+                    <!-- Mock-up TCT -->
+                    <article class="project-card reveal" data-category="design" style="--accent: var(--pink); --d:.05s">
+                        <div class="project-cover">
+                            <span class="project-cat" data-i18n="filter-design">Design &amp; Print</span>
+                            <span class="project-year">2023</span>
+                            <i class="fas fa-object-group"></i>
+                        </div>
+                        <div class="project-body">
+                            <h3>Mock-ups TCT</h3>
+                            <p>Mock-ups pour des supports immobiliers (enseignes, planches, affichages) à partir de
+                                visuels Illustrator et d'un brief client.</p>
+                            <div class="project-tags">
+                                <span class="tag">Illustrator</span>
+                                <span class="tag">Branding</span>
+                                <span class="tag">15+ visuels</span>
+                            </div>
+                            <a href="Travaux Stage Kilyann 2/Mock-up TCT/1313-AEW-43-Vineuse.ai"
+                                class="btn btn-ghost btn-sm btn-block" download>
+                                <i class="fas fa-download"></i> <span data-i18n="download-source">Télécharger le
+                                    fichier source</span> (AI)
+                            </a>
+                        </div>
+                    </article>
+
+                    <!-- Magazine -->
+                    <article class="project-card reveal" data-category="design" style="--accent: var(--pink); --d:.1s">
+                        <div class="project-cover">
+                            <span class="project-cat" data-i18n="filter-design">Design &amp; Print</span>
+                            <span class="project-year">2024</span>
                             <i class="fas fa-book-open"></i>
                         </div>
-                        <span class="project-year">2024</span>
-                    </div>
-                    <h3>Magazine</h3>
-                    <p>Mise en page et design complet d'un magazine (InDesign). Travail sur la typographie et la
-                        composition.</p>
-                    <div class="project-tags">
-                        <span class="tag">InDesign</span>
-                        <span class="tag">Print</span>
-                        <span class="tag">Mise en page</span>
-                    </div>
-                    <div class="project-stats">
-                        <div class="stat-item">
-                            <span class="stat-value">Print</span>
-                            <span class="stat-name">Type</span>
+                        <div class="project-body">
+                            <h3>Magazine</h3>
+                            <p>Mise en page et design complet d'un magazine sous InDesign. Travail sur la typographie
+                                et la composition.</p>
+                            <div class="project-tags">
+                                <span class="tag">InDesign</span>
+                                <span class="tag">Print</span>
+                                <span class="tag">Mise en page</span>
+                            </div>
+                            <a href="fichiers-divers/magazine-boucly-kilyann.indd" class="btn btn-ghost btn-sm btn-block"
+                                download>
+                                <i class="fas fa-download"></i> <span data-i18n="download-file">Télécharger</span>
+                                (INDD)
+                            </a>
                         </div>
-                        <div class="stat-item">
-                            <span class="stat-value">INDD</span>
-                            <span class="stat-name">Outil</span>
-                        </div>
-                    </div>
-                    <a href="fichiers-divers/magazine-boucly-kilyann.indd" class="btn btn-secondary" download>
-                        <i class="fas fa-download"></i> Télécharger (INDD)
-                    </a>
-                </div>
+                    </article>
 
-                <div class="project-card" data-category="design">
-                    <div class="project-header">
-                        <div class="project-icon">
+                    <!-- Logo Azurade -->
+                    <article class="project-card reveal" data-category="design" style="--accent: var(--violet)">
+                        <div class="project-cover">
+                            <span class="project-cat" data-i18n="filter-design">Design &amp; Print</span>
+                            <span class="project-year">2024</span>
                             <i class="fas fa-pen-nib"></i>
                         </div>
-                        <span class="project-year">2024</span>
-                    </div>
-                    <h3>Logo Azurade</h3>
-                    <p>Création de l'identité visuelle pour Azurade, une entreprise fictive inventée pour le projet.</p>
-                    <div class="project-tags">
-                        <span class="tag">Branding</span>
-                        <span class="tag">Logo</span>
-                        <span class="tag">Identité</span>
-                    </div>
-                    <div class="project-stats">
-                        <div class="stat-item">
-                            <span class="stat-value">Doc</span>
-                            <span class="stat-name">Type</span>
+                        <div class="project-body">
+                            <h3>Logo Azurade</h3>
+                            <p>Identité visuelle complète pour Azurade, une entreprise fictive inventée pour le projet.
+                            </p>
+                            <div class="project-tags">
+                                <span class="tag">Branding</span>
+                                <span class="tag">Logo</span>
+                                <span class="tag">Identité</span>
+                            </div>
+                            <a href="fichiers-divers/entreprise-logo-azurade.docx" class="btn btn-ghost btn-sm btn-block"
+                                download>
+                                <i class="fas fa-download"></i> <span data-i18n="download-file">Télécharger</span>
+                                (DOCX)
+                            </a>
                         </div>
-                        <div class="stat-item">
-                            <span class="stat-value">Word</span>
-                            <span class="stat-name">Outil</span>
+                    </article>
+
+                    <!-- Travail EDN -->
+                    <article class="project-card reveal" data-category="com" style="--accent: var(--amber); --d:.05s">
+                        <div class="project-cover">
+                            <span class="project-cat" data-i18n="filter-com">Communication</span>
+                            <span class="project-year">2024</span>
+                            <i class="fas fa-person-chalkboard"></i>
                         </div>
-                    </div>
-                    <a href="fichiers-divers/entreprise-logo-azurade.docx" class="btn btn-secondary" download>
-                        <i class="fas fa-download"></i> Télécharger (DOCX)
-                    </a>
+                        <div class="project-body">
+                            <h3>Travail EDN</h3>
+                            <p>Présentation sur l'usage des réseaux sociaux dans une stratégie marketing.</p>
+                            <div class="project-tags">
+                                <span class="tag">PowerPoint</span>
+                                <span class="tag">Réseaux sociaux</span>
+                                <span class="tag">Marketing</span>
+                            </div>
+                            <a href="fichiers-divers/travail-edn.pptx" class="btn btn-ghost btn-sm btn-block" download>
+                                <i class="fas fa-download"></i> <span data-i18n="download-file">Télécharger</span>
+                                (PPTX)
+                            </a>
+                        </div>
+                    </article>
                 </div>
+            </div>
+        </section>
 
-                <div class="project-card" data-category="com">
-                    <div class="project-header">
-                        <div class="project-icon">
-                            <i class="fas fa-presentation"></i>
-                        </div>
-                        <span class="project-year">2024</span>
+        <section class="section">
+            <div class="container">
+                <div class="cta-band reveal">
+                    <h2 data-i18n="cta-title">Envie d'un projet similaire ?</h2>
+                    <p data-i18n="cta-desc">Parlons de votre idée et transformons-la en réalité.</p>
+                    <div class="cta-buttons">
+                        <a href="contact.html" class="btn btn-primary"><span data-i18n="btn-start-project">Démarrer un
+                                projet</span></a>
+                        <a href="competences.html" class="btn btn-ghost"><span data-i18n="btn-skills">Voir mes
+                                compétences</span></a>
                     </div>
-                    <h3>Travail EDN</h3>
-                    <p>Présentation des réseaux sociaux pour le marketing.</p>
-                    <div class="project-tags">
-                        <span class="tag">PowerPoint</span>
-                        <span class="tag">Présentation</span>
-                        <span class="tag">Com</span>
-                    </div>
-                    <div class="project-stats">
-                        <div class="stat-item">
-                            <span class="stat-value">Pres</span>
-                            <span class="stat-name">Type</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-value">PPTX</span>
-                            <span class="stat-name">Outil</span>
-                        </div>
-                    </div>
-                    <a href="fichiers-divers/travail-edn.pptx" class="btn btn-secondary" download>
-                        <i class="fas fa-download"></i> Télécharger (PPTX)
-                    </a>
                 </div>
-
-
             </div>
-        </div>
-    </section>
-
-    <!-- CTA -->
-    <section class="cta-section page-section">
-        <div class="container">
-            <h2 class="fade-in" data-i18n="cta-title">Envie d'un projet similaire ?</h2>
-            <p class="fade-in" data-i18n="cta-desc">Parlons de votre idée et transformons-la en réalité</p>
-            <div class="cta-buttons fade-in">
-                <a href="competences.html" class="btn btn-primary" data-i18n="btn-skills">Voir mes compétences</a>
-                <a href="contact.html" class="btn btn-secondary" data-i18n="btn-start-project">Démarrer un projet</a>
-            </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
-                <div class="footer-section">
-                    <h4 data-i18n="footer-about">À propos</h4>
-                    <p data-i18n="footer-about-desc">Alternant passionné par le développement web et les technologies
-                        modernes.</p>
+                <div class="footer-brand">
+                    <a href="index.html" class="logo">
+                        <span class="logo-mark">KB</span>
+                        <span class="logo-name">Kilyann Boucly</span>
+                    </a>
+                    <p data-i18n="footer-about-desc">Étudiant en BTS CIEL à l'UTEC et alternant chez Cap RATP. Passionné
+                        d'informatique, de réseaux et de cybersécurité.</p>
                 </div>
-                <div class="footer-section">
+                <div>
                     <h4 data-i18n="footer-nav">Navigation</h4>
                     <ul>
                         <li><a href="index.html" data-i18n="nav-home">Accueil</a></li>
@@ -345,41 +332,39 @@
                         <li><a href="projets.html" data-i18n="nav-projects">Projets</a></li>
                         <li><a href="alternance.html" data-i18n="nav-alternance">Parcours</a></li>
                         <li><a href="mini-jeux.html" data-i18n="nav-games">Mini-jeux</a></li>
+                        <li><a href="contact.html" data-i18n="nav-contact">Contact</a></li>
                     </ul>
                 </div>
-                <div class="footer-section">
+                <div>
                     <h4 data-i18n="footer-socials">Réseaux</h4>
                     <div class="social-links">
-                        <a href="https://www.linkedin.com/in/kilyann-boucly-aaa56638b/" target="_blank" title="LinkedIn"
-                            class="social-btn">
-                            <i class="fab fa-linkedin"></i>
-                        </a>
-                        <a href="https://github.com/KilyannPro" target="_blank" title="GitHub" class="social-btn">
-                            <i class="fab fa-github"></i>
-                        </a>
-                        <a href="https://instagram.com/klnn_pro" target="_blank" title="Instagram" class="social-btn">
-                            <i class="fab fa-instagram"></i>
-                        </a>
+                        <a href="https://www.linkedin.com/in/kilyann-boucly-aaa56638b/" target="_blank" rel="noopener"
+                            title="LinkedIn" class="social-btn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://github.com/KilyannPro" target="_blank" rel="noopener" title="GitHub"
+                            class="social-btn"><i class="fab fa-github"></i></a>
+                        <a href="https://instagram.com/klnn_pro" target="_blank" rel="noopener" title="Instagram"
+                            class="social-btn"><i class="fab fa-instagram"></i></a>
                     </div>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 Kilyann Boucly. <span data-i18n="footer-rights">Tous droits réservés.</span></p>
+                <p>&copy; <span class="year">2026</span> Kilyann Boucly. <span data-i18n="footer-rights">Tous droits
+                        réservés.</span></p>
+                <p data-i18n="footer-made">Conçu et codé en Seine-et-Marne</p>
             </div>
         </div>
     </footer>
 
-    <!-- Project Modal -->
-    <div id="projectModal" class="modal">
+    <!-- Modal projet -->
+    <div id="projectModal" class="modal" role="dialog" aria-modal="true">
         <div class="modal-content-wrapper">
-            <button id="modalClose" class="modal-close">&times;</button>
-            <div id="modalBody">
-                <!-- Content injected via JS -->
-            </div>
+            <button id="modalClose" class="modal-close" aria-label="Fermer">&times;</button>
+            <div id="modalBody"></div>
             <p id="modalCaption" class="modal-caption"></p>
         </div>
     </div>
 
+    <button class="back-to-top" id="backToTop" aria-label="Retour en haut"><i class="fas fa-arrow-up"></i></button>
     <script src="script.js"></script>
 </body>
 

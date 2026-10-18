@@ -4,182 +4,294 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kilyann Boucly - Portfolio</title>
+    <title>Kilyann Boucly — Portfolio</title>
+    <meta name="description"
+        content="Portfolio de Kilyann Boucly : étudiant en BTS CIEL au CFA UTEC d'Emerainville et alternant chez Cap RATP. Développement web, réseaux et création visuelle.">
+    <meta name="theme-color" content="#0b0a12">
+    <meta property="og:title" content="Kilyann Boucly — Portfolio">
+    <meta property="og:description" content="BTS CIEL en alternance chez Cap RATP. Web, réseaux et création visuelle.">
+    <meta property="og:image" content="moi-web.jpg">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
+    <div class="scroll-progress" id="scrollProgress"></div>
+    <div class="bg-orbs" aria-hidden="true"></div>
+    <div class="bg-grid" aria-hidden="true"></div>
+
     <!-- Navigation -->
-    <nav class="navbar">
-        <div class="navbar-inner">
-            <div class="container">
-                <div class="navbar-content">
-                    <a href="index.html" class="logo">
-                        <div class="logo-mark">KB</div>
-                        <div class="logo-text">
-                            <span class="logo-name">Kilyann Boucly</span>
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <div class="nav-shell">
+                <a href="index.html" class="logo" aria-label="Kilyann Boucly — accueil">
+                    <span class="logo-mark">KB</span>
+                    <span class="logo-name">Kilyann Boucly</span>
+                </a>
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="index.html" class="nav-link" data-i18n="nav-home">Accueil</a></li>
+                    <li><a href="competences.html" class="nav-link" data-i18n="nav-skills">Compétences</a></li>
+                    <li><a href="projets.html" class="nav-link" data-i18n="nav-projects">Projets</a></li>
+                    <li><a href="alternance.html" class="nav-link" data-i18n="nav-alternance">Parcours</a></li>
+                    <li><a href="mini-jeux.html" class="nav-link" data-i18n="nav-games">Mini-jeux</a></li>
+                    <li><a href="contact.html" class="nav-link" data-i18n="nav-contact">Contact</a></li>
+                </ul>
+                <div class="nav-right">
+                    <div class="lang-dropdown">
+                        <button class="lang-toggle" id="langToggle" aria-label="Langue">FR</button>
+                        <div class="lang-dropdown-content" id="langMenu">
+                            <button class="lang-option" data-lang="fr">Français (FR)</button>
+                            <button class="lang-option" data-lang="en">English (EN)</button>
                         </div>
-                    </a>
-                    <ul class="nav-menu" id="navMenu">
-                        <li><a href="index.html" class="nav-link active" data-i18n="nav-home">Accueil</a></li>
-                        <li><a href="competences.html" class="nav-link" data-i18n="nav-skills">Compétences</a></li>
-                        <li><a href="projets.html" class="nav-link" data-i18n="nav-projects">Projets</a></li>
-                        <li><a href="alternance.html" class="nav-link" data-i18n="nav-alternance">Parcours</a></li>
-                        <li><a href="mini-jeux.html" class="nav-link" data-i18n="nav-games">Mini-jeux</a></li>
-                        <li><a href="contact.html" class="nav-link" data-i18n="nav-contact">Contact</a></li>
-                    </ul>
-                    <div class="nav-right">
-                        <div class="lang-dropdown">
-                            <button class="lang-toggle" id="langToggle">FR</button>
-                            <div class="lang-dropdown-content" id="langMenu">
-                                <button class="lang-option" data-lang="fr">Français (FR)</button>
-                                <button class="lang-option" data-lang="en">English (EN)</button>
-                            </div>
-                        </div>
-                        <button class="menu-toggle" id="menuToggle">
-                            <i class="fas fa-bars"></i>
-                        </button>
                     </div>
+                    <a href="contact.html" class="nav-cta" data-i18n="nav-cta">Discutons</a>
+                    <button class="menu-toggle" id="menuToggle" aria-label="Menu" aria-expanded="false">
+                        <i class="fas fa-bars"></i>
+                    </button>
                 </div>
             </div>
         </div>
     </nav>
 
-    <!-- Section Accueil -->
-    <section class="hero page-section">
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-greeting fade-in-left" data-i18n="hero-greeting">
-                    👋 BIENVENUE
+    <main>
+        <!-- Hero -->
+        <section class="hero">
+            <div class="container hero-grid">
+                <div class="hero-text">
+                    <div class="status-pill reveal">
+                        <span class="pulse-dot"></span>
+                        <span data-i18n="hero-status">En alternance chez Cap RATP · BTS CIEL</span>
+                    </div>
+                    <p class="hero-hello reveal" style="--d:.05s" data-i18n="hero-hello">Salut, moi c'est</p>
+                    <h1 class="hero-title reveal" style="--d:.1s">
+                        <span class="line">Kilyann</span>
+                        <span class="line gradient-text">Boucly.</span>
+                    </h1>
+                    <p class="hero-role reveal" style="--d:.15s">
+                        <span class="rotator" id="roleRotator">Réseaux &amp; Cybersécurité</span><span class="caret"></span>
+                    </p>
+                    <p class="hero-desc reveal" style="--d:.2s" data-i18n="hero-desc">Étudiant en <strong>BTS CIEL</strong>
+                        (1<sup>re</sup> année) au CFA UTEC d'Emerainville et alternant chez <strong>Cap RATP</strong>.
+                        Passionné d'informatique, je me forme aux réseaux, à la cybersécurité et au développement
+                        web.</p>
+                    <div class="hero-actions reveal" style="--d:.25s">
+                        <a href="projets.html" class="btn btn-primary">
+                            <span data-i18n="btn-projects">Voir mes projets</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                        <a href="contact.html" class="btn btn-ghost">
+                            <span data-i18n="btn-contact">Me contacter</span>
+                        </a>
+                    </div>
+                    <div class="hero-links reveal" style="--d:.3s">
+                        <a href="cv.pdf" download class="link-chip">
+                            <i class="fas fa-file-arrow-down"></i>
+                            <span data-i18n="download-cv">Télécharger mon CV</span>
+                        </a>
+                        <a href="https://www.linkedin.com/in/kilyann-boucly-aaa56638b/" target="_blank" rel="noopener"
+                            class="link-chip">
+                            <i class="fab fa-linkedin-in"></i>
+                            <span>LinkedIn</span>
+                        </a>
+                    </div>
+                    <div class="hero-stats reveal" style="--d:.35s">
+                        <div class="stat">
+                            <span class="stat-number gradient-text" data-count="4" data-suffix="+">4+</span>
+                            <span class="stat-label" data-i18n="stat-years">Années de formation</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number gradient-text" data-count="10" data-suffix="+">10+</span>
+                            <span class="stat-label" data-i18n="stat-projects">Projets réalisés</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number gradient-text" data-count="12">12</span>
+                            <span class="stat-label" data-i18n="stat-skills">Compétences</span>
+                        </div>
+                    </div>
                 </div>
-                <h1 class="hero-title fade-in-left">Kilyann Boucly</h1>
-                <p class="hero-subtitle fade-in-left" data-i18n="hero-subtitle">Développeur Web & Réseaux</p>
-                <p class="hero-description fade-in-left" data-i18n="hero-desc">Créateur de solutions web modernes et
-                    performantes. Passionné
-                    par les technologies actuelles et les défis techniques.</p>
-                <div class="hero-buttons fade-in-left">
-                    <a href="contact.html" class="btn btn-primary" data-i18n="btn-contact">Me contacter</a>
-                    <a href="projets.html" class="btn btn-secondary" data-i18n="btn-projects">Voir mes projets</a>
+
+                <div class="hero-visual reveal" style="--d:.15s">
+                    <div class="photo-glow"></div>
+                    <div class="photo-frame">
+                        <img src="moi-web.jpg" alt="Portrait de Kilyann Boucly" width="800" height="800">
+                    </div>
+                    <div class="float-chip chip-1">
+                        <span class="chip-icon"><i class="fas fa-briefcase"></i></span>
+                        <div>
+                            <strong data-i18n="chip-job">Alternance</strong>
+                            <span>Cap RATP</span>
+                        </div>
+                    </div>
+                    <div class="float-chip chip-2">
+                        <span class="chip-icon"><i class="fas fa-graduation-cap"></i></span>
+                        <div>
+                            <strong>BTS CIEL</strong>
+                            <span data-i18n="chip-school">1re année · UTEC</span>
+                        </div>
+                    </div>
+                    <div class="float-chip chip-3">
+                        <span class="chip-icon"><i class="fas fa-shield-halved"></i></span>
+                        <div>
+                            <strong data-i18n="chip-web">Cybersécurité</strong>
+                            <span data-i18n="chip-web-sub">Réseaux · Systèmes</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="hero-downloads fade-in-left">
-                    <a href="cv.pdf" download class="btn-download" data-i18n="download-cv">
-                        <i class="fas fa-file-pdf"></i>
-                        Télécharger mon CV
+            </div>
+        </section>
+
+        <!-- En ce moment -->
+        <section class="section">
+            <div class="container">
+                <div class="section-head reveal">
+                    <span class="eyebrow" data-i18n="now-eyebrow">En ce moment</span>
+                    <h2 class="section-title"><span data-i18n="now-title">Mon alternance</span> <span
+                            class="gradient-text">2026 – 2028</span></h2>
+                    <p class="section-sub" data-i18n="now-sub">Depuis septembre 2026, je partage mon temps entre la
+                        formation au CFA et la pratique en entreprise.</p>
+                </div>
+                <div class="now-grid">
+                    <article class="now-card reveal" style="--accent: var(--violet)">
+                        <div class="now-top">
+                            <div class="now-icon"><i class="fas fa-graduation-cap"></i></div>
+                            <span class="now-tag" data-i18n="now-school-tag">Formation</span>
+                        </div>
+                        <h3>BTS CIEL</h3>
+                        <p class="now-role" data-i18n="now-school-role">Cybersécurité, Informatique et réseaux,
+                            Électronique — 1<sup>re</sup> année sur 2</p>
+                        <div class="now-meta">
+                            <span><i class="fas fa-school"></i> CFA UTEC</span>
+                            <span><i class="fas fa-location-dot"></i> Emerainville (77)</span>
+                            <span><i class="fas fa-calendar"></i> 2026 – 2028</span>
+                        </div>
+                    </article>
+                    <article class="now-card reveal" style="--accent: var(--mint); --d:.1s">
+                        <div class="now-top">
+                            <div class="now-icon"><i class="fas fa-building"></i></div>
+                            <span class="now-tag" data-i18n="now-company-tag">Entreprise</span>
+                        </div>
+                        <h3>Cap RATP</h3>
+                        <p class="now-role" data-i18n="now-company-role">Alternant — en parallèle du BTS CIEL</p>
+                        <div class="now-meta">
+                            <span><i class="fas fa-location-dot"></i> Neuilly-Plaisance (93)</span>
+                            <span><i class="fas fa-location-dot"></i> Saint-Maur-des-Fossés (94)</span>
+                            <span><i class="fas fa-calendar"></i> <span data-i18n="now-since">Depuis sept.
+                                    2026</span></span>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Explorer -->
+        <section class="section">
+            <div class="container">
+                <div class="section-head reveal">
+                    <span class="eyebrow" data-i18n="preview-eyebrow">Explorer</span>
+                    <h2 class="section-title" data-i18n="preview-title">Plongez dans mon univers</h2>
+                </div>
+                <div class="bento">
+                    <a href="projets.html" class="bento-card wide feature reveal" style="--accent: var(--pink)">
+                        <span class="bento-arrow"><i class="fas fa-arrow-right"></i></span>
+                        <div class="bento-big gradient-text">10+</div>
+                        <div>
+                            <h3 data-i18n="nav-projects">Projets</h3>
+                            <p data-i18n="preview-projects-desc">Web, design, vidéo, communication : une sélection
+                                de travaux réalisés en formation et en stage.</p>
+                        </div>
                     </a>
-                    <a href="lettre.pdf" download class="btn-download" data-i18n="cover-letter">
-                        <i class="fas fa-file-pdf"></i>
-                        Lettre de motivation
+                    <a href="competences.html" class="bento-card reveal" style="--accent: var(--violet); --d:.05s">
+                        <span class="bento-arrow"><i class="fas fa-arrow-right"></i></span>
+                        <div class="bento-icon"><i class="fas fa-layer-group"></i></div>
+                        <div>
+                            <h3 data-i18n="nav-skills">Compétences</h3>
+                            <p data-i18n="preview-skills-desc">Mes technologies et domaines d'expertise.</p>
+                        </div>
+                    </a>
+                    <a href="mini-jeux.html" class="bento-card tall reveal" style="--accent: var(--amber); --d:.1s">
+                        <span class="bento-arrow"><i class="fas fa-arrow-right"></i></span>
+                        <div class="bento-icon"><i class="fas fa-gamepad"></i></div>
+                        <div>
+                            <h3 data-i18n="nav-games">Mini-jeux</h3>
+                            <p data-i18n="preview-games-desc">Découvrez mon profil en jouant à Pac-Profil, mon Pac-Man maison.</p>
+                        </div>
+                    </a>
+                    <a href="alternance.html" class="bento-card reveal" style="--accent: var(--mint); --d:.15s">
+                        <span class="bento-arrow"><i class="fas fa-arrow-right"></i></span>
+                        <div class="bento-icon"><i class="fas fa-route"></i></div>
+                        <div>
+                            <h3 data-i18n="nav-alternance">Parcours</h3>
+                            <p data-i18n="preview-alternance-desc">Du Bac STI2D à l'alternance chez Cap RATP.</p>
+                        </div>
+                    </a>
+                    <a href="contact.html" class="bento-card wide reveal" style="--accent: var(--coral); --d:.2s">
+                        <span class="bento-arrow"><i class="fas fa-arrow-right"></i></span>
+                        <div class="bento-icon"><i class="fas fa-paper-plane"></i></div>
+                        <div>
+                            <h3 data-i18n="nav-contact">Contact</h3>
+                            <p data-i18n="preview-contact-desc">Une question, un projet, une opportunité ? Écrivez-moi,
+                                je réponds vite.</p>
+                        </div>
                     </a>
                 </div>
-                <div class="hero-stats fade-in-left">
-                    <div class="stat">
-                        <span class="stat-number">4+</span>
-                        <span class="stat-label" data-i18n="stat-years">Années de formation</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-number">10+</span>
-                        <span class="stat-label" data-i18n="stat-projects">Projets réalisés</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-number">12</span>
-                        <span class="stat-label" data-i18n="stat-skills">Compétences</span>
-                    </div>
-                </div>
             </div>
-            <div class="hero-image fade-in-right">
-                <div class="profile-pic-frame">
-                    <img src="moi.jpg" alt="Kilyann Boucly" class="profile-pic">
-                </div>
+        </section>
 
+        <!-- Qualités -->
+        <section class="section-tight" aria-label="Qualités professionnelles">
+            <div class="marquee">
+                <div class="marquee-track">
+                    <span class="marquee-item"><i class="fas fa-fire"></i><span data-i18n="quality-motivation">Motivation</span></span>
+                    <span class="marquee-item"><i class="fas fa-compass"></i><span data-i18n="quality-autonomy">Autonomie</span></span>
+                    <span class="marquee-item"><i class="fas fa-handshake"></i><span data-i18n="quality-team">Esprit d'équipe</span></span>
+                    <span class="marquee-item"><i class="fas fa-lightbulb"></i><span data-i18n="quality-creativity">Créativité</span></span>
+                    <span class="marquee-item"><i class="fas fa-shield-halved"></i><span data-i18n="quality-rigor">Rigueur</span></span>
+                    <span class="marquee-item"><i class="fas fa-shuffle"></i><span data-i18n="quality-adaptability">Adaptabilité</span></span>
+                    <span class="marquee-item" aria-hidden="true"><i class="fas fa-fire"></i><span data-i18n="quality-motivation">Motivation</span></span>
+                    <span class="marquee-item" aria-hidden="true"><i class="fas fa-compass"></i><span data-i18n="quality-autonomy">Autonomie</span></span>
+                    <span class="marquee-item" aria-hidden="true"><i class="fas fa-handshake"></i><span data-i18n="quality-team">Esprit d'équipe</span></span>
+                    <span class="marquee-item" aria-hidden="true"><i class="fas fa-lightbulb"></i><span data-i18n="quality-creativity">Créativité</span></span>
+                    <span class="marquee-item" aria-hidden="true"><i class="fas fa-shield-halved"></i><span data-i18n="quality-rigor">Rigueur</span></span>
+                    <span class="marquee-item" aria-hidden="true"><i class="fas fa-shuffle"></i><span data-i18n="quality-adaptability">Adaptabilité</span></span>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Aperçu des Sections -->
-    <section class="preview-sections page-section">
-        <div class="container">
-            <h2 class="section-title" data-i18n="preview-title">Explorez Mon Portfolio</h2>
-            <div class="preview-grid">
-                <a href="competences.html" class="preview-card card-1">
-                    <div class="preview-icon">
-                        <i class="fas fa-star"></i>
+        <!-- CTA -->
+        <section class="section">
+            <div class="container">
+                <div class="cta-band reveal">
+                    <h2 data-i18n="cta-home-title">Envie d'en savoir plus ?</h2>
+                    <p data-i18n="cta-home-desc">Téléchargez mon CV ou envoyez-moi un message, je serai ravi d'échanger.</p>
+                    <div class="cta-buttons">
+                        <a href="contact.html" class="btn btn-primary"><span data-i18n="btn-contact">Me contacter</span></a>
+                        <a href="cv.pdf" download class="btn btn-ghost"><i class="fas fa-file-arrow-down"></i> <span
+                                data-i18n="download-cv">Télécharger mon CV</span></a>
                     </div>
-                    <h3 data-i18n="nav-skills">Compétences</h3>
-                    <p data-i18n="preview-skills-desc">Découvrez mes technologies et domaines d'expertise</p>
-                    <span class="preview-arrow">→</span>
-                </a>
-                <a href="projets.html" class="preview-card card-2">
-                    <div class="preview-icon">
-                        <i class="fas fa-rocket"></i>
-                    </div>
-                    <h3 data-i18n="nav-projects">Projets</h3>
-                    <p data-i18n="preview-projects-desc">Les projets que j'ai développés et leurs détails</p>
-                    <span class="preview-arrow">→</span>
-                </a>
-                <a href="alternance.html" class="preview-card card-3">
-                    <div class="preview-icon">
-                        <i class="fas fa-briefcase"></i>
-                    </div>
-                    <h3 data-i18n="nav-alternance">Parcours</h3>
-                    <p data-i18n="preview-alternance-desc">Mon parcours académique et professionnel</p>
-                    <span class="preview-arrow">→</span>
-                </a>
-                <a href="contact.html" class="preview-card card-4">
-                    <div class="preview-icon">
-                        <i class="fas fa-envelope"></i>
-                    </div>
-                    <h3 data-i18n="nav-contact">Contact</h3>
-                    <p data-i18n="preview-contact-desc">Discutons d'une collaboration ou opportunité</p>
-                    <span class="preview-arrow">→</span>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Qualités Rapides -->
-    <section class="quick-qualities page-section">
-        <div class="container">
-            <h2 class="section-title" data-i18n="qualities-title">Qualités Professionnelles</h2>
-            <div class="qualities-list">
-                <div class="quality-badge">
-                    <i class="fas fa-fire"></i>
-                    <span data-i18n="quality-motivation">Motivation</span>
-                </div>
-                <div class="quality-badge">
-                    <i class="fas fa-chart-line"></i>
-                    <span data-i18n="quality-autonomy">Autonomie</span>
-                </div>
-                <div class="quality-badge">
-                    <i class="fas fa-handshake"></i>
-                    <span data-i18n="quality-team">Esprit d'équipe</span>
-                </div>
-                <div class="quality-badge">
-                    <i class="fas fa-lightbulb"></i>
-                    <span data-i18n="quality-creativity">Créativité</span>
-                </div>
-                <div class="quality-badge">
-                    <i class="fas fa-shield-alt"></i>
-                    <span data-i18n="quality-rigor">Rigueur</span>
-                </div>
-                <div class="quality-badge">
-                    <i class="fas fa-brain"></i>
-                    <span data-i18n="quality-adaptability">Adaptabilité</span>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
-                <div class="footer-section">
-                    <h4 data-i18n="footer-about">À propos</h4>
-                    <p data-i18n="footer-about-desc">Étudiant passionné par le développement web et les technologies
-                        modernes.</p>
+                <div class="footer-brand">
+                    <a href="index.html" class="logo">
+                        <span class="logo-mark">KB</span>
+                        <span class="logo-name">Kilyann Boucly</span>
+                    </a>
+                    <p data-i18n="footer-about-desc">Étudiant en BTS CIEL à l'UTEC et alternant chez Cap RATP. Passionné
+                        d'informatique, de réseaux et de cybersécurité.</p>
                 </div>
-                <div class="footer-section">
+                <div>
                     <h4 data-i18n="footer-nav">Navigation</h4>
                     <ul>
                         <li><a href="index.html" data-i18n="nav-home">Accueil</a></li>
@@ -187,30 +299,30 @@
                         <li><a href="projets.html" data-i18n="nav-projects">Projets</a></li>
                         <li><a href="alternance.html" data-i18n="nav-alternance">Parcours</a></li>
                         <li><a href="mini-jeux.html" data-i18n="nav-games">Mini-jeux</a></li>
+                        <li><a href="contact.html" data-i18n="nav-contact">Contact</a></li>
                     </ul>
                 </div>
-                <div class="footer-section">
+                <div>
                     <h4 data-i18n="footer-socials">Réseaux</h4>
                     <div class="social-links">
-                        <a href="https://www.linkedin.com/in/kilyann-boucly-aaa56638b/" target="_blank" title="LinkedIn"
-                            class="social-btn">
-                            <i class="fab fa-linkedin"></i>
-                        </a>
-                        <a href="https://github.com/KilyannPro" target="_blank" title="GitHub" class="social-btn">
-                            <i class="fab fa-github"></i>
-                        </a>
-                        <a href="https://instagram.com/klnn_pro" target="_blank" title="Instagram" class="social-btn">
-                            <i class="fab fa-instagram"></i>
-                        </a>
+                        <a href="https://www.linkedin.com/in/kilyann-boucly-aaa56638b/" target="_blank" rel="noopener"
+                            title="LinkedIn" class="social-btn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://github.com/KilyannPro" target="_blank" rel="noopener" title="GitHub"
+                            class="social-btn"><i class="fab fa-github"></i></a>
+                        <a href="https://instagram.com/klnn_pro" target="_blank" rel="noopener" title="Instagram"
+                            class="social-btn"><i class="fab fa-instagram"></i></a>
                     </div>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 Kilyann Boucly. <span data-i18n="footer-rights">Tous droits réservés.</span></p>
+                <p>&copy; <span class="year">2026</span> Kilyann Boucly. <span data-i18n="footer-rights">Tous droits
+                        réservés.</span></p>
+                <p data-i18n="footer-made">Conçu et codé en Seine-et-Marne</p>
             </div>
         </div>
     </footer>
 
+    <button class="back-to-top" id="backToTop" aria-label="Retour en haut"><i class="fas fa-arrow-up"></i></button>
     <script src="script.js"></script>
 </body>
 

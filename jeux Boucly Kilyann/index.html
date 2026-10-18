@@ -4,50 +4,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mission: Alternance - Kilyann Boucly</title>
+    <title>Pac-Profil — Kilyann Boucly</title>
+    <meta name="theme-color" content="#050010">
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto:wght@400;700&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 
 <body>
+    <a href="../mini-jeux.html" class="back-link"><i class="fas fa-arrow-left"></i> Retour au portfolio</a>
+
     <div class="game-container">
         <canvas id="gameCanvas"></canvas>
 
         <!-- UI Overlay -->
         <div id="ui-layer">
             <div id="start-screen" class="screen active">
-                <h1>MISSION: ALTERNANCE</h1>
-                <p class="subtitle">Aidez-moi à décrocher mon alternance !</p>
+                <h1>PAC-PROFIL</h1>
+                <p class="subtitle">Mangez les 6 gros points pour découvrir mon profil !</p>
                 <div class="controls-info">
-                    <p>UTILISEZ LES FLÈCHES OU ZQSD POUR BOUGER</p>
+                    <p>FLÈCHES OU ZQSD POUR BOUGER</p>
                 </div>
-                <button id="start-btn" class="btn-primary">COMMENCER LA MISSION</button>
+                <button id="start-btn" class="btn-primary">JOUER</button>
             </div>
 
             <div id="game-over-screen" class="screen hidden">
-                <h1>MISSION ÉCHOUÉE</h1>
-                <p>N'abandonnez pas ! La persévérance est la clé.</p>
+                <h1>PERDU !</h1>
+                <p>Un fantôme vous a attrapé. Réessayez pour découvrir la suite de mon profil.</p>
                 <button id="restart-btn" class="btn-primary">RÉESSAYER</button>
             </div>
 
             <div id="victory-screen" class="screen hidden">
-                <h1>MISSION ACCOMPLIE !</h1>
-                <p>Vous avez découvert tout mon potentiel.</p>
+                <h1>PROFIL DÉBLOQUÉ !</h1>
+                <p>Vous savez maintenant (presque) tout sur moi.</p>
                 <div class="actions">
-                    <a href="CV Boucly Kilyann.pdf" download class="btn-primary">TÉLÉCHARGER CV</a>
-                    <a href="lettre.pdf" download class="btn-secondary">LETTRE DE MOTIVATION</a>
+                    <a href="../cv.pdf" download class="btn-link">TÉLÉCHARGER MON CV</a>
+                    <a href="../contact.html" class="btn-link secondary">ME CONTACTER</a>
                 </div>
                 <button id="replay-btn" class="btn-text">Rejouer</button>
             </div>
 
-            <!-- In-game Hub/Modal for details -->
+            <!-- Fenêtre d'infos -->
             <div id="info-modal" class="modal hidden">
                 <div class="modal-content">
-                    <span class="close-modal">&times;</span>
+                    <span class="close-modal" role="button" aria-label="Fermer">&times;</span>
                     <h2 id="modal-title">Titre</h2>
-                    <p id="modal-desc">Description...</p>
+                    <div id="modal-desc">Description...</div>
+                    <p class="modal-hint">Entrée ou ✕ pour continuer · <span id="modal-progress"></span></p>
                 </div>
             </div>
 
@@ -57,7 +62,7 @@
                 <div class="highscore-container">BEST: <span id="highscore">0</span></div>
             </div>
 
-            <!-- Mobile Controls -->
+            <!-- Contrôles mobiles -->
             <div id="mobile-controls" class="hidden">
                 <div class="control-btn up" id="ctrl-up"><i class="fas fa-chevron-up"></i></div>
                 <div class="control-row">
