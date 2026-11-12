@@ -1,0 +1,14 @@
+# Applications que le script te propose de désactiver, une par une.
+# Format : nom_du_paquet;description affichée
+# Rien n'est supprimé : l'option « Tout remettre comme avant » les réactive.
+# Les applis absentes de ton stick sont ignorées automatiquement.
+com.google.android.backdrop;Mode Ambiant : écran de veille photos qui télécharge en continu
+com.google.android.play.games;Google Play Jeux : presque inutile sur une TV
+com.google.android.videos;Google Play Films et TV : location et achat de films chez Google
+com.google.android.youtube.tvkids;YouTube Kids
+com.google.android.youtube.tvmusic;YouTube Music
+com.amazon.amazonvideo.livingroom;Prime Video
+com.netflix.ninja;Netflix
+com.spotify.tv.android;Spotify
+com.google.android.apps.mediashell;Chromecast intégré : sert à caster depuis un téléphone, tourne en permanence
+com.google.android.katniss;Assistant Google et recherche vocale : bouton micro de la télécommande, très gourmand en mémoire
