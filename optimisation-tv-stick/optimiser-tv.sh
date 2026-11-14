@@ -372,7 +372,7 @@ chercher_lanceur() { # affiche paquet/activité d'une appli installée qui sait 
 }
 
 accueil() {
-  local lanceur paquet nom stock e r n=0 f p
+  local lanceur paquet nom stock e r n=0 f p echecs=0 erreur sur_tv
   echo
   echo " Écran d'accueil et fonds d'écran"
   echo "       L'écran d'accueil d'origine n'accepte pas de fond d'écran. On le"
@@ -454,13 +454,32 @@ accueil() {
     [ "$paquet" = "$PROJECTIVY" ] && tv mkdir -p "/sdcard/Android/data/$PROJECTIVY/files/wallpapers" >/dev/null 2>&1
     for f in "$ICI"/fonds-ecran/*.jpg "$ICI"/fonds-ecran/*.jpeg "$ICI"/fonds-ecran/*.png; do
       [ -f "$f" ] || continue
-      adb push "$f" "$DOSSIER_FONDS/$(basename "$f")" >/dev/null 2>&1 </dev/null || continue
+      if ! erreur="$(adb push "$f" "$DOSSIER_FONDS/$(basename "$f")" 2>&1 </dev/null)"; then
+        echecs=$((echecs + 1))
+        if [ "$echecs" -eq 1 ]; then
+          echo "       [!] La TV a refusé $(basename "$f"). Message d'adb :"
+          echo "$erreur"
+        fi
+        continue
+      fi
       n=$((n + 1))
       tv "am broadcast -a android.intent.action.MEDIA_SCANNER_SCAN_FILE -d 'file://$DOSSIER_FONDS/$(basename "$f")'" >/dev/null 2>&1
       [ "$paquet" = "$PROJECTIVY" ] && adb push "$f" "/sdcard/Android/data/$PROJECTIVY/files/wallpapers/$(basename "$f")" >/dev/null 2>&1 </dev/null
     done
+  else
+    echo "       [!] Le dossier fonds-ecran est introuvable à côté de ce script."
+    echo "           Extrais tout le ZIP, puis relance l'option 4."
   fi
-  echo "       [OK] $n fonds d'écran envoyés dans le dossier Pictures > FondsEcran."
+  sur_tv="$(tv "ls $DOSSIER_FONDS 2>/dev/null | wc -l" 2>/dev/null | tr -dc '0-9')"
+  sur_tv="${sur_tv:-0}"
+  echo "       $n fonds d'écran envoyés. Sur la TV, Pictures > FondsEcran en contient $sur_tv."
+  if [ "$sur_tv" -gt 0 ]; then
+    echo "       [OK] Les images sont bien sur la TV."
+    autoriser_appli com.lonelycatgames.Xplore
+    autoriser_appli "$paquet"
+  else
+    echo "       [!] Aucune image n'est arrivée sur la TV. Envoie-moi une copie de cette fenêtre."
+  fi
   tv input keyevent KEYCODE_HOME >/dev/null 2>&1
 
   echo
@@ -508,10 +527,29 @@ accueil() {
       echo "   Si aucun dossier ne s'ouvre, il faut le gestionnaire de fichiers X-plore."
       if oui "       Ouvrir sa page Play Store sur la TV ?"; then
         tv "am start -a android.intent.action.VIEW -d 'market://details?id=com.lonelycatgames.Xplore'" >/dev/null 2>&1
-        echo "       Clique sur Installer sur la TV, puis refais les étapes 1 et 2."
+        echo "       Clique sur Installer sur la TV, puis reviens ici."
+        read -r -p "       C'est installé ? [C]ontinuer ou [R]etour au menu " r
+        case "$r" in
+          [cC]*)
+            autoriser_appli com.lonelycatgames.Xplore
+            echo "       Refais maintenant les étapes 1 et 2 sur la TV."
+            ;;
+        esac
       fi
     fi
   fi
+}
+
+autoriser_appli() { # donne à l'appli $1 le droit de voir les images (Android 11+ : souvent aucun menu pour ça)
+  [ -n "$1" ] || return 0
+  [ "$(etat "$1")" = absent ] && return 0
+  local p
+  for p in READ_EXTERNAL_STORAGE WRITE_EXTERNAL_STORAGE READ_MEDIA_IMAGES; do
+    tv pm grant "$1" "android.permission.$p" >/dev/null 2>&1
+  done
+  tv appops set --uid "$1" MANAGE_EXTERNAL_STORAGE allow >/dev/null 2>&1
+  tv am force-stop "$1" >/dev/null 2>&1
+  echo "       [OK] $1 a le droit de voir les images."
 }
 
 ouvrir_image() { # ouvrir_image uri mime paquet [option] -> 0 si l'écran d'accueil a accepté l'image

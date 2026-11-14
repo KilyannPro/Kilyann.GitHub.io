@@ -131,7 +131,7 @@ Pour ajouter tes propres images, mets-les dans le dossier `fonds-ecran` (JPG ou 
 | La fenêtre d'autorisation n'apparaît pas sur la TV | *Options pour les développeurs → Révoquer les autorisations de débogage USB*, puis relance le script. |
 | Ton stick n'a que « Débogage sans fil » (modèles récents) | Dans le script, choisis **[A] Associer avec un code**. |
 | Le bouton Accueil ramène à l'écran Google | Relance l'option 4 et accepte de désactiver l'écran d'accueil Google. Si ton modèle refuse, active dans les réglages de ton nouvel écran d'accueil l'option qui remplace le lanceur actuel. |
-| FLauncher ne trouve pas les images | Installe le gestionnaire de fichiers **X-plore** depuis le Play Store et réessaie. |
+| FLauncher ne trouve pas les images, ou le dossier Pictures est vide | Relance l'option **4** : le script vérifie que les images sont bien sur la TV et donne à X-plore le droit de les voir. Dans X-plore, ouvre ensuite *Mémoire interne → Pictures → FondsEcran*. |
 | « Ce modèle refuse de la désactiver » | C'est normal pour certaines applis système : rien n'est cassé. |
 | Quelque chose ne marche plus | Relance le script et choisis **6**. |
 

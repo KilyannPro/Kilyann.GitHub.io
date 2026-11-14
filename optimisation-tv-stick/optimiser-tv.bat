@@ -383,8 +383,26 @@ echo        Déjà désactivé.
 echo.
 echo  [3/4] Envoi des fonds d'écran sur la TV
 set "NB_FONDS=0"
-if not exist "fonds-ecran\*" goto :accueil_fonds_fin
-echo        [OK] %NB_FONDS% fonds d'écran envoyés dans le dossier Pictures ^> FondsEcran.
+set "NB_ECHECS=0"
+if not exist "fonds-ecran\*" goto :accueil_fonds_absents
+adb shell mkdir -p %DOSSIER_FONDS% >nul 2>&1
+if "%LANCEUR_PAQUET%"=="%PROJECTIVY%" adb shell mkdir -p /sdcard/Android/data/%PROJECTIVY%/files/wallpapers >nul 2>&1
+rem  Chemins relatifs : le script s'est placé dans son propre dossier au démarrage.
+for %%F in (fonds-ecran\*.jpg fonds-ecran\*.jpeg fonds-ecran\*.png) do call :envoyer_fond "%%~fF" "%%~nxF"
+goto :accueil_fonds_verif
+:accueil_fonds_absents
+echo        [!] Le dossier fonds-ecran est introuvable à côté de ce script.
+echo            Extrais tout le ZIP, puis relance l'option 4.
+:accueil_fonds_verif
+call :compter_fonds_tv
+echo        %NB_FONDS% fonds d'écran envoyés. Sur la TV, Pictures ^> FondsEcran en contient %NB_TV%.
+if "%NB_TV%"=="0" goto :accueil_fonds_vide
+echo        [OK] Les images sont bien sur la TV.
+call :autoriser_images
+goto :accueil_fonds_suite
+:accueil_fonds_vide
+echo        [!] Aucune image n'est arrivée sur la TV. Envoie-moi une capture de cette fenêtre.
+:accueil_fonds_suite
 adb shell input keyevent KEYCODE_HOME >nul 2>&1
 
 echo.
@@ -420,7 +438,11 @@ echo    Si aucun dossier ne s'ouvre, il faut le gestionnaire de fichiers X-plore
 choice /c ON /n /m "        Ouvrir sa page Play Store sur la TV ? [O/N] "
 if errorlevel 2 goto :menu
 adb shell "am start -a android.intent.action.VIEW -d 'market://details?id=com.lonelycatgames.Xplore'" >nul 2>&1
-echo        Clique sur Installer sur la TV, puis refais les étapes 1 et 2.
+echo        Clique sur Installer sur la TV, puis reviens ici.
+choice /c CR /n /m "        C'est installé ? [C]ontinuer ou [R]etour au menu "
+if errorlevel 2 goto :menu
+call :autoriser_appli com.lonelycatgames.Xplore
+echo        Refais maintenant les étapes 1 et 2 sur la TV.
 goto :menu
 :accueil_aide_projectivy
 echo    1. Ouvre les réglages de Projectivy : Apparence ^> Fond d'écran.
@@ -625,8 +647,9 @@ del "%TEMP%\tvstick_lanceurs.txt" >nul 2>&1
 exit /b 0
 
 :envoyer_fond
-adb push "%~1" "%DOSSIER_FONDS%/%~2" >nul 2>&1
-if errorlevel 1 exit /b 0
+adb push "%~1" "%DOSSIER_FONDS%/%~2" >"%TEMP%\tvstick_push.txt" 2>&1
+if errorlevel 1 goto :envoyer_fond_echec
+del "%TEMP%\tvstick_push.txt" >nul 2>&1
 set /a NB_FONDS+=1
 adb shell "am broadcast -a android.intent.action.MEDIA_SCANNER_SCAN_FILE -d 'file://%DOSSIER_FONDS%/%~2'" >nul 2>&1
 if "%LANCEUR_PAQUET%"=="%PROJECTIVY%" adb push "%~1" "/sdcard/Android/data/%PROJECTIVY%/files/wallpapers/%~2" >nul 2>&1
@@ -667,6 +690,38 @@ if not errorlevel 1 goto :ouvrir_image_fin
 set "AM_OK=oui"
 :ouvrir_image_fin
 del "%TEMP%\tvstick_am.txt" >nul 2>&1
+exit /b 0
+
+:envoyer_fond_echec
+set /a NB_ECHECS+=1
+if not "%NB_ECHECS%"=="1" exit /b 0
+echo        [!] La TV a refusé %~2. Message d'adb :
+type "%TEMP%\tvstick_push.txt"
+del "%TEMP%\tvstick_push.txt" >nul 2>&1
+exit /b 0
+
+:compter_fonds_tv
+set "NB_TV=0"
+for /f %%n in ('adb shell "ls %DOSSIER_FONDS% 2>/dev/null | wc -l"') do set "NB_TV=%%n"
+exit /b 0
+
+:autoriser_images
+rem  Donne à X-plore et à l'écran d'accueil le droit de voir les images.
+rem  Sur Android 11 et plus, la TV n'a souvent aucun menu pour ce réglage.
+call :autoriser_appli com.lonelycatgames.Xplore
+call :autoriser_appli %LANCEUR_PAQUET%
+exit /b 0
+
+:autoriser_appli
+if "%~1"=="" exit /b 0
+call :etat "%~1"
+if "%ETAT%"=="absent" exit /b 0
+adb shell pm grant %~1 android.permission.READ_EXTERNAL_STORAGE >nul 2>&1
+adb shell pm grant %~1 android.permission.WRITE_EXTERNAL_STORAGE >nul 2>&1
+adb shell pm grant %~1 android.permission.READ_MEDIA_IMAGES >nul 2>&1
+adb shell appops set --uid %~1 MANAGE_EXTERNAL_STORAGE allow >nul 2>&1
+adb shell am force-stop %~1 >nul 2>&1
+echo        [OK] %~1 a le droit de voir les images.
 exit /b 0
 
 :restaurer_accueil
