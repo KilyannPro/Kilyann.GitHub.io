@@ -3,13 +3,18 @@
 #  Optimisation d'un TV Stick Android (Xiaomi Mi TV Stick...)
 #  Version macOS / Linux. Lancement : bash optimiser-tv.sh
 #  Tout passe par ADB, l'outil officiel de Google.
-#  Aucun root, rien d'irréversible : l'option 4 du menu annule tout.
+#  Aucun root, rien d'irréversible : l'option 6 du menu annule tout.
 # ============================================================
 set -u
 
 ICI="$(cd "$(dirname "$0")" && pwd)"
 LISTE="$ICI/applis.txt"
 export PATH="$ICI/platform-tools:$PATH"
+DNS_ANTIPUB="dns.adguard-dns.com"
+DOSSIER_FONDS="/sdcard/Pictures/FondsEcran"
+PROJECTIVY="com.spocky.projengmenu"
+FLAUNCHER="me.efesser.flauncher"
+VMAJ=99
 
 # --- Petits utilitaires ------------------------------------------------------
 
@@ -83,6 +88,10 @@ pour_chaque_appli() { # pour_chaque_appli fonction -> appelle "fonction paquet d
     case "$pkg" in '' | \#*) continue ;; esac
     "$1" "$pkg" "$desc"
   done 3<"$LISTE"
+}
+
+desactiver() { # 0 si le paquet $1 a bien été désactivé
+  tv pm disable-user --user 0 "$1" 2>/dev/null | grep -q disabled
 }
 
 # --- Connexion ---------------------------------------------------------------
@@ -160,6 +169,7 @@ infos() {
   local modele version ram s
   modele="$(tv getprop ro.product.model | tr -d '\r')"
   version="$(tv getprop ro.build.version.release | tr -d '\r')"
+  case "${version%%.*}" in '' | *[!0-9]*) VMAJ=99 ;; *) VMAJ="${version%%.*}" ;; esac
   ram="$(tv cat /proc/meminfo | tr -d '\r' | awk '
     /^MemTotal:/ { t = int($2 / 1024) }
     /^MemAvailable:/ { l = int($2 / 1024) }
@@ -171,7 +181,7 @@ infos() {
   echo "      Stockage : ${s%%|*} libres sur ${s##*|}"
 }
 
-# --- Actions -----------------------------------------------------------------
+# --- 1 et 2. Optimisation et nettoyage ---------------------------------------
 
 nettoyer() {
   local avant apres
@@ -195,17 +205,11 @@ proposer() {
     return 0
   fi
   oui "         Désactiver ?" || return 0
-  if tv pm disable-user --user 0 "$1" 2>/dev/null | grep -q disabled; then
+  if desactiver "$1"; then
     echo "         [OK] Désactivée."
   else
     echo "         [!] Ce modèle refuse de la désactiver, on passe à la suite."
   fi
-}
-
-reactiver() {
-  [ "$(etat "$1")" = desactive ] || return 0
-  tv pm enable "$1" >/dev/null 2>&1
-  echo "       [OK] Réactivée : $2"
 }
 
 optimiser() {
@@ -219,7 +223,7 @@ optimiser() {
   echo
   echo " [2/5] Applications qui tournent en arrière-plan"
   echo "       Pour chacune : O pour la désactiver, N pour la garder."
-  echo "       Rien n'est supprimé, l'option 4 du menu les réactive."
+  echo "       Rien n'est supprimé, l'option 6 du menu les réactive."
   pour_chaque_appli proposer
 
   echo
@@ -247,6 +251,235 @@ optimiser() {
   fi
 }
 
+# --- 3. Wi-Fi ----------------------------------------------------------------
+
+lire_dns() {
+  DNS_MODE="$(tv settings get global private_dns_mode | tr -d '\r')"
+  DNS_HOTE="$(tv settings get global private_dns_specifier | tr -d '\r')"
+}
+
+dns_defaut() {
+  tv settings put global private_dns_mode opportunistic >/dev/null 2>&1
+  tv settings delete global private_dns_specifier >/dev/null 2>&1
+}
+
+tester_internet() { # 0 si le stick arrive à résoudre un nom de domaine (3 essais)
+  tv "for i in 1 2 3; do sleep 3; ping -c 1 -W 3 www.example.com 2>&1 | grep -q ^PING && { echo INTERNET_OK; break; }; done" \
+    2>/dev/null | grep -q INTERNET_OK
+}
+
+wifi() {
+  local infos rssi lien freq bande="" qual="" debit avis sortie
+  echo
+  echo " [1/4] État de la connexion Wi-Fi"
+  infos="$(tv "dumpsys wifi | grep mWifiInfo | head -n 1" 2>/dev/null | tr -d '\r')"
+  rssi="$(printf '%s' "$infos" | grep -oE 'RSSI: -?[0-9]+' | grep -oE -- '-?[0-9]+')"
+  lien="$(printf '%s' "$infos" | grep -oE 'Link speed: [0-9]+' | grep -oE '[0-9]+')"
+  freq="$(printf '%s' "$infos" | grep -oE 'Frequency: [0-9]+' | grep -oE '[0-9]+')"
+  if [ -n "$freq" ]; then
+    rssi="${rssi:--100}"
+    bande="2,4 GHz"
+    [ "$freq" -ge 4900 ] && bande="5 GHz"
+    [ "$freq" -ge 5925 ] && bande="6 GHz"
+    qual="faible"
+    [ "$rssi" -ge -75 ] && qual="moyen"
+    [ "$rssi" -ge -67 ] && qual="bon"
+    [ "$rssi" -ge -55 ] && qual="excellent"
+    echo "       Bande        : $bande"
+    echo "       Signal       : $qual, $rssi dBm"
+    echo "       Vitesse lien : ${lien:-?} Mbit/s"
+  else
+    echo "       Le stick ne semble pas connecté en Wi-Fi : câble Ethernet,"
+    echo "       ou modèle qui ne donne pas cette information."
+  fi
+
+  echo
+  echo " [2/4] Mesure du débit réel entre cet ordinateur et le stick, 30 secondes environ"
+  if oui "       Lancer la mesure ?"; then
+    tv "dd if=/dev/urandom of=/data/local/tmp/tvstick_test bs=1048576 count=8 2>/dev/null"
+    adb pull /data/local/tmp/tvstick_test "$ICI/tvstick_test" >/dev/null 2>&1
+    sortie="$(cd "$ICI" && adb push tvstick_test /data/local/tmp/tvstick_test2 2>&1 </dev/null | tail -n 1)"
+    tv rm -f /data/local/tmp/tvstick_test /data/local/tmp/tvstick_test2 >/dev/null 2>&1
+    rm -f "$ICI/tvstick_test"
+    debit="$(printf '%s' "$sortie" | awk '{ for (i = 2; i <= NF; i++) {
+      if ($i == "MB/s") { printf "%d", $(i - 1) * 8; exit }
+      if ($i == "KB/s") { printf "%d", $(i - 1) * 8 / 1000; exit } } }')"
+    if [ -n "$debit" ]; then
+      avis="faible : risque de coupures, même en HD"
+      [ "$debit" -ge 10 ] && avis="correct pour la HD, trop juste pour la 4K"
+      [ "$debit" -ge 25 ] && avis="suffisant pour la 4K"
+      [ "$debit" -ge 50 ] && avis="excellent, largement assez pour la 4K"
+      echo "       Débit vers le stick : $debit Mbit/s, $avis."
+      echo "       Si cet ordinateur est lui aussi en Wi-Fi, le vrai débit du stick est sans doute plus élevé."
+    else
+      echo "       [!] Mesure impossible sur ce modèle, on passe à la suite."
+    fi
+  fi
+
+  echo
+  echo " [3/4] Conseils pour ton installation"
+  if [ "$bande" = "2,4 GHz" ]; then
+    echo "       - Ton stick est en 2,4 GHz : c'est le point le plus important."
+    echo "         Connecte-le au réseau 5 GHz de ta box, plus rapide et sans"
+    echo "         interférences avec la télécommande Bluetooth. Si ta box n'affiche"
+    echo "         qu'un seul réseau, sépare les bandes 2,4 et 5 GHz dans ses réglages."
+  fi
+  if [ "$qual" = faible ] || [ "$qual" = moyen ]; then
+    echo "       - Signal trop faible : branche le stick avec une petite rallonge HDMI"
+    echo "         pour le sortir de derrière la TV, qui bloque les ondes. Rapproche"
+    echo "         la box ou ajoute un répéteur Wi-Fi."
+  fi
+  echo "       - Laisse 1 m entre la box et les autres appareils sans fil, et évite"
+  echo "         de la poser dans un meuble fermé."
+  echo "       - Si les coupures arrivent le soir, change le canal Wi-Fi dans"
+  echo "         l'interface de ta box : les voisins utilisent peut-être le même."
+
+  echo
+  echo " [4/4] DNS anti-pub, optionnel"
+  echo "       Bloque une partie des pubs et des traqueurs dans les applis et"
+  echo "       sur l'écran d'accueil. Les pubs YouTube ne sont pas bloquées."
+  echo "       Service gratuit utilisé : AdGuard DNS."
+  if [ "$VMAJ" -lt 9 ]; then
+    echo "       [!] Il faut Android 9 ou plus récent pour ce réglage."
+    return 0
+  fi
+  lire_dns
+  if [ "$DNS_MODE" = hostname ]; then
+    echo "       Un DNS privé est déjà actif : $DNS_HOTE"
+    if oui "       Le désactiver ?"; then
+      dns_defaut
+      echo "       [OK] DNS remis par défaut."
+    fi
+    return 0
+  fi
+  oui "       Activer le DNS anti-pub ?" || return 0
+  tv settings put global private_dns_specifier "$DNS_ANTIPUB"
+  tv settings put global private_dns_mode hostname
+  echo "       Vérification de la connexion Internet..."
+  if tester_internet; then
+    echo "       [OK] DNS anti-pub activé, Internet fonctionne."
+  else
+    dns_defaut
+    echo "       [!] Ta box bloque ce type de DNS : réglage annulé, rien n'a changé."
+  fi
+}
+
+# --- 4. Écran d'accueil et fonds d'écran -------------------------------------
+
+chercher_lanceur() { # affiche paquet/activité d'une appli installée qui sait servir d'écran d'accueil
+  tv "for p in \$(pm list packages -3 | cut -d: -f2); do c=\$(cmd package resolve-activity --brief -a android.intent.action.MAIN -c android.intent.category.HOME \$p 2>/dev/null | tail -n 1 | tr -d ' '); case \$c in */*) echo \$c;; esac; done" \
+    2>/dev/null | tr -d '\r' | tail -n 1
+}
+
+accueil() {
+  local lanceur paquet nom stock e r n=0 f
+  echo
+  echo " Écran d'accueil et fonds d'écran"
+  echo "       L'écran d'accueil d'origine n'accepte pas de fond d'écran. On le"
+  echo "       remplace par un écran plus propre, plus léger et sans publicités."
+  while true; do
+    echo "       Recherche des écrans d'accueil installés..."
+    lanceur="$(chercher_lanceur)"
+    [ -n "$lanceur" ] && break
+    echo
+    echo "       Aucun n'est installé. Choisis-en un :"
+    echo "         P. Projectivy Launcher : le plus beau et le plus réglable. Il a ses"
+    echo "            propres fonds d'écran. Mettre ta propre image demande la version"
+    echo "            Premium, payante."
+    echo "         F. FLauncher : simple, gratuit et open source. Ta propre image est"
+    echo "            gratuite, mais il faut aussi installer un gestionnaire de fichiers"
+    echo "            comme X-plore depuis le Play Store."
+    echo
+    read -r -p "       Ouvrir sa page Play Store sur la TV : [P]rojectivy, [F]Launcher ou [R]etour ? " r
+    case "$r" in
+      [pP]*) paquet="$PROJECTIVY" ;;
+      [fF]*) paquet="$FLAUNCHER" ;;
+      *) return 0 ;;
+    esac
+    tv "am start -a android.intent.action.VIEW -d 'market://details?id=$paquet'" >/dev/null 2>&1
+    echo "       La page s'ouvre sur la TV : clique sur Installer, puis reviens ici."
+    read -r -p "       C'est installé ? [C]ontinuer ou [R]etour au menu " r
+    case "$r" in [cC]*) ;; *) return 0 ;; esac
+  done
+
+  paquet="${lanceur%%/*}"
+  case "$paquet" in
+    "$PROJECTIVY") nom="Projectivy Launcher" ;;
+    "$FLAUNCHER") nom="FLauncher" ;;
+    *) nom="$paquet" ;;
+  esac
+  echo "       Trouvé : $nom"
+
+  echo
+  echo " [1/3] $nom devient l'écran d'accueil par défaut"
+  if tv cmd package set-home-activity "$lanceur" 2>/dev/null | grep -q Success; then
+    echo "       [OK] Fait."
+  else
+    echo "       [!] Ce modèle refuse le changement automatique. Appuie sur le bouton"
+    echo "           Accueil de la télécommande : la TV te demandera peut-être lequel utiliser."
+  fi
+
+  echo
+  echo " [2/3] Écran d'accueil Google d'origine"
+  stock=""
+  for p in com.google.android.tvlauncher com.google.android.leanbacklauncher; do
+    e="$(etat "$p")"
+    if [ "$e" != absent ]; then stock="$p"; break; fi
+  done
+  if [ -z "$stock" ]; then
+    echo "       Sur ce modèle, il ne peut pas être désactivé. Si le bouton Accueil y"
+    echo "       ramène encore, active dans les réglages de $nom l'option qui"
+    echo "       remplace le lanceur actuel."
+  elif [ "$e" = desactive ]; then
+    echo "       Déjà désactivé."
+  else
+    echo "       Le désactiver est recommandé : sinon le bouton Accueil de la"
+    echo "       télécommande peut y ramener, et ça libère beaucoup de mémoire."
+    echo "       L'option 6 du menu le remet si besoin."
+    if oui "       Désactiver l'écran d'accueil Google ?"; then
+      if desactiver "$stock"; then
+        echo "       [OK] Désactivé."
+      else
+        echo "       [!] Ce modèle refuse de le désactiver. Si le bouton Accueil y ramène"
+        echo "           encore, active dans les réglages de $nom l'option qui"
+        echo "           remplace le lanceur actuel."
+      fi
+    fi
+  fi
+
+  echo
+  echo " [3/3] Envoi des fonds d'écran sur la TV"
+  if [ -d "$ICI/fonds-ecran" ]; then
+    tv mkdir -p "$DOSSIER_FONDS" >/dev/null 2>&1
+    [ "$paquet" = "$PROJECTIVY" ] && tv mkdir -p "/sdcard/Android/data/$PROJECTIVY/files/wallpapers" >/dev/null 2>&1
+    for f in "$ICI"/fonds-ecran/*.jpg "$ICI"/fonds-ecran/*.jpeg "$ICI"/fonds-ecran/*.png; do
+      [ -f "$f" ] || continue
+      adb push "$f" "$DOSSIER_FONDS/$(basename "$f")" >/dev/null 2>&1 </dev/null || continue
+      n=$((n + 1))
+      tv "am broadcast -a android.intent.action.MEDIA_SCANNER_SCAN_FILE -d 'file://$DOSSIER_FONDS/$(basename "$f")'" >/dev/null 2>&1
+      [ "$paquet" = "$PROJECTIVY" ] && adb push "$f" "/sdcard/Android/data/$PROJECTIVY/files/wallpapers/$(basename "$f")" >/dev/null 2>&1 </dev/null
+    done
+  fi
+  echo "       [OK] $n fonds d'écran envoyés dans le dossier Pictures > FondsEcran."
+  echo "       Tu peux ajouter tes propres images dans le dossier fonds-ecran à côté"
+  echo "       de ce script, puis relancer cette option."
+  tv input keyevent KEYCODE_HOME >/dev/null 2>&1
+
+  echo
+  echo " Pour choisir ton fond d'écran sur la TV :"
+  if [ "$paquet" = "$PROJECTIVY" ]; then
+    echo "   Dans les réglages de Projectivy : Apparence > Fond d'écran."
+    echo "   Sans Premium, choisis un de ses fonds intégrés. Avec Premium, choisis"
+    echo "   « dossier défini par l'utilisateur » : les images y sont déjà copiées."
+  else
+    echo "   Ouvre les réglages de $nom, partie fond d'écran, et choisis une"
+    echo "   image dans Pictures > FondsEcran. Si rien ne s'ouvre, installe le"
+    echo "   gestionnaire de fichiers X-plore depuis le Play Store et réessaie."
+  fi
+}
+
+# --- 5 et 6. Mémoire et restauration -----------------------------------------
+
 memoire() {
   echo
   echo " Analyse en cours, quelques secondes..."
@@ -257,14 +490,40 @@ memoire() {
   echo " Si tu ne t'en sers pas, désinstalle-les depuis les Paramètres de la TV."
 }
 
+reactiver() {
+  [ "$(etat "$1")" = desactive ] || return 0
+  tv pm enable "$1" >/dev/null 2>&1
+  echo "       [OK] Réactivée : $2"
+}
+
+restaurer_accueil() { # réactive l'écran d'accueil Google $1 s'il est présent et le remet par défaut
+  local e
+  e="$(etat "$1")"
+  [ "$e" = absent ] && return 0
+  if [ "$e" = desactive ]; then
+    tv pm enable "$1" >/dev/null 2>&1
+    echo "       [OK] Écran d'accueil Google réactivé."
+  fi
+  tv "c=\$(cmd package resolve-activity --brief -a android.intent.action.MAIN -c android.intent.category.HOME $1 | tail -n 1 | tr -d ' '); case \$c in */*) cmd package set-home-activity \$c;; esac" >/dev/null 2>&1
+}
+
 restaurer() {
   echo
-  oui " Réactiver toutes les applis de la liste et remettre les animations normales ?" || return 0
+  echo " Remet les animations, les applis de la liste, l'écran d'accueil Google"
+  echo " et le DNS d'origine. Les fonds d'écran et les applis installées restent."
+  oui " Tout remettre comme avant ?" || return 0
   tv settings put global window_animation_scale 1
   tv settings put global transition_animation_scale 1
   tv settings put global animator_duration_scale 1
   echo "       [OK] Animations remises à la vitesse normale."
   pour_chaque_appli reactiver
+  restaurer_accueil com.google.android.tvlauncher
+  restaurer_accueil com.google.android.leanbacklauncher
+  lire_dns
+  if [ "$DNS_MODE" = hostname ]; then
+    dns_defaut
+    echo "       [OK] DNS remis par défaut."
+  fi
   echo
   echo " [OK] Annulation terminée."
 }
@@ -292,16 +551,20 @@ while true; do
   echo " ----------------------------------------------------------"
   echo "  1. Optimiser le stick, recommandé la première fois"
   echo "  2. Nettoyage rapide : vider les caches et la mémoire"
-  echo "  3. Voir ce qui consomme le plus de mémoire"
-  echo "  4. Annuler : tout réactiver et remettre les animations"
-  echo "  5. Quitter"
+  echo "  3. Wi-Fi : diagnostic, débit réel et DNS anti-pub"
+  echo "  4. Écran d'accueil moderne et fonds d'écran"
+  echo "  5. Voir ce qui consomme le plus de mémoire"
+  echo "  6. Annuler : tout remettre comme avant"
+  echo "  7. Quitter"
   echo " ----------------------------------------------------------"
-  read -r -p " Ton choix [1-5] : " choix
+  read -r -p " Ton choix [1-7] : " choix
   case "$choix" in
     1) optimiser ;;
     2) echo; nettoyer ;;
-    3) memoire ;;
-    4) restaurer ;;
-    5) fin 0 ;;
+    3) wifi ;;
+    4) accueil ;;
+    5) memoire ;;
+    6) restaurer ;;
+    7) fin 0 ;;
   esac
 done
