@@ -372,7 +372,7 @@ chercher_lanceur() { # affiche paquet/activité d'une appli installée qui sait 
 }
 
 accueil() {
-  local lanceur paquet nom stock e r n=0 f
+  local lanceur paquet nom stock e r n=0 f p
   echo
   echo " Écran d'accueil et fonds d'écran"
   echo "       L'écran d'accueil d'origine n'accepte pas de fond d'écran. On le"
@@ -411,7 +411,7 @@ accueil() {
   echo "       Trouvé : $nom"
 
   echo
-  echo " [1/3] $nom devient l'écran d'accueil par défaut"
+  echo " [1/4] $nom devient l'écran d'accueil par défaut"
   if tv cmd package set-home-activity "$lanceur" 2>/dev/null | grep -q Success; then
     echo "       [OK] Fait."
   else
@@ -420,7 +420,7 @@ accueil() {
   fi
 
   echo
-  echo " [2/3] Écran d'accueil Google d'origine"
+  echo " [2/4] Écran d'accueil Google d'origine"
   stock=""
   for p in com.google.android.tvlauncher com.google.android.leanbacklauncher; do
     e="$(etat "$p")"
@@ -448,7 +448,7 @@ accueil() {
   fi
 
   echo
-  echo " [3/3] Envoi des fonds d'écran sur la TV"
+  echo " [3/4] Envoi des fonds d'écran sur la TV"
   if [ -d "$ICI/fonds-ecran" ]; then
     tv mkdir -p "$DOSSIER_FONDS" >/dev/null 2>&1
     [ "$paquet" = "$PROJECTIVY" ] && tv mkdir -p "/sdcard/Android/data/$PROJECTIVY/files/wallpapers" >/dev/null 2>&1
@@ -461,21 +461,75 @@ accueil() {
     done
   fi
   echo "       [OK] $n fonds d'écran envoyés dans le dossier Pictures > FondsEcran."
-  echo "       Tu peux ajouter tes propres images dans le dossier fonds-ecran à côté"
-  echo "       de ce script, puis relancer cette option."
   tv input keyevent KEYCODE_HOME >/dev/null 2>&1
 
   echo
-  echo " Pour choisir ton fond d'écran sur la TV :"
-  if [ "$paquet" = "$PROJECTIVY" ]; then
-    echo "   Dans les réglages de Projectivy : Apparence > Fond d'écran."
-    echo "   Sans Premium, choisis un de ses fonds intégrés. Avec Premium, choisis"
-    echo "   « dossier défini par l'utilisateur » : les images y sont déjà copiées."
-  else
-    echo "   Ouvre les réglages de $nom, partie fond d'écran, et choisis une"
-    echo "   image dans Pictures > FondsEcran. Si rien ne s'ouvre, installe le"
-    echo "   gestionnaire de fichiers X-plore depuis le Play Store et réessaie."
+  echo " [4/4] Choix du fond d'écran"
+  local fonds=() choix fond="" i=0
+  for f in "$ICI"/fonds-ecran/*.jpg "$ICI"/fonds-ecran/*.jpeg "$ICI"/fonds-ecran/*.png; do
+    [ -f "$f" ] || continue
+    fonds+=("$(basename "$f")")
+    i=$((i + 1))
+    echo "         $i. $(basename "$f")"
+  done
+  if [ "$i" -gt 0 ]; then
+    read -r -p "       Numéro du fond voulu, ou Entrée pour passer : " choix
+    case "$choix" in
+      '' | *[!0-9]*) ;;
+      *) [ "$choix" -ge 1 ] && [ "$choix" -le "$i" ] && fond="${fonds[$((choix - 1))]}" ;;
+    esac
   fi
+  if [ -n "$fond" ]; then
+    echo "       Fond choisi : $fond"
+    if [ "$paquet" = "$PROJECTIVY" ]; then # ne laisse que ce fond dans le dossier de Projectivy
+      for f in "${fonds[@]}"; do
+        [ "$f" = "$fond" ] || tv "rm -f '/sdcard/Android/data/$PROJECTIVY/files/wallpapers/$f'" >/dev/null 2>&1
+      done
+    fi
+    echo "       Tentative d'application automatique..."
+    if appliquer_fond "$fond" "$paquet"; then
+      echo "       [OK] Ton fond d'écran s'est ouvert dans $nom sur la TV."
+      echo "       Regarde la TV : si une confirmation s'affiche, valide-la avec la"
+      echo "       télécommande. Si rien n'a changé, voici quoi faire :"
+    fi
+  fi
+
+  echo
+  echo " Dernière étape, sur la TV avec la télécommande :"
+  if [ "$paquet" = "$PROJECTIVY" ]; then
+    echo "   1. Ouvre les réglages de Projectivy : Apparence > Fond d'écran."
+    echo "   2. Choisis « dossier défini par l'utilisateur » : ton fond y est déjà."
+    echo "   Ta propre image demande Projectivy Premium. Sans Premium, choisis un"
+    echo "   de ses fonds intégrés."
+  else
+    echo "   1. Ouvre les réglages de $nom, partie fond d'écran."
+    echo "   2. Choisis ton image dans Pictures > FondsEcran."
+    if [ "$(etat com.lonelycatgames.Xplore)" = absent ]; then
+      echo "   Si aucun dossier ne s'ouvre, il faut le gestionnaire de fichiers X-plore."
+      if oui "       Ouvrir sa page Play Store sur la TV ?"; then
+        tv "am start -a android.intent.action.VIEW -d 'market://details?id=com.lonelycatgames.Xplore'" >/dev/null 2>&1
+        echo "       Clique sur Installer sur la TV, puis refais les étapes 1 et 2."
+      fi
+    fi
+  fi
+}
+
+ouvrir_image() { # ouvrir_image uri mime paquet [option] -> 0 si l'écran d'accueil a accepté l'image
+  local r
+  r="$(tv "am start -a android.intent.action.VIEW -t $2 ${4:-} -d '$1' $3" 2>&1)"
+  case "$r" in *Error* | *Exception*) return 1 ;; esac
+  return 0
+}
+
+appliquer_fond() { # ouvre le fond $1 directement dans l'écran d'accueil $2
+  local mime="image/jpeg" id
+  case "$1" in *.png | *.PNG) mime="image/png" ;; esac
+  id="$(tv "content query --uri content://media/external/images/media --projection _id:_display_name | grep -F '_display_name=$1'" 2>/dev/null \
+    | tr -d '\r' | sed -n 's/.*_id=\([0-9]*\).*/\1/p' | tail -n 1)"
+  if [ -n "$id" ] && ouvrir_image "content://media/external/images/media/$id" "$mime" "$2" --grant-read-uri-permission; then
+    return 0
+  fi
+  ouvrir_image "file://$DOSSIER_FONDS/$1" "$mime" "$2"
 }
 
 # --- 5 et 6. Mémoire et restauration -----------------------------------------

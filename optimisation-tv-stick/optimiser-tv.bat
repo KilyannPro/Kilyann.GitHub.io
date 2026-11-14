@@ -336,7 +336,7 @@ if "%LANCEUR_PAQUET%"=="%PROJECTIVY%" set "LANCEUR_NOM=Projectivy Launcher"
 if "%LANCEUR_PAQUET%"=="%FLAUNCHER%" set "LANCEUR_NOM=FLauncher"
 echo        Trouvé : %LANCEUR_NOM%
 echo.
-echo  [1/3] %LANCEUR_NOM% devient l'écran d'accueil par défaut
+echo  [1/4] %LANCEUR_NOM% devient l'écran d'accueil par défaut
 set "REPONSE=rien"
 for /f "delims=" %%R in ('adb shell cmd package set-home-activity %LANCEUR%') do set "REPONSE=%%R"
 if "%REPONSE%"=="Success" goto :accueil_defaut_ok
@@ -348,7 +348,7 @@ echo        [OK] Fait.
 
 :accueil_origine
 echo.
-echo  [2/3] Écran d'accueil Google d'origine
+echo  [2/4] Écran d'accueil Google d'origine
 set "STOCK=com.google.android.tvlauncher"
 call :etat "%STOCK%"
 if not "%ETAT%"=="absent" goto :accueil_origine_trouve
@@ -381,29 +381,52 @@ echo        Déjà désactivé.
 
 :accueil_fonds
 echo.
-echo  [3/3] Envoi des fonds d'écran sur la TV
+echo  [3/4] Envoi des fonds d'écran sur la TV
 set "NB_FONDS=0"
 if not exist "fonds-ecran\*" goto :accueil_fonds_fin
-adb shell mkdir -p %DOSSIER_FONDS% >nul 2>&1
-if "%LANCEUR_PAQUET%"=="%PROJECTIVY%" adb shell mkdir -p /sdcard/Android/data/%PROJECTIVY%/files/wallpapers >nul 2>&1
-rem  Chemins relatifs : le script s'est placé dans son propre dossier au démarrage.
-for %%F in (fonds-ecran\*.jpg fonds-ecran\*.jpeg fonds-ecran\*.png) do call :envoyer_fond "%%~fF" "%%~nxF"
-:accueil_fonds_fin
 echo        [OK] %NB_FONDS% fonds d'écran envoyés dans le dossier Pictures ^> FondsEcran.
-echo        Tu peux ajouter tes propres images dans le dossier fonds-ecran à côté
-echo        de ce script, puis relancer cette option.
 adb shell input keyevent KEYCODE_HOME >nul 2>&1
+
 echo.
-echo  Pour choisir ton fond d'écran sur la TV :
+echo  [4/4] Choix du fond d'écran
+set "NB_LISTE=0"
+set "FOND="
+for %%F in (fonds-ecran\*.jpg fonds-ecran\*.jpeg fonds-ecran\*.png) do call :lister_fond "%%~nxF"
+if "%NB_LISTE%"=="0" goto :accueil_aide
+set "CHOIX_FOND="
+set /p "CHOIX_FOND=        Numéro du fond voulu, ou Entrée pour passer : "
+if "%CHOIX_FOND%"=="" goto :accueil_aide
+for /f "delims=0123456789" %%x in ("%CHOIX_FOND%") do goto :accueil_aide
+call set "FOND=%%FOND_%CHOIX_FOND%%%"
+if "%FOND%"=="" goto :accueil_aide
+echo        Fond choisi : %FOND%
+if "%LANCEUR_PAQUET%"=="%PROJECTIVY%" call :projectivy_un_seul_fond
+echo        Tentative d'application automatique...
+call :appliquer_fond
+if not "%AM_OK%"=="oui" goto :accueil_aide
+echo        [OK] Ton fond d'écran s'est ouvert dans %LANCEUR_NOM% sur la TV.
+echo        Regarde la TV : si une confirmation s'affiche, valide-la avec la
+echo        télécommande. Si rien n'a changé, voici quoi faire :
+
+:accueil_aide
+echo.
+echo  Dernière étape, sur la TV avec la télécommande :
 if "%LANCEUR_PAQUET%"=="%PROJECTIVY%" goto :accueil_aide_projectivy
-echo    Ouvre les réglages de %LANCEUR_NOM%, partie fond d'écran, et choisis une
-echo    image dans Pictures ^> FondsEcran. Si rien ne s'ouvre, installe le
-echo    gestionnaire de fichiers X-plore depuis le Play Store et réessaie.
+echo    1. Ouvre les réglages de %LANCEUR_NOM%, partie fond d'écran.
+echo    2. Choisis ton image dans Pictures ^> FondsEcran.
+call :etat com.lonelycatgames.Xplore
+if not "%ETAT%"=="absent" goto :menu
+echo    Si aucun dossier ne s'ouvre, il faut le gestionnaire de fichiers X-plore.
+choice /c ON /n /m "        Ouvrir sa page Play Store sur la TV ? [O/N] "
+if errorlevel 2 goto :menu
+adb shell "am start -a android.intent.action.VIEW -d 'market://details?id=com.lonelycatgames.Xplore'" >nul 2>&1
+echo        Clique sur Installer sur la TV, puis refais les étapes 1 et 2.
 goto :menu
 :accueil_aide_projectivy
-echo    Dans les réglages de Projectivy : Apparence ^> Fond d'écran.
-echo    Sans Premium, choisis un de ses fonds intégrés. Avec Premium, choisis
-echo    « dossier défini par l'utilisateur » : les images y sont déjà copiées.
+echo    1. Ouvre les réglages de Projectivy : Apparence ^> Fond d'écran.
+echo    2. Choisis « dossier défini par l'utilisateur » : ton fond y est déjà.
+echo    Ta propre image demande Projectivy Premium. Sans Premium, choisis un
+echo    de ses fonds intégrés.
 goto :menu
 
 rem ------------------------------------------------------------
@@ -607,6 +630,43 @@ if errorlevel 1 exit /b 0
 set /a NB_FONDS+=1
 adb shell "am broadcast -a android.intent.action.MEDIA_SCANNER_SCAN_FILE -d 'file://%DOSSIER_FONDS%/%~2'" >nul 2>&1
 if "%LANCEUR_PAQUET%"=="%PROJECTIVY%" adb push "%~1" "/sdcard/Android/data/%PROJECTIVY%/files/wallpapers/%~2" >nul 2>&1
+exit /b 0
+
+:lister_fond
+set /a NB_LISTE+=1
+set "FOND_%NB_LISTE%=%~1"
+echo          %NB_LISTE%. %~1
+exit /b 0
+
+:projectivy_un_seul_fond
+rem  Ne laisse que le fond choisi dans le dossier défini par l'utilisateur de Projectivy
+for %%F in (fonds-ecran\*.jpg fonds-ecran\*.jpeg fonds-ecran\*.png) do if /i not "%%~nxF"=="%FOND%" adb shell "rm -f '/sdcard/Android/data/%PROJECTIVY%/files/wallpapers/%%~nxF'" >nul 2>&1
+exit /b 0
+
+:appliquer_fond
+rem  Ouvre le fond choisi directement dans l'écran d'accueil : AM_OK = oui ou non
+set "AM_OK=non"
+set "MIME=image/jpeg"
+if /i "%FOND:~-4%"==".png" set "MIME=image/png"
+set "URI_MEDIA="
+adb shell "content query --uri content://media/external/images/media --projection _id:_display_name | grep -F '_display_name=%FOND%'" >"%TEMP%\tvstick_media.txt" 2>nul
+for /f "usebackq tokens=4 delims==, " %%i in ("%TEMP%\tvstick_media.txt") do set "URI_MEDIA=content://media/external/images/media/%%i"
+del "%TEMP%\tvstick_media.txt" >nul 2>&1
+if not "%URI_MEDIA%"=="" call :ouvrir_image "%URI_MEDIA%" --grant-read-uri-permission
+if "%AM_OK%"=="oui" exit /b 0
+call :ouvrir_image "file://%DOSSIER_FONDS%/%FOND%"
+exit /b 0
+
+:ouvrir_image
+adb shell "am start -a android.intent.action.VIEW -t %MIME% %~2 -d '%~1' %LANCEUR_PAQUET%" >"%TEMP%\tvstick_am.txt" 2>&1
+set "AM_OK=non"
+find "Error" "%TEMP%\tvstick_am.txt" >nul
+if not errorlevel 1 goto :ouvrir_image_fin
+find "Exception" "%TEMP%\tvstick_am.txt" >nul
+if not errorlevel 1 goto :ouvrir_image_fin
+set "AM_OK=oui"
+:ouvrir_image_fin
+del "%TEMP%\tvstick_am.txt" >nul 2>&1
 exit /b 0
 
 :restaurer_accueil

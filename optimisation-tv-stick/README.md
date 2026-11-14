@@ -95,10 +95,20 @@ Le script :
 1. ouvre directement la page Play Store de celui que tu choisis sur la TV ;
 2. le met comme écran d'accueil par défaut ;
 3. te propose de désactiver l'écran d'accueil Google : le bouton Accueil n'y ramène plus, et ça libère beaucoup de mémoire ;
-4. envoie les fonds d'écran dans le dossier *Pictures → FondsEcran* du stick, et dans le dossier de Projectivy s'il est installé.
+4. envoie les fonds d'écran dans le dossier *Pictures → FondsEcran* du stick, et dans le dossier de Projectivy s'il est installé ;
+5. te demande quel fond tu veux et essaie de l'appliquer tout seul. S'il n'y arrive pas, il t'affiche les deux derniers clics à faire sur la TV.
 
 **Les 6 fonds d'écran fournis** (dossier `fonds-ecran`, 1920×1080) : Aurore, Crépuscule, Océan, Minuit, Dunes et Ardoise. Ils sont sombres pour que les icônes restent lisibles, avec un léger grain qui évite les bandes de couleur sur les TV.
 Pour ajouter tes propres images, mets-les dans le dossier `fonds-ecran` (JPG ou PNG) et relance l'option 4.
+
+**Ta propre photo en fond d'écran, étape par étape :**
+
+1. Mets la photo, en 1920×1080 de préférence, dans le dossier `fonds-ecran`. Les fichiers qui commencent par `photo-` ne sont jamais envoyés sur GitHub.
+2. Lance le script et choisis **4**.
+3. Si aucun écran d'accueil n'est installé, choisis-en un : sa page Play Store s'ouvre sur la TV. Clique sur **Installer**, puis tape **C** sur l'ordinateur.
+4. Accepte de désactiver l'écran d'accueil Google (**O**).
+5. Tape le **numéro** de ta photo dans la liste.
+6. Regarde la TV : si une confirmation s'affiche, valide-la. Sinon, fais les deux clics indiqués par le script.
 
 **Choisir le fond d'écran sur la TV** :
 
